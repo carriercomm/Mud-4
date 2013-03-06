@@ -1,4 +1,5 @@
-require '../lib/em-websocket.rb'
+require 'rubygems'
+require 'em-websocket'
 
 EM.run {
   EM::WebSocket.run(:host => "0.0.0.0", :port => 8080) do |ws|
