@@ -1,10 +1,15 @@
 require 'rubygems'
 require 'em-websocket'
+require 'Logger'
+
+logger = Logger.new(STDERR)
 
 EM.run {
-  EM::WebSocket.run(:host => "0.0.0.0", :port => 8080) do |ws|
+  logger.info "Starting server..."
+
+  EM::WebSocket.run(:host => "localhost", :port => 8080) do |ws|
     ws.onopen { |handshake|
-      puts "WebSocket connection open"
+      puts "New connection from #{handshake.origin}"
 
       # Access properties on the EM::WebSocket::Handshake object, e.g.
       # path, query_string, origin, headers
@@ -16,8 +21,8 @@ EM.run {
     ws.onclose { puts "Connection closed" }
 
     ws.onmessage { |msg|
-      puts "Recieved message: #{msg}"
-      ws.send "Pong: #{msg}"
+      puts "Received message: #{msg}"
+      ws.send "I see you"
     }
   end
 }

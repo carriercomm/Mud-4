@@ -1,0 +1,74 @@
+body {
+	margin: 0;
+	background:#f4f4f4 url(../resources/body.gif)
+}
+
+h1 {
+  margin: 0;
+}
+
+.header {
+	margin: 0 auto;
+	padding: 0;
+	width: 900px;
+	background-color: #666;
+  font: 15px Monaco;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 0;
+  width: 900px;
+  height: 600px;
+  background-color: #000;
+  font: 13px Monaco;
+  color: #fff;
+  overflow: hidden;
+}
+
+.content span {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.promptContainer {
+  margin: 0 auto;
+  padding: 0;
+  width: 900px;
+  height: 30px;
+  background-color: #fff;
+  font: 14px Monaco;
+}
+
+.prompt {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: green;
+  width: 20px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  display: block;
+  float: left;
+}
+
+.input {
+  background-color: #000;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  height: 30px;
+  width: 880px;
+  line-height: 30px;
+  text-align: left;
+  display: block;
+  float: left;
+  color: #fff;
+}
+
+.input:focus {
+  outline: 0;
+}
