@@ -3,10 +3,6 @@ body {
 	background:#f4f4f4 url(../resources/body.gif)
 }
 
-h1 {
-  margin: 0;
-}
-
 .header {
 	margin: 0 auto;
 	padding: 0;
@@ -15,22 +11,35 @@ h1 {
   font: 15px Monaco;
 }
 
-.content {
+.header h1 {
+  margin: 0;
+  padding-left: 5px;
+}
+
+#wrapper {
   margin: 0 auto;
   padding: 0;
   width: 900px;
   height: 600px;
   background-color: #000;
-  font: 13px Monaco;
+  font: 12px Monaco;
   color: #fff;
-  overflow: hidden;
+  overflow: auto;
+  position: relative;
 }
 
-.content span {
+#wrapper #board {
   display: block;
   float: left;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 5px;
+  position: absolute;
+  left: 0;
+  height: auto;
+}
+
+#wrapper #topAdjust {
+  height: 600px;
 }
 
 .promptContainer {
@@ -53,6 +62,7 @@ h1 {
   text-align: center;
   display: block;
   float: left;
+  border-bottom-left-radius: 5px;
 }
 
 .input {
@@ -66,7 +76,9 @@ h1 {
   text-align: left;
   display: block;
   float: left;
+  font: 11px Monaco;
   color: #fff;
+  border-bottom-right-radius: 5px;
 }
 
 .input:focus {
