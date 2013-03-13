@@ -6,16 +6,46 @@
 
 </head>
 <body>
-	<div class="header">
-		<h1> MUD </h1>
-	</div>
-	<div id="wrapper">
-		<div id="topAdjust"></div>
-		<div id="board" ></div>
-	</div>
-	<div class="promptContainer">
-		<label class="prompt">></label>
-		<input type="text" class="input">
-	</div>
+	<div id="fb-root"></div>
+  <div class="header">
+      <h1> MUD </h1>
+  </div>
+
+  <div class="login" id="login">
+    <h2> Log in first to play the game </h2>
+
+    <div class="fields">
+      <div>
+        <label>Username</label>
+      </div>
+      <div>
+        <input type="text" />
+      </div>
+      <div>
+        <label>Password</label>
+      </div>
+      <div>
+        <input type="text"/>
+      </div>
+      <div>
+        <input type="button" value="Log in"/>
+      </div>
+    </div>
+
+    <!-- <div id="fbLoginButton" class="fb-login-button" data-size="large"></div> -->
+    <img src="resources/fb_login_large.png" class="loginFbButton" id="loginFbBt"/>
+  </div>
+
+  <!-- <div class="game" id="game"> -->
+	  <div id="wrapper">
+	    <div id="topAdjust"></div>
+	    <div id="board" ></div>
+	  </div>
+	  <div id="promptContainer" class="promptContainer">
+	    <label class="prompt">></label>
+	    <input id="command" type="text" class="input">
+	  </div>
+	<!-- </div> -->
+    
 </body>
 </html>
