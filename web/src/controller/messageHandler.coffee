@@ -6,4 +6,4 @@ define [
       @_printer = new Printer()
 
     onMessage: (message) ->
-      console.log message
+      

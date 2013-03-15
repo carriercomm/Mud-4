@@ -24,11 +24,10 @@ require [
         return
 
       gameConnection = new GameConnection userData
-      gameConnection.connectToGame()
-
-      commandHandler = new CommandHandler()
-      $('#command').keyup (event) =>
-        commandHandler.getCommand event.which, $('#command').val()
+      gameConnection.connectToGame (ws) =>
+        commandHandler = new CommandHandler ws
+        $('#command').keyup (event) =>
+          commandHandler.getCommand event.which, $('#command').val()
 
       $('#wrapper').click =>
         $('#command').focus()

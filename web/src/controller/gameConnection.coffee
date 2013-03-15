@@ -7,7 +7,7 @@ define [
       @_printer = new Printer()
       @_messageHandler = new MessageHandler()
 
-    connectToGame: ->
+    connectToGame: (cb) ->
       @_ws = new WebSocket 'ws://localhost:8080'
       
       @_ws.onopen = =>
@@ -15,6 +15,8 @@ define [
         
         @_ws.onmessage = (evt) =>
           @_messageHandler.onMessage evt
+
+        cb @_ws
 
       @_ws.onclose = =>
         @_printer.append 'Connection with game ended... :('
