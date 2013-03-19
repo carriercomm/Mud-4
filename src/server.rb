@@ -1,12 +1,19 @@
 require 'rubygems'
 require 'em-websocket'
+require 'debugger'
 require 'data_mapper'
 require 'Logger'
+require 'json'
+
+# require_relative 'model/player_profile'
+require_relative 'service/mud_service'
 
 class Server
   def initialize
     @logger = Logger.new STDOUT
     @logger.info 'Starting server...'
+
+    @mud_service = MudService.new
   end
 
   def start_game
@@ -27,8 +34,10 @@ class Server
         ws.onclose { puts "Connection closed" }
 
         ws.onmessage do |msg|
+          parsedMsg = JSON.parse msg
           puts "Received message: #{msg}"
-          ws.send "I see you"
+
+          @mud_service.handle_message parsedMsg
         end
       end
     end
@@ -37,8 +46,8 @@ class Server
   def setup_database
     @logger.info 'Configuring database'
 
-    # need to figure out how to connect to db :(
-    DataMapper.setup(:default, 'sqlite:///pathtodb')
+    DataMapper.setup :default, "sqlite://#{Dir.pwd}/mud_dev.db"
+    DataMapper.auto_upgrade!
   end
 
 end

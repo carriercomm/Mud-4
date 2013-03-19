@@ -20,7 +20,7 @@ define [
       if command in CommandList
         @_printer.append command + ' ' + args, 'command'
       else
-        @_printer.append 'invalid command', 'command'
+        @_printer.append "invalid command: #{command}", 'command'
 
     _sendCommand: (command) ->
       @_ws.send command

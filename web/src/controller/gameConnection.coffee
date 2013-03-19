@@ -12,7 +12,13 @@ define [
       
       @_ws.onopen = =>
         @_printer.append "Connected :D Welcome #{@_userData.first_name}!"
-        
+
+        @_ws.send JSON.stringify
+          messageName: 'PL_CONNECTED'
+          email: @_userData.email
+          first_name: @_userData.first_name
+          last_name: @_userData.last_name
+          
         @_ws.onmessage = (evt) =>
           @_messageHandler.onMessage evt
 
