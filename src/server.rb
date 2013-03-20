@@ -1,19 +1,16 @@
 require 'rubygems'
 require 'em-websocket'
-require 'debugger'
 require 'data_mapper'
 require 'Logger'
 require 'json'
 
-# require_relative 'model/player_profile'
+require_relative 'service/messenger'
 require_relative 'service/mud_service'
 
 class Server
   def initialize
     @logger = Logger.new STDOUT
     @logger.info 'Starting server...'
-
-    @mud_service = MudService.new
   end
 
   def start_game
@@ -29,15 +26,17 @@ class Server
       EM::WebSocket.run(:host => "localhost", :port => 8080) do |ws|
         ws.onopen do |handshake|
           puts "New connection from #{handshake.origin}"
+
+          @messenger = Messenger.instance
+          @messenger.websocket ws
+          @messenger.service MudService.new
         end
 
         ws.onclose { puts "Connection closed" }
 
         ws.onmessage do |msg|
           parsedMsg = JSON.parse msg
-          puts "Received message: #{msg}"
-
-          @mud_service.handle_message parsedMsg
+          @messenger.new_message parsedMsg
         end
       end
     end

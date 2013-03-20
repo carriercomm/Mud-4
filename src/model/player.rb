@@ -2,7 +2,9 @@ require 'dm-core'
 require 'dm-timestamps'  
 require 'dm-validations'
 
-class PlayerProfile
+require_relative 'player_character'
+
+class Player
   include DataMapper::Resource
 
   property :id,         Serial
@@ -11,5 +13,7 @@ class PlayerProfile
   property :email,      String
   property :created_at, DateTime
   property :updated_at, DateTime
+
+  has n, :player_characters
 
 end

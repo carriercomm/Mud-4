@@ -20,7 +20,7 @@ define [
           last_name: @_userData.last_name
           
         @_ws.onmessage = (evt) =>
-          @_messageHandler.onMessage evt
+          @_messageHandler.onMessage evt.data
 
         cb @_ws
 

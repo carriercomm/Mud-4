@@ -1,38 +1,32 @@
 require 'Logger'
 
-require_relative '../model/player_profile'
+require_relative 'player_service'
+require_relative 'messenger'
 
 class MudService
   def initialize
     @logger = Logger.new STDOUT
+    @messenger = Messenger.instance
+
+    @player_service = PlayerService.new
   end
 
-  def handle_message (msg)
-    case msg['messageName']
-    when 'PL_CONNECTED'
-      player = PlayerProfile.first(:email => msg['email'])
-      puts player
+  def player_connected (player_data)
+    player = @player_service.find_by_email player_data['email']
       
-      unless player
-        @logger.info 'New player connected'
+    unless player
+      @logger.info 'New player connected'
 
-        newPlayer            = PlayerProfile.new
-        newPlayer.first_name = msg['first_name']
-        newPlayer.last_name  = msg['last_name']
-        newPlayer.email      = msg['email']
-        newPlayer.created_at = Time.now
-        newPlayer.updated_at = Time.now
+      newPlayer = {
+        :first_name => player_data['first_name'],
+        :last_name => player_data['last_name'],
+        :email => player_data['email']
+      }
 
-        newPlayer.save
-
-        # TODO: load player profile
-      else
-        @logger.info 'Loading player profile'
-        # TODO: load player profile
-      end
-
+      @player_service.new_player newPlayer
     else
-      puts 'message not known yet'
+      @logger.info 'Loading player profile'
+      @player_service.load_player_profile player
     end
   end
 
