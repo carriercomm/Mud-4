@@ -1,6 +1,7 @@
 require 'Logger'
 
 require_relative '../../model/player'
+require_relative '../../model/player_character'
 
 class PlayerDaoService
   def initialize
@@ -23,5 +24,9 @@ class PlayerDaoService
       :created_at => Time.now,
       :updated_at => Time.now
     )
+  end
+
+  def get_player_characters (player_id)
+    PlayerCharacter.all(:player_id => player_id)
   end
 end

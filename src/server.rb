@@ -4,7 +4,8 @@ require 'data_mapper'
 require 'Logger'
 require 'json'
 
-require_relative 'service/messenger'
+require_relative 'messages/messenger'
+require_relative 'messages/messages_en'
 require_relative 'service/mud_service'
 
 class Server
@@ -28,8 +29,7 @@ class Server
           puts "New connection from #{handshake.origin}"
 
           @messenger = Messenger.instance
-          @messenger.websocket ws
-          @messenger.service MudService.new
+          @messenger.properties ws, MudService.new, MessagesEnglish.new
         end
 
         ws.onclose { puts "Connection closed" }

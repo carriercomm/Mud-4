@@ -1,7 +1,7 @@
 require 'Logger'
 
 require_relative 'player_service'
-require_relative 'messenger'
+require_relative '../messages/messenger'
 
 class MudService
   def initialize

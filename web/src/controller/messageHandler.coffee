@@ -1,9 +1,19 @@
 define [
   "output/printer"
-], (Printer) ->
+  "controller/gameState"
+], (Printer, GameState) ->
   class MessageHandler
     constructor: ->
       @_printer = new Printer()
+      @_gameState = GameState.getInstance()
 
-    onMessage: (message) ->
-      
+    onMessage: (jsonMessage) ->
+      message = JSON.parse jsonMessage
+
+      @_gameState.setState message.state
+
+      switch message.message_name
+        when 'auto_print'
+          @_printer.append message.text, message.css
+        else
+          console.log 'not yet implemented'

@@ -1,11 +1,12 @@
 define [
   "output/printer"
-  "utils/commandList"
+  "controller/gameState"
   "jquery"
-], (Printer, CommandList, $) ->
+], (Printer, GameState, $) ->
   class CommandHandler
     constructor: (@_ws) ->
       @_printer = new Printer()
+      @_gameState = GameState.getInstance()
 
     getCommand: (key, text) ->
       if key is 13 and text.length > 0
@@ -17,8 +18,8 @@ define [
       command = components.shift()
       args = components.join ' '
 
-      if command in CommandList
-        @_printer.append command + ' ' + args, 'command'
+      if command.toLowerCase() in @_gameState.getValidCommands()
+        @_printer.append command.toLowerCase() + ' ' + args, 'command'
       else
         @_printer.append "invalid command: #{command}", 'command'
 
