@@ -1,2 +1,0 @@
-rm -rf ../bin/
-coffee -o ../web/bin/ -cw ../web/src/
