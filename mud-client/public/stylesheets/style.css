@@ -17,16 +17,18 @@
   color: #fff;
   background-color: #000;
   overflow: scroll;
+  overflow-x: hidden;
   box-sizing: border-box;
   padding: 20px 30px 30px 30px;
 }
 
 .prompt {
   background-color: #fff;
+  color: #000;
+  width: 100%;
   position: absolute;
   bottom: 0;
   height: 30px;
-  width: 100%;
 }
 
 .prompt input {
