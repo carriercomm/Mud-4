@@ -4,8 +4,11 @@ html
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body
+    script(type='text/javascript', src='/jquery/dist/jquery.min.js')
+    script(type='text/javascript', src='/scripts/client.js')
+  body(onload='start()')
     div(id='header', class='header')
     div(id='content', class='content')
       block content
     div(id='prompt', class='prompt')
+      input(id='prompt_input', type='text', autofocus)
