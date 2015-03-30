@@ -2,6 +2,9 @@
   "name": "ssmud",
   "version": "0.0.1",
   "description": "my mud",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "socket.io": "*",
     "express": "4.X"
