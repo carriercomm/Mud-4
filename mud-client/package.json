@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "prestart": "coffee --compile --output public/javascripts/ coffee/",
     "start": "node ./bin/www"
   },
   "dependencies": {

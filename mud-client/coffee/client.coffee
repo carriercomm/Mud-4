@@ -1,7 +1,12 @@
-class MudClient
-
+class window.MudClient
   constructor: ->
-    $('html').click ->
-      $('#prompt_input').focus()
+    @_socket = io("http://localhost:8080");
 
-    @_socket = io.connect 'http://localhost:8080'
+    @_socket.connect()
+
+
+  getSocket: ->
+    @_socket
+
+  onNews: (data) ->
+    console.log data
