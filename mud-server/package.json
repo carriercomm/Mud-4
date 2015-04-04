@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "socket.io": "*",
-    "express": "4.X"
+    "express": "4.X",
+    "mongoose": "*",
+    "mocha": "*",
+    "body-parser": "*"
   }
 }

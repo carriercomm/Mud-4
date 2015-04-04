@@ -5,14 +5,11 @@ html
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body()
-    div(id='header', class='header')
-    div(id='content', class='content')
-      block content
-    div(id='prompt', class='prompt')
-      input(id='prompt_input', type='text', autofocus)
-    
-    script(type='text/javascript', src='/jquery/dist/jquery.min.js')
-    script(type='text/javascript', src='/socket.io.js')
-    script(type='text/javascript', src='/javascripts/client.js')
-    script(type='text/javascript', src='/javascripts/events.js')
-    script(type='text/javascript', src='/javascripts/init.js')
+    div(class='header')
+      nav(class='navbar left-navbar')
+        a(href='mud') Play
+        a(href='about') About
+      nav(class='navbar right-navbar')
+        a(href='account') Account
+        a(id='log-in', href='#') Log in
+    block content

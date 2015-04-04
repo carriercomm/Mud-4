@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title MUD
+    link(rel='stylesheet', href='/normalize.css/normalize.css')
+    link(rel='stylesheet', href='/stylesheets/mud.css')
+  body()
+    //- div(id='header', class='header')
+    div(id='content', class='content')
+      div(id='container', class='container')
+    div(id='prompt', class='prompt')
+      input(id='prompt_input', type='text', autofocus)
+    
+    script(type='text/javascript', src='/jquery/dist/jquery.min.js')
+    script(type='text/javascript', src='/socket.io.js')
+    script(type='text/javascript', src='/javascripts/client.js')
+    script(type='text/javascript', src='/javascripts/events.js')
+    script(type='text/javascript', src='/javascripts/init.js')

@@ -1,40 +1,43 @@
+/*
+$color1: #ffffff;
+$color2: #d2d7df;
+$color3: #4d4847;
+$color4: #bdbbb0;
+$color5: #8a897c;
+*/
+
 .header {
-  background-color: #fff;
-  color: #000;
   width: 100%;
-  position: absolute;
-  top: 0;
-  height: 20px;
+  background-color: #4d4847;
+  height: 50px;
+  position: fixed;
 }
 
-.content {
-  background-color: #000;
-  width: 100%;
+.navbar {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.container {
-  height: 100vh;
+.left-navbar {
+  margin-left: 20%;
+  float: left;
+}
+
+.left-navbar a {
+  margin-right: 20px;
+}
+
+.right-navbar {
+  margin-right: 20%;
+  float: right;
+}
+
+.right-navbar a {
+  margin-left: 20px;
+}
+
+.navbar a {
   color: #fff;
-  background-color: #000;
-  overflow: scroll;
-  overflow-x: hidden;
-  box-sizing: border-box;
-  padding: 20px 30px 30px 30px;
-}
-
-.prompt {
-  background-color: #fff;
-  color: #000;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  height: 30px;
-}
-
-.prompt input {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  padding: 0 10px;
-  box-sizing: border-box;
+  text-decoration: none;
 }

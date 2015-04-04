@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "prestart": "coffee --compile --output public/javascripts/ coffee/",
+    "preinstall": "bower install",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -14,6 +14,8 @@
     "jade": "1.X",
     "morgan": "~1.0.0",
     "serve-favicon": "*",
-    "socket.io": "^1.3.5"
+    "socket.io": "^1.3.5",
+    "bower": "*",
+    "coffee": "*"
   }
 }
