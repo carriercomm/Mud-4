@@ -1,16 +1,24 @@
 /*
-$color1: #ffffff;
-$color2: #d2d7df;
-$color3: #4d4847;
-$color4: #bdbbb0;
-$color5: #8a897c;
+$color1: #13315c;
+$color2: #19647e;
+$color3: #0b2545;
+$color4: #8da9c4;
+$color5: #eef4ed;
 */
+html {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #8da9c4;
+}
 
+/*
+HEADER
+*/
 .header {
   width: 100%;
-  background-color: #4d4847;
+  background-color: #19647e;
   height: 50px;
   position: fixed;
+  top: 0;
 }
 
 .navbar {
@@ -40,4 +48,106 @@ $color5: #8a897c;
 .navbar a {
   color: #fff;
   text-decoration: none;
+}
+
+/*
+REGISTER
+*/
+.register {
+  margin: 10% auto 0;
+  width: 33%;
+  background-color: #eef4ed;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5%;
+}
+
+.register p {
+  margin: 4%;
+}
+
+input[type="text"] {
+  display: block;
+  margin: 0 0 10px;
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+  outline: none;
+}
+
+/* lists */
+ul.input-list {
+  list-style: none;
+  margin: 0 -10px;
+  padding: 0;
+}
+
+ul.input-list li {
+  display: block;
+  padding: 0 10px;
+  width: 50%;
+  float: left;
+}
+
+.style-1 input[type="text"] {
+  padding: 10px;
+  border: solid 1px gainsboro;
+  -webkit-transition: box-shadow 0.3s, border 0.3s;
+  -moz-transition: box-shadow 0.3s, border 0.3s;
+  -o-transition: box-shadow 0.3s, border 0.3s;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.style-1 input[type="text"]:focus, .style-1 input[type="text"].focus {
+  border: solid 1px #707070;
+  -webkit-box-shadow: 0 0 5px 1px #969696;
+  -moz-box-shadow: 0 0 5px 1px #969696;
+  box-shadow: 0 0 5px 1px #969696;
+}
+
+/* button style */
+button {
+  display: inline-block;
+  padding: 7px 30px;
+  font-size: 25px;
+  font-family: "Bitter", serif;
+  line-height: 1.8;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+section.flat {
+  width: 100;
+  text-align: center;
+}
+
+section.flat button {
+  color: #fff;
+  background-color: #6496c8;
+  text-shadow: -1px 1px #417cb8;
+  border: none;
+}
+
+section.flat button:hover,
+section.flat button.hover {
+  background-color: #346392;
+  text-shadow: -1px 1px #27496d;
+}
+
+section.flat button:active,
+section.flat button.active {
+  background-color: #27496d;
+  text-shadow: -1px 1px #193047;
 }

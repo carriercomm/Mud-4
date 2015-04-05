@@ -8,14 +8,15 @@
   },
   "dependencies": {
     "body-parser": "~1.0.0",
+    "bower": "*",
+    "coffee": "*",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
     "express": "4.X",
     "jade": "1.X",
     "morgan": "~1.0.0",
+    "passport": "^0.2.1",
     "serve-favicon": "*",
-    "socket.io": "^1.3.5",
-    "bower": "*",
-    "coffee": "*"
+    "socket.io": "^1.3.5"
   }
 }
