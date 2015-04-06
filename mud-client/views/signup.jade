@@ -2,12 +2,13 @@ extends layout
 
 block content
   div(class='register')
-    ul(class="input-list style-1 clearfix")
-      input(type="text" placeholder="username")
-      input(type="text" placeholder="e-mail")
-      input(type="text" placeholder="password")
-      input(type="text" placeholder="retype password")
-    
-    div(class='buttons')
-      section(class='flat')
-        button Sign up!
+    form(method='post', action='/signup')
+      ul(class="input-list style-1 clearfix")
+        input(type="text", placeholder="username", name="username")
+        input(type="text", placeholder="e-mail", name="email")
+        input(type="text", placeholder="password", name="password")
+        input(type="text", placeholder="retype password", name="retypepassword")
+      
+      div(class='buttons')
+        section(class='flat')
+          button(type='submit') Sign up!

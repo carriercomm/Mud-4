@@ -6,9 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var models = require('./models');
+
 var mud = require('./routes/mud');
 var signup = require('./routes/signup');
+var signin = require('./routes/signin');
 
 var app = express();
 
@@ -26,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(express.static(path.join(__dirname, 'node_modules/socket.io/node_modules/socket.io-client')));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/mud', mud);
 app.use('/signup', signup);
 app.use('/signin', signin);
