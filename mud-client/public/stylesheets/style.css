@@ -10,6 +10,11 @@ html {
   background-color: #fff;
 }
 
+.content {
+  margin: 70px auto 0 auto;
+  width: 70%;
+}
+
 /*
 HEADER
 */
@@ -61,8 +66,8 @@ HEADER
 REGISTER
 */
 .register {
-  margin: 10% auto 0;
-  width: 33%;
+  margin: 0 auto 0;
+  width: 390px;
   background-color: #fff;
   border-radius: 10px;
   box-sizing: border-box;
