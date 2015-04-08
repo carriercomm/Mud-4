@@ -2,7 +2,9 @@ extends layout
 
 block content
   div(class='register')
-    form(method='post', action='/signup')
+    if error
+      span.error= errorMessage
+    form(class='register-form' method='post', action='/signup')
       ul(class="input-list style-1 clearfix")
         input(type="text", placeholder="username", name="username")
         input(type="text", placeholder="e-mail", name="email")

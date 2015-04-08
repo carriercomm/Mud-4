@@ -11,6 +11,7 @@ var models = require('./models');
 var mud = require('./routes/mud');
 var signup = require('./routes/signup');
 var signin = require('./routes/signin');
+var account = require('./routes/account');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/', routes);
 app.use('/mud', mud);
 app.use('/signup', signup);
 app.use('/signin', signin);
+app.use('/account', account);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
