@@ -13,6 +13,8 @@ var signup = require('./routes/signup');
 var signin = require('./routes/signin');
 var account = require('./routes/account');
 
+var utils = require('./helper/utils');
+
 var app = express();
 
 // view engine setup
