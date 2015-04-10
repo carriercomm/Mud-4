@@ -1,23 +1,32 @@
-var utils = require('../helper/utils');
 var express = require('express');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var recaptcha = require('express-recaptcha');
 var router = express.Router();
+
+recaptcha.init('6LfVJgUTAAAAAJg3RnIq5TwoFqVE11gbFO_QSDO4', '6LfVJgUTAAAAAKOMazg4kYFNSkm9lVdEyBFhvuNE');
 
 router.use(function(req, res, next) {
   if (req.method === "POST") {
-    validateCaptcha(req.body['g-recaptcha-response'], function(response) {
-      console.log(response);
-      var error = validateData(req.body);
-
-      if (error !== "") {
+    recaptcha.verify(req, function(success, error) {
+      if (error) {
         res.render('signup', {
           error: true,
-          errorMessage: error,
+          errorMessage: 'Are you a robot?',
           data: req.body
         });
       } else {
-        next();
+        var error = validateData(req.body);
+
+        if (error !== "") {
+          res.render('signup', {
+            error: true,
+            errorMessage: error,
+            data: req.body
+          });
+        } else {
+          next();
+        }
       }
     });
   } else {
@@ -78,11 +87,6 @@ function validateEmail(email) {
 
 function validatePasswords(pass1, pass2) {
   return pass1 === pass2;
-}
-
-function validateCaptcha(captchaResponse, callback) {
-  var params = "secret=6LfVJgUTAAAAAKOMazg4kYFNSkm9lVdEyBFhvuNE&response=" + captchaResponse;
-  utils.sendPOSTRequest("https://www.google.com/recaptcha/api/siteverify", params, callback);
 }
 
 module.exports = router;

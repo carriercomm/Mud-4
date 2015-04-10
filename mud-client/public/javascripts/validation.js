@@ -13,6 +13,13 @@ function validateSignUp () {
       email = $('input[name="email"]').val(),
       isValid = true;
 
+  if (!grecaptcha.getResponse()) {
+    $('.error').removeClass('hidden');
+    $('.error').html("Are you a robot?");
+
+    isValid = false;
+  }
+
   if (!validatePasswords(password, retypePass)) {
     $('.error').removeClass('hidden');
     $('.error').html("Passwords do not match");
