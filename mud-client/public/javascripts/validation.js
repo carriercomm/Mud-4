@@ -7,7 +7,6 @@ $('.register-form :input[type="text"]').focus(function() {
 });
 
 function validateSignUp () {
-  return true;
   var username = $('input[name="username"]').val(),
       password = $('input[name="password"]').val(),
       retypePass = $('input[name="retypepassword"]').val(),

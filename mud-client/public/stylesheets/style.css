@@ -90,7 +90,7 @@ REGISTER
 /*
 OTHER STYLES
 */
-input[type="text"] {
+input {
   display: block;
   margin: 0 0 10px;
   width: 100%;
@@ -102,7 +102,7 @@ input[type="text"] {
   box-sizing: border-box;
 }
 
-input[type="text"]:focus {
+input :focus {
   outline: none;
 }
 
@@ -120,7 +120,7 @@ ul.input-list li {
   float: left;
 }
 
-.style-1 input[type="text"] {
+.style-1 input {
   padding: 10px;
   border: solid 1px gainsboro;
   -webkit-transition: box-shadow 0.3s, border 0.3s;
@@ -129,7 +129,7 @@ ul.input-list li {
   transition: box-shadow 0.3s, border 0.3s;
 }
 
-.style-1 input[type="text"]:focus, .style-1 input[type="text"].focus {
+.style-1 input:focus, .style-1 input.focus {
   border: solid 1px #707070;
   -webkit-box-shadow: 0 0 5px 1px #969696;
   -moz-box-shadow: 0 0 5px 1px #969696;

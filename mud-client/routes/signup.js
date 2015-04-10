@@ -9,7 +9,8 @@ router.use(function(req, res, next) {
     if (error !== "") {
       res.render('signup', {
         error: true,
-        errorMessage: error
+        errorMessage: error,
+        data: req.body
       });
     } else {
       next();
@@ -21,7 +22,7 @@ router.use(function(req, res, next) {
 
 router
   .get('/', function(req, res) {
-    res.render('signup');
+    res.render('signup', {data: {}});
   })
 
   .post('/', function(req, res) {
@@ -50,12 +51,12 @@ router
 function validateData(data) {
   var error = "";
 
-  if (!validateEmail(data.email)) {
-    error = "Invalid e-mail address";
-  }
-
   if (!validatePasswords(data.password, data.retypepassword)) {
     error = "Passwords do not match";
+  }
+
+  if (!validateEmail(data.email)) {
+    error = "Invalid e-mail address";
   }
 
   if (data.username == "" || data.password == "" || data.retypepassword == "" || data.email == "") {
