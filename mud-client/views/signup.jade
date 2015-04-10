@@ -9,7 +9,7 @@ block content
     form(class='register-form' method='post', action='/signup')
       ul(class="input-list style-1 clearfix")
         input(type="text", id="su-username" placeholder="username", name="username", value=data.username)
-        input(type="text", id="su-email" placeholder="e-mail", name="email", value=data.email)
+        input(type="email", id="su-email" placeholder="e-mail", name="email", value=data.email)
         input(type="password", id="su-passwd" placeholder="password", name="password", value=data.password)
         input(type="password", id="su-retypepasswd" placeholder="retype password", name="retypepassword", value=data.retypepassword)
       

@@ -36,7 +36,8 @@ router
       if (data) {
         res.render('signup', {
           error: true,
-          errorMessage: 'User already registered with this username'
+          errorMessage: 'User already registered with this username',
+	  data: req.body
         });
       } else {
         user.save(function(err) {
