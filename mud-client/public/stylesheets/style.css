@@ -84,6 +84,7 @@ REGISTER
 
 .register .error {
   color: #d00;
+  font-size: 15px;
 }
 
 /*
@@ -173,4 +174,8 @@ section.flat button:active,
 section.flat button.active {
   background-color: #27496d;
   text-shadow: -1px 1px #193047;
+}
+
+.hidden {
+  display: none;
 }
