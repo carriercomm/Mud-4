@@ -1,8 +1,8 @@
 var express = require('express');
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
+var passport = require('passport');
 var recaptcha = require('express-recaptcha');
 var router = express.Router();
+require('../config/passport')(passport);
 
 recaptcha.init('6LfVJgUTAAAAAJg3RnIq5TwoFqVE11gbFO_QSDO4', '6LfVJgUTAAAAAKOMazg4kYFNSkm9lVdEyBFhvuNE');
 
@@ -38,29 +38,11 @@ router.get('/', function(req, res) {
   res.render('signup', {data: {}});
 })
 
-.post('/', function(req, res) {
-  var user = new User();
-  user._id = req.body.username ? req.body.username : "";
-  user.email = req.body.email ? req.body.email : "";
-
-  User.findById(req.body.username, function(err, data) {
-    if (err) return next(err);
-
-    if (data) {
-      res.render('signup', {
-        error: true,
-        errorMessage: 'User already registered with this username',
-        data: req.body
-      });
-    } else {
-      user.save(function(err) {
-        if (err) throw err;
-
-        res.render('account');
-      });
-    }
-  });
-});
+.post('/', passport.authenticate('local-signup', {
+  successRedirect : 'account',
+  failureRedirect : '/',
+  failureFlash : true
+}));
 
 function validateData(data) {
   var error = "";

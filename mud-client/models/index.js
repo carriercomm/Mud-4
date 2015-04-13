@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mud');
+var config = require('../config/database');
+
+mongoose.connect(config.url);
 
 exports.User = require('./user');
