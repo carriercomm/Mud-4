@@ -38,11 +38,21 @@ router.get('/', function(req, res) {
   res.render('signup', {data: {}});
 })
 
-.post('/', passport.authenticate('local-signup', {
-  successRedirect : 'account',
-  failureRedirect : '/',
-  failureFlash : true
-}));
+.post('/', function(req, res, next) {
+  passport.authenticate('local-signup', function(err, user, info) {
+    if (!user) {
+      res.render('signup', {
+        error: true,
+        errorMessage: req.flash('signupMessage'),
+        data: req.body
+      });
+    } else {
+      res.render('account', {
+        user: user
+      });
+    }
+  })(req, res, next);
+});
 
 function validateData(data) {
   var error = "";
