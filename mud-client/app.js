@@ -4,15 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
-var routes = require('./routes/index');
+var passport = require('passport');
+var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+var config = require('./config/database');
 var models = require('./models');
+var routes = require('./routes/index');
 var mud = require('./routes/mud');
 var signup = require('./routes/signup');
-var signin = require('./routes/signin');
+var login = require('./routes/login');
 var account = require('./routes/account');
+
+mongoose.connect(config.url);
 
 var app = express();
 
@@ -27,9 +32,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser('sschezar mud'));
 app.use(session({
     secret: 'sschezar mud',
-    cookie: { maxAge: 60000 },
-    resave: true,
-    saveUninitialized: true
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -38,7 +41,7 @@ app.use(flash());
 app.use('/', routes);
 app.use('/mud', mud);
 app.use('/signup', signup);
-app.use('/signin', signin);
+app.use('/login', login);
 app.use('/account', account);
 
 app.use(favicon(path.join(__dirname, '/public/favicon.ico')));

@@ -5,10 +5,12 @@ var User = mongoose.model('User');
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    console.log('taporra 1: ' + user);
+    done(null, user._id);
   });
 
   passport.deserializeUser(function(id, done) {
+    console.log('tapoora2: ' + id);
     User.findById(id, function(err, user) {
         done(err, user);
     });
@@ -22,7 +24,7 @@ module.exports = function(passport) {
           if (err) return done(err);
 
           if (user) {
-            return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
+            return done(null, null, req.flash('signupMessage', 'That username is already taken.'));
           } else {
             var newUser = new User();
             newUser._id = username;
@@ -36,5 +38,22 @@ module.exports = function(passport) {
           }
         });
       });
+  }));
+
+  passport.use('local-login', new LocalStrategy({
+    passReqToCallback : true
+  }, function(req, username, password, done) {
+    User.findById(username, function(err, user) {
+      if (err)
+        return done(err);
+
+      if (!user)
+        return done(null, false, req.flash('loginMessage', 'No user found with username: ' + username));
+
+      if (!user.validPassword(password))
+        return done(null, false, req.flash('loginMessage', 'Wrong password.'));
+
+      return done(null, user);
+    });
   }));
 }

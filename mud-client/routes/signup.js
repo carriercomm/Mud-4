@@ -34,21 +34,19 @@ router.use(function(req, res, next) {
   }
 });
 
-router.get('/', function(req, res) {
+router.get('/', isLoggedIn, function(req, res) {
   res.render('signup', {data: {}});
 })
 
 .post('/', function(req, res, next) {
   passport.authenticate('local-signup', function(err, user, info) {
-    if (!user) {
+    if (user) {
+      res.redirect('account');
+    } else {
       res.render('signup', {
         error: true,
         errorMessage: req.flash('signupMessage'),
         data: req.body
-      });
-    } else {
-      res.render('account', {
-        user: user
       });
     }
   })(req, res, next);
@@ -79,6 +77,13 @@ function validateEmail(email) {
 
 function validatePasswords(pass1, pass2) {
   return pass1 === pass2;
+}
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated())
+    res.redirect('/');
+
+  next();
 }
 
 module.exports = router;

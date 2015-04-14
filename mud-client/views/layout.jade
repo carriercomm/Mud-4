@@ -10,9 +10,12 @@ html
         a(href='mud') Play
         a(href='about') About
       nav(class='navbar right-navbar')
-        a(href='account') Account
-        a(id='log-in', href='signin') Log in
-        a(id='log-in', href='signup') Register
+        if isLoggedIn
+          a(href='account') Account
+          a(href='account') Logout
+        else
+          a(id='log-in', href='signin') Log in
+          a(id='log-in', href='signup') Register
     div.content
       block content
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
