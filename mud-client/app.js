@@ -29,9 +29,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-app.use(cookieParser('sschezar mud'));
+app.use(cookieParser('sschezarmud'));
 app.use(session({
-    secret: 'sschezar mud',
+    secret: 'sschezarmud',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 app.use(passport.initialize());

@@ -6,11 +6,12 @@ block content
       span.error= errorMessage
     else
       span.error.hidden
-    div
-      ul(class="input-list style-1 clearfix")
-        input(type="text", id="si-username" placeholder="username", name="username")
-        input(type="password", id="si-passwd" placeholder="password", name="password")
+    form(class='register-form' method='post', action='/login')
+      div
+        ul(class="input-list style-1 clearfix")
+          input(type="text", id="si-username" placeholder="username", name="username")
+          input(type="password", id="si-passwd" placeholder="password", name="password")
 
-      div(class='buttons')
-        section(class='flat')
-          button(id='signin-button') Sign in!
+        div(class='buttons')
+          section(class='flat')
+            button(id='login-button', type='submit') Sign in!
