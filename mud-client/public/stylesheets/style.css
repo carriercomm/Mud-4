@@ -4,7 +4,7 @@ html {
 }
 
 .content {
-  margin: 120px auto 0 auto;
+  margin: 150px auto 0 auto;
   width: 70%;
 }
 
@@ -19,7 +19,12 @@ html {
 LOGIN
 */
 .login-content {
-  display: flex;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
   height: 100vh;
   background-color: #fff;
 }
@@ -57,7 +62,8 @@ HEADER
 }
 
 .logo {
-  font-size: 32px;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 50px;
   color: #000;
   text-decoration: none;
 }
@@ -79,7 +85,8 @@ HEADER
 REGISTER
 */
 .register {
-  margin: auto;
+  /*margin: auto;*/
+  height: 526px;
   width: 355px;
   background-color: #fff;
   border-radius: 10px;
@@ -192,7 +199,7 @@ section.flat button.active {
 }
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 .g-recaptcha {
