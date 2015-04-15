@@ -6,15 +6,16 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body()
     div(class='header')
-      nav(class='navbar left-navbar')
-        a(href='play') Play
-      nav(class='navbar right-navbar')
-        if isLoggedIn
-          a(href='profile') Account
-          a(href='logout') Logout
-        else
-          a(id='log-in', href='login') Log in
-          a(id='log-in', href='signup') Register
+      div.header-container
+        a.logo(href='/') SsMUD
+        nav.navbar
+          a(href='/play') Play
+          if isLoggedIn
+            a(href='/profile') Profile
+            a(href='/logout') Logout
+          else
+            a(id='log-in', href='/login') Log in
+            a(id='log-in', href='/signup') Register
     div.content
       block content
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')

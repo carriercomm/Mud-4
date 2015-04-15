@@ -31,25 +31,17 @@ module.exports = function (app, passport) {
   });
 
   app.get('/signup', isLoggedIn, function(req, res) {
-    res.render('signup', {data: {}});
+    res.render('signup', {
+      message: req.flash('signupMessage'),
+      data: {}
+    });
   });
 
-  app.post('/signup', function(req, res, next) {
-    passport.authenticate('local-signup', function(err, user, info) {
-      if (user) {
-        req.logIn(user, function(err) {
-          if (err) { return next(err); }
-          return res.redirect('/profile');
-        });
-      } else {
-        res.render('signup', {
-          error: true,
-          errorMessage: req.flash('signupMessage'),
-          data: req.body
-        });
-      }
-    })(req, res, next);
-  });
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/profile',
+    failureRedirect : '/signup',
+    failureFlash : true
+  }));
 
   function validateData(data) {
     var error = "";

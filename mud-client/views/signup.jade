@@ -2,8 +2,8 @@ extends layout
 
 block content
   div(class='register')
-    if error
-      span.error= errorMessage
+    if message.length > 0
+      span.error= message
     else
       span.error.hidden
     form(class='register-form' method='post', action='/signup')

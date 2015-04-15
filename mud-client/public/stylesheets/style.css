@@ -6,7 +6,8 @@ $color4: #8da9c4;
 $color5: #eef4ed;
 */
 html {
-  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  /*font-family: "Open Sans", Helvetica, Arial, sans-serif;*/
+  font-family: 'Open Sans', Arial, sans-serif;
   background-color: #fff;
 }
 
@@ -20,46 +21,33 @@ HEADER
 */
 .header {
   width: 100%;
-  height: 50px;
+  min-height: 50px;
   position: fixed;
   top: 0;
-
-  background-color: #1b1b1b;
-  background-image: linear-gradient(to bottom, #222, #111);
-  background-repeat: repeat-x;
+  background-color: #fff;
+  border-bottom: solid 1px #ccc;
+}
+.header-container {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.navbar {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.left-navbar {
-  margin-left: 20%;
-  float: left;
-}
-
-.left-navbar a {
-  margin-right: 20px;
-}
-
-.right-navbar {
-  margin-right: 20%;
-  float: right;
-}
-
-.right-navbar a {
-  margin-left: 20px;
-}
-
-.navbar a {
-  color: #999;
+.logo {
+  font-size: 32px;
+  color: #000;
   text-decoration: none;
 }
 
-.navbar a:hover {
-  color: #fff;
+.navbar a {
+  color: #1e73be;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.navbar { 
+  font-size: 14px;
+  margin: 15px 0;
 }
 
 /*
