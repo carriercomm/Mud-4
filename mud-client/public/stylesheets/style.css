@@ -52,7 +52,7 @@ HEADER
   position: fixed;
   top: 0;
   background-color: #fff;
-  border-bottom: solid 1px #ccc;
+  border-bottom: solid 1px #6496c8;
 }
 
 .header-container {
@@ -85,9 +85,7 @@ HEADER
 REGISTER
 */
 .register {
-  /*margin: auto;*/
   height: 526px;
-  width: 355px;
   background-color: #fff;
   border-radius: 10px;
   border: 1px solid #6496c8;

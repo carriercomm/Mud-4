@@ -46,9 +46,7 @@ module.exports = function(app, passport) {
     if (req.isAuthenticated()) {
       next();
     } else {
-      res.render('signup', {
-        data: req.body
-      });
+      res.render('login');
     }
   }
 };
