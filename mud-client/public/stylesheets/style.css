@@ -96,6 +96,10 @@ REGISTER
   text-align: center;
 }
 
+.login {
+  height: 400px;
+}
+
 .register p {
   margin: 4%;
 }

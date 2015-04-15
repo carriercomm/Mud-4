@@ -1,12 +1,12 @@
 extends loginLayout
 
 block content
-  div(class='register')
+  .register.login
     p.login-logo SS MUD
     if message && message.length > 0
       span.error= message
     else
-      span.hidden Placeholder
+      span.error.hidden Placeholder
     form(class='register-form' method='post', action='/login')
       div
         ul(class="input-list style-1 clearfix")
