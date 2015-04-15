@@ -1,19 +1,19 @@
-/*
-$color1: #13315c;
-$color2: #19647e;
-$color3: #0b2545;
-$color4: #8da9c4;
-$color5: #eef4ed;
-*/
 html {
   /*font-family: "Open Sans", Helvetica, Arial, sans-serif;*/
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   background-color: #fff;
 }
 
 .content {
-  margin: 100px auto 0 auto;
+  margin: 120px auto 0 auto;
   width: 70%;
+}
+
+.content p {
+  padding-bottom: 1em;
+  line-height: 1.7em;
+  font-size: 100%;
+  margin: 0;
 }
 
 /*
@@ -27,9 +27,10 @@ HEADER
   background-color: #fff;
   border-bottom: solid 1px #ccc;
 }
+
 .header-container {
   width: 500px;
-  margin: 0 auto;
+  margin: 15px auto;
   text-align: center;
 }
 
@@ -46,7 +47,11 @@ HEADER
 }
 
 .navbar { 
-  font-size: 14px;
+  /*font-size: 16px;
+  font-weight: bold;*/
+  line-height: 23px;
+  font-weight: 500;
+  font-size: 100%;
   margin: 15px 0;
 }
 

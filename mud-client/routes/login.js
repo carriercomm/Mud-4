@@ -6,9 +6,11 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.post('/login', passport.authenticate('local-login'), function(req, res) {
-    res.redirect('/profile/' + req.user._id);
-  });
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/profile',
+    failureRedirect : '/login',
+    failureFlash : true
+  }));
 
   function isLoggedIn(req, res, next) {
     if (req.isAuthenticated())
