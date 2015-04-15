@@ -1,8 +1,9 @@
-extends layout
+extends loginLayout
 
 block content
   div(class='register')
-    if message.length > 0
+    p.login-logo SS MUD
+    if message && message.length > 0
       span.error= message
     else
       span.error.hidden
@@ -15,3 +16,5 @@ block content
         div(class='buttons')
           section(class='flat')
             button(id='login-button', type='submit') Sign in!
+        span No account? &nbsp;
+        a(href='/signup') Sign up!

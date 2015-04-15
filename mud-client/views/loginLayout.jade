@@ -7,18 +7,7 @@ html
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
   body()
-    div(class='header')
-      div.header-container
-        a.logo(href='/') SsMUD
-        nav.navbar
-          a(href='/play') Play
-          if isLoggedIn
-            a(href='/profile') Profile
-            a(href='/logout') Logout
-          else
-            a(id='log-in', href='/login') Log in
-            a(id='log-in', href='/signup') Register
-    div.content
+    div.login-content
       block content
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/javascripts/validation.js')

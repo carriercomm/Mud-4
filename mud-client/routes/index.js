@@ -5,10 +5,10 @@ var User = mongoose.model('User')
 
 module.exports = function(app, passport) {
 
-  app.get('/', function(req, res) {
+  app.get('/', ensureAuthentication, function(req, res) {
     res.render('index',{
       isLoggedIn: req.isAuthenticated()
-    }); 
+    });
   });
 
   app.get('/logout', function(req, res) {
@@ -46,7 +46,9 @@ module.exports = function(app, passport) {
     if (req.isAuthenticated()) {
       next();
     } else {
-      res.redirect('/login');
+      res.render('signup', {
+        data: req.body
+      });
     }
   }
 };
