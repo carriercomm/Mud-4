@@ -1,26 +1,31 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-require('../config/passport')(passport);
+module.exports = function(app, passport) {
 
-router
-.get('/', function(req, res) {
-  res.render('login');
-})
+  app.get('/login', function(req, res) {
+    res.render('login');
+  });
 
-.post('/', function(req, res, next) {
-  passport.authenticate('local-login', function(err, user) {
-    if (err) throw err;
+  app.post('/login', isLoggedIn, function(req, res, next) {
+    passport.authenticate('local-login', function(err, user) {
+      if (err) throw err;
 
-    if (!user) {
-      res.render('login', {
-        error: true,
-        errorMessage: req.flash('loginMessage')
-      });
-    } else {
-      res.redirect('account');
-    }
-  })(req, res, next);
-});
+      if (!user) {
+        res.render('login', {
+          error: true,
+          errorMessage: req.flash('loginMessage')
+        });
+      } else {
+        req.logIn(user, function(err) {
+          if (err) { return next(err); }
+          return res.redirect('/profile');
+        });
+      }
+    })(req, res, next);
+  });
 
-module.exports = router;
+  function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated())
+      res.redirect('/');
+
+    next();
+  }
+}

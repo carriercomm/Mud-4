@@ -7,12 +7,11 @@ html
   body()
     div(class='header')
       nav(class='navbar left-navbar')
-        a(href='mud') Play
-        a(href='about') About
+        a(href='play') Play
       nav(class='navbar right-navbar')
         if isLoggedIn
-          a(href='account') Account
-          a(href='account') Logout
+          a(href='profile') Account
+          a(href='logout') Logout
         else
           a(id='log-in', href='login') Log in
           a(id='log-in', href='signup') Register

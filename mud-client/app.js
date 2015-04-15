@@ -11,11 +11,8 @@ var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var config = require('./config/database');
 var models = require('./models');
-var routes = require('./routes/index');
-var mud = require('./routes/mud');
-var signup = require('./routes/signup');
-var login = require('./routes/login');
-var account = require('./routes/account');
+var routes = require('./routes');
+require('./config/passport')(passport);
 
 mongoose.connect(config.url);
 
@@ -25,11 +22,15 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(favicon(path.join(__dirname, '/public/favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'node_modules/socket.io/node_modules/socket.io-client')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-
-app.use(cookieParser('sschezarmud'));
+app.use(cookieParser());
 app.use(session({
     secret: 'sschezarmud',
     store: new MongoStore({ mongooseConnection: mongoose.connection })
@@ -38,16 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.use('/', routes);
-app.use('/mud', mud);
-app.use('/signup', signup);
-app.use('/login', login);
-app.use('/account', account);
-
-app.use(favicon(path.join(__dirname, '/public/favicon.ico')));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
-app.use(express.static(path.join(__dirname, 'node_modules/socket.io/node_modules/socket.io-client')));
+routes(app, passport);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

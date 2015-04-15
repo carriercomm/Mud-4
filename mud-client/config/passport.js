@@ -5,12 +5,10 @@ var User = mongoose.model('User');
 module.exports = function(passport) {
 
   passport.serializeUser(function(user, done) {
-    console.log('taporra 1: ' + user);
     done(null, user._id);
   });
 
   passport.deserializeUser(function(id, done) {
-    console.log('tapoora2: ' + id);
     User.findById(id, function(err, user) {
         done(err, user);
     });
@@ -52,7 +50,7 @@ module.exports = function(passport) {
 
       if (!user.validPassword(password))
         return done(null, false, req.flash('loginMessage', 'Wrong password.'));
-
+      
       return done(null, user);
     });
   }));
