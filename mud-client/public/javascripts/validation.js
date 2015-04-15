@@ -9,7 +9,7 @@ $('.register-form :input[type="text"]').focus(function() {
 function validateSignUp () {
   var username = $('input[name="username"]').val(),
       password = $('input[name="password"]').val(),
-      retypePass = $('input[name="retypepassword"]').val(),
+      // retypePass = $('input[name="retypepassword"]').val(),
       email = $('input[name="email"]').val(),
       isValid = true;
 
@@ -20,14 +20,14 @@ function validateSignUp () {
     isValid = false;
   }
 
-  if (!validatePasswords(password, retypePass)) {
-    $('.error').removeClass('hidden');
-    $('.error').html("Passwords do not match");
+  // if (!validatePasswords(password, retypePass)) {
+  //   $('.error').removeClass('hidden');
+  //   $('.error').html("Passwords do not match");
 
-    isValid = false;
-  }
+  //   isValid = false;
+  // }
 
-  if (username == "" || password == "" || retypePass == "" || email == "") {
+  if (username == "" || password == "" || email == "") {
         $('.error').removeClass('hidden');
         $('.error').html("All fields are mandatory");
 
