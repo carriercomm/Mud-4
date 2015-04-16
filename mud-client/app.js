@@ -33,6 +33,8 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({
     secret: 'sschezarmud',
+    resave: true,
+    saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 app.use(passport.initialize());

@@ -119,6 +119,15 @@ REGISTER
 }
 
 /*
+PROFILE
+*/
+.add-char {
+  padding-left: 32px;
+  background: transparent url('/images/plus.png') no-repeat left center;
+  background-size: 32px;
+}
+
+/*
 OTHER STYLES
 */
 input {
