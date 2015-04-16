@@ -1,5 +1,6 @@
 extend layout
 
 block content
-  p Username: #{user._id}
-  p E-mail: #{user.local.email}
+  .flex-100
+    a(href='/profile/' + user._id + '/newchar'): img(src='/images/plus.png')
+    a(href='/profile/' + user._id + '/newchar') ADD CHARACTER

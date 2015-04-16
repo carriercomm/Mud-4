@@ -6,6 +6,9 @@ html {
 .content {
   margin: 150px auto 0 auto;
   width: 70%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
 }
 
 .content p {
@@ -13,6 +16,10 @@ html {
   line-height: 1.7em;
   font-size: 100%;
   margin: 0;
+}
+
+.flex-100 {
+  flex: 1 100%;
 }
 
 /*
