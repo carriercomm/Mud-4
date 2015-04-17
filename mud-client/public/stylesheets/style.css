@@ -4,11 +4,8 @@ html {
 }
 
 .content {
-  margin: 150px auto 0 auto;
+  margin: 150px auto 50px auto;
   width: 70%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
 }
 
 .content p {
@@ -18,8 +15,30 @@ html {
   margin: 0;
 }
 
-.flex-100 {
-  flex: 1 100%;
+.grid-flex-start,
+.grid-space-around {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0;
+  margin-bottom: 1em;
+  /*margin: -1em 0 1em -1em;*/
+  align-items: center;
+}
+
+.grid-space-around {
+  justify-content: space-around;
+}
+
+.grid-flex-start {
+  justify-content: flex-start;
+}
+
+.grid-cell {
+
+}
+
+.flex-50 {
+  flex: 1 50%;
 }
 
 /*
@@ -121,10 +140,31 @@ REGISTER
 /*
 PROFILE
 */
+.back,
 .add-char {
-  padding-left: 32px;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  color: #000;
+  padding-left: 35px;
+}
+
+.add-char {
   background: transparent url('/images/plus.png') no-repeat left center;
   background-size: 32px;
+}
+
+.back {
+  background: transparent url('/images/arrow-left.png') no-repeat left center;
+  background-size: 32px;
+}
+
+.image-link {
+  cursor: pointer;
+}
+
+.selected {
+  border: 2px solid #66cd00;
 }
 
 /*
@@ -218,6 +258,14 @@ section.flat button.active {
 
 .hidden {
   visibility: hidden;
+}
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
 }
 
 .g-recaptcha {

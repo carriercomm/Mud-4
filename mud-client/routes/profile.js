@@ -21,6 +21,12 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/profile/:id/newchar', ensureAuthentication, function(req, res) {
+    res.render('newchar', {
+      isLoggedIn: req.isAuthenticated()
+    });
+  });
+
   function ensureAuthentication (req, res, next) {
     if (req.isAuthenticated()) {
       next();

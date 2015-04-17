@@ -1,0 +1,81 @@
+extends layout
+
+block content
+  #select-gender
+    .grid-space-around
+      h2 Select a gender:
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/human.png', onclick="selectGender('male', this);")
+      .grid-cell
+        img.image-link(src='/images/rogue.png', onclick="selectGender('female', this);")
+
+  #select-race.display-none 
+    .grid-space-around
+      h2 Select a race:
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/human.png', onclick="selectRace('human', this);")
+      .grid-cell
+        p Text about humans
+        p Humans skills
+
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/dwarf.png', onclick="selectRace('dwarf', this);")
+      .grid-cell
+        p Text about dwarfs
+        p Dwarfs skills
+
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/elf.png', onclick="selectRace('elf', this);")
+      .grid-cell
+        p Text about elves
+        p Elves skills
+
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/orc.png', onclick="selectRace('orc', this);")
+      .grid-cell
+        p Text about orcs
+        p Orcs skills
+
+    .grid-space-around
+      .grid-cell
+        a.back(href='#', onclick='backToGenders();') Back to genders
+
+  #select-class.display-none
+    .grid-space-around
+      h2 Select a class:
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/human.png', onclick="selectClass('warrior', this);")
+      .grid-cell
+        p Text about warriors
+        p Link to warriors details
+
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/mage.png', onclick="selectClass('mage', this);")
+      .grid-cell
+        p Text about mages
+        p Link to mages details
+
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/elf.png', onclick="selectClass('ranger', this);")
+      .grid-cell
+        p Text about rangers
+        p Link to rangers details
+
+    .grid-space-around
+      .grid-cell
+        img.image-link(src='/images/rogue.png', onclick="selectClass('rogue', this);")
+      .grid-cell
+        p Text about rogues
+        p Link to rogues details
+
+    .grid-space-around
+      .grid-cell
+        a.back(href='#', onclick='backToRaces();') Back to races
