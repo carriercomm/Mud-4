@@ -14,6 +14,7 @@
     "connect-flash": "*",
     "connect-mongo": "^0.8.0",
     "cookie-parser": "~1.0.1",
+    "cors": "^2.5.3",
     "debug": "~0.7.4",
     "express": "4.X",
     "express-recaptcha": "^1.0.2",

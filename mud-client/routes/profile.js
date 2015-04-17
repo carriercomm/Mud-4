@@ -27,6 +27,10 @@ module.exports = function(app) {
     });
   });
 
+  app.post('/newchar', function(req, res, next) {
+    console.log("Adding new char");
+  });
+
   function ensureAuthentication (req, res, next) {
     if (req.isAuthenticated()) {
       next();

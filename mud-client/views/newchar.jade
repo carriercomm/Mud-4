@@ -1,42 +1,53 @@
 extends layout
 
 block content
+  #newchar-progrses
+    .grid-space-around
+      .grid-cell
+        img.selected-gender()
+        span.selected-gender-label
+      .grid-cell
+        img.selected-race()
+        span.selected-race-label
+      .grid-cell
+        img.selected-class()
+        span.selected-class-label
   #select-gender
     .grid-space-around
       h2 Select a gender:
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/human.png', onclick="selectGender('male', this);")
+        img.image-link(src='/images/characters/male.png', onclick="selectGender('male', this);")
       .grid-cell
-        img.image-link(src='/images/rogue.png', onclick="selectGender('female', this);")
+        img.image-link(src='/images/characters/female.png', onclick="selectGender('female', this);")
 
-  #select-race.display-none 
+  #select-race.display-none
     .grid-space-around
       h2 Select a race:
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/human.png', onclick="selectRace('human', this);")
+        img.image-link(src='/images/characters/human.png', onclick="selectRace('human', this);")
       .grid-cell
         p Text about humans
         p Humans skills
 
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/dwarf.png', onclick="selectRace('dwarf', this);")
+        img.image-link(src='/images/characters/dwarf.png', onclick="selectRace('dwarf', this);")
       .grid-cell
-        p Text about dwarfs
-        p Dwarfs skills
+        p Text about dwarves
+        p Dwarves skills
 
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/elf.png', onclick="selectRace('elf', this);")
+        img.image-link(src='/images/characters/elf.png', onclick="selectRace('elf', this);")
       .grid-cell
         p Text about elves
         p Elves skills
 
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/orc.png', onclick="selectRace('orc', this);")
+        img.image-link(src='/images/characters/orc.png', onclick="selectRace('orc', this);")
       .grid-cell
         p Text about orcs
         p Orcs skills
@@ -50,28 +61,28 @@ block content
       h2 Select a class:
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/human.png', onclick="selectClass('warrior', this);")
+        img.image-link(src='/images/characters/warrior.png', onclick="selectClass('warrior', this);")
       .grid-cell
         p Text about warriors
         p Link to warriors details
 
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/mage.png', onclick="selectClass('mage', this);")
+        img.image-link(src='/images/characters/mage.png', onclick="selectClass('mage', this);")
       .grid-cell
         p Text about mages
         p Link to mages details
 
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/elf.png', onclick="selectClass('ranger', this);")
+        img.image-link(src='/images/characters/ranger.png', onclick="selectClass('ranger', this);")
       .grid-cell
         p Text about rangers
         p Link to rangers details
 
     .grid-space-around
       .grid-cell
-        img.image-link(src='/images/rogue.png', onclick="selectClass('rogue', this);")
+        img.image-link(src='/images/characters/rogue.png', onclick="selectClass('rogue', this);")
       .grid-cell
         p Text about rogues
         p Link to rogues details
@@ -79,3 +90,21 @@ block content
     .grid-space-around
       .grid-cell
         a.back(href='#', onclick='backToRaces();') Back to races
+
+  #confirm-newchar.display-none
+    .grid-space-around
+      h2 Confirm you character:
+    .grid-space-around
+      .grid-cell
+        img.final-class(src='/images/characters/mage.png')
+    .grid-space-around
+        p Character name:
+    .grid-space-around
+      input#char-name(type='text', class="input-list style-1 clearfix")
+    .grid-space-around
+      p#char-name-alert.hidden.error Insert a name!
+    .grid-space-around
+      .grid-cell
+        a.confirm-newchar(href="#", onclick="confirmChar();") That's it!
+      .grid-cell
+        a.redo-newchar(href="#", onclick="redoChar();") Nope, redo it!

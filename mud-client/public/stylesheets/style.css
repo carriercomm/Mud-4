@@ -33,12 +33,9 @@ html {
   justify-content: flex-start;
 }
 
-.grid-cell {
-
-}
-
-.flex-50 {
-  flex: 1 50%;
+.error {
+  color: #d00;
+  font-size: 15px;
 }
 
 /*
@@ -132,11 +129,6 @@ REGISTER
   margin-top: 10px;
 }
 
-.register .error {
-  color: #d00;
-  font-size: 15px;
-}
-
 /*
 PROFILE
 */
@@ -168,6 +160,16 @@ PROFILE
   /*border: 10px solid #66cd00;*/
   outline: solid 10px #66cd00;
   outline-offset: -10px;
+}
+
+.selected-race,
+.selected-class,
+.selected-gender {
+  width: 64px;
+}
+
+#char-name {
+  width: 200px;
 }
 
 /*
