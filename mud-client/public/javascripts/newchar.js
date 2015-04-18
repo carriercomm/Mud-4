@@ -27,6 +27,7 @@ var charRace = (function () {
     show: function () {
       $('#select-race').show()
       $('.selected-gender').attr('src', '/images/characters/' + charGender.selected + '.png')
+      $('.selected-gender').show()
       $('.selected-gender-label').html(charGender.selected)
     },
 
@@ -53,6 +54,7 @@ var charClass = (function () {
     show: function () {
       $('#select-class').show()
       $('.selected-race').attr('src', '/images/characters/' + charRace.selected + '.png')
+      $('.selected-race').show()
       $('.selected-race-label').html(charRace.selected)
     },
 
@@ -80,6 +82,7 @@ var charConfirm = (function () {
       $('#confirm-newchar').show()
       $('#char-name-alert').addClass('hidden');
       $('.selected-class').attr('src', '/images/characters/' + charClass.selected + '.png')
+      $('.selected-class').show()
       $('.selected-class-label').html(charClass.selected)
     },
 
@@ -119,6 +122,27 @@ backToClasses = function () {
   charClass.show()
 }
 
+redoChar = function () {
+  setCookie('charGender', '', 1);
+  setCookie('charRace', '', 1);
+  setCookie('charClass', '', 1);
+
+  charGender.selectedImage.removeClass('selected')
+  charRace.selectedImage.removeClass('selected')
+  charClass.selectedImage.removeClass('selected')
+
+  $('.selected-gender').hide()
+  $('.selected-race').hide()
+  $('.selected-class').hide()
+
+  $('.selected-gender-label').html('')
+  $('.selected-race-label').html('')
+  $('.selected-class-label').html('')
+
+  $('#confirm-newchar').hide()
+  $('#select-gender').show()
+}
+
 confirmChar = function () {
   if ($('#char-name').val() === "") {
     $('#char-name-alert').removeClass('hidden');
@@ -132,13 +156,7 @@ confirmChar = function () {
     charName: $('#char-name').val()
   }
 
-  $.ajax({
-    type: "POST",
-    url: "http://mud.sschezar.rocks/newchar",
-    data: JSON.stringify(data),
-    success: function() {
-      console.log("Char added successfully")
-    },
-    dataType: "json"
+  $.post("http://localhost:3000/newchar", data, function() {
+    console.log('Success')
   })
 }

@@ -12,7 +12,6 @@ var mongoose = require('mongoose');
 var config = require('./config/database');
 var models = require('./models');
 var routes = require('./routes');
-var cors = require('cors');
 
 require('./config/passport')(passport);
 
@@ -44,12 +43,6 @@ app.use(passport.session());
 app.use(flash());
 
 routes(app, passport);
-
-var corsOptions = {
-  origin: 'http://localhost:3000'
-};
-
-app.use(cors());
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
