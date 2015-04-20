@@ -177,6 +177,31 @@ PROFILE
   width: 200px;
 }
 
+.char-frame {
+  display: flex;
+  height: 60px;
+  min-width: 400px;
+  border-radius: 10px;
+  /*background-color: #000;*/
+  /*color: #ddd;*/
+}
+
+.char-frame-warrior {
+  border: 2px solid red;
+}
+
+.char-frame-mage {
+  border: 2px solid blue;
+}
+
+.char-frame-ranger {
+  border: 2px solid green;
+}
+
+.char-frame-rogue {
+  border: 2px solid yellow;
+}
+
 /*
 OTHER STYLES
 */

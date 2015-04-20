@@ -7,3 +7,11 @@ block content
   if message && message.length
     .grid-space-around
       p.success= message
+
+  if characters && characters.length
+    .grid-flex-start
+      h3 Your characters:
+
+    each character in characters
+      div(class='grid-space-around char-frame char-frame-#{character.charClass}')
+        span= character.name

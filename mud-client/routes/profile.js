@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Character = mongoose.model('Character');
 
 module.exports = function(app) {
   app.get('/profile', ensureAuthentication, function(req, res) {
@@ -14,11 +15,16 @@ module.exports = function(app) {
 
   app.get('/profile/:id', ensureAuthentication, function(req, res) {
     User.findById(req.params.id, function(err, user) {
-      res.render('profile', {
-        user: user,
-        isLoggedIn: req.isAuthenticated(),
-        message: req.flash('newChar')
-      });
+      if (user) {
+        Character.find({user: user._id}, function(err, characters) {
+          res.render('profile', {
+            user: user,
+            isLoggedIn: req.isAuthenticated(),
+            message: req.flash('newChar'),
+            characters: characters
+          });
+        });
+      }
     });
   });
 
