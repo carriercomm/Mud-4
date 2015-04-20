@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 module.exports = function(app) {
-  app.get('/profile', ensureAuthentication, function(req, res, next) {
+  app.get('/profile', ensureAuthentication, function(req, res) {
     if (req.session && req.session.passport) {
       User.findById(req.session.passport.user, function(err, user) {
         res.redirect('/profile/' + user._id);
@@ -16,7 +16,8 @@ module.exports = function(app) {
     User.findById(req.params.id, function(err, user) {
       res.render('profile', {
         user: user,
-        isLoggedIn: req.isAuthenticated()
+        isLoggedIn: req.isAuthenticated(),
+        message: req.flash('newChar')
       });
     });
   });
@@ -25,10 +26,6 @@ module.exports = function(app) {
     res.render('newchar', {
       isLoggedIn: req.isAuthenticated()
     });
-  });
-
-  app.post('/newchar', function(req, res, next) {
-    console.log('adding new char');
   });
 
   function ensureAuthentication (req, res, next) {

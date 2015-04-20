@@ -38,6 +38,11 @@ html {
   font-size: 15px;
 }
 
+.success {
+  color: #0d0;
+  font-size: 15px;
+}
+
 /*
 LOGIN
 */

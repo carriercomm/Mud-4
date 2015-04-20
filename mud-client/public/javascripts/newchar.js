@@ -138,6 +138,7 @@ redoChar = function () {
   $('.selected-gender-label').html('')
   $('.selected-race-label').html('')
   $('.selected-class-label').html('')
+  $('#char-name').val('')
 
   $('#confirm-newchar').hide()
   $('#select-gender').show()
@@ -145,7 +146,7 @@ redoChar = function () {
 
 confirmChar = function () {
   if ($('#char-name').val() === "") {
-    $('#char-name-alert').removeClass('hidden');
+    $('#char-name-alert').removeClass('hidden')
     return;
   }
 
@@ -156,7 +157,18 @@ confirmChar = function () {
     charName: $('#char-name').val()
   }
 
-  $.post("http://localhost:3000/newchar", data, function() {
-    console.log('Success')
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/newchar',
+    data: data,
+    success: function(responseData, textStatus, jqXHR) {
+      console.log(responseData)
+      window.location.replace('http://localhost:3000/profile')
+    },
+    error: function (responseData, textStatus, errorThrown) {
+      console.log("error posting")
+      console.log(responseData)
+      console.log(textStatus)
+    }
   })
 }
