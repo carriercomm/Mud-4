@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 
-exports.User = require('./user');
-exports.Character = require('./character');
+exports.User = require('./user')
+exports.Character = require('./character')

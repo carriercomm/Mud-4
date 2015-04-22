@@ -16,9 +16,11 @@
   }
 
   MudClient.prototype.onHandshake = function(data) {
-    var user = $('#user-id')
+    var user = $('#user-id').val()
 
-    // this._sendMesage()
+    this._socket.emit('login', {
+      user: user
+    })
   }
 
   window.MudClient = MudClient

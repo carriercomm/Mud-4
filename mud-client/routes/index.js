@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
   app.get('/play', ensureAuthentication, function(req, res) {
     if (req.session && req.session.passport)
     res.render('mud', {
-      user: session.passport.user
+      user: req.session.passport.user
     });
   });
 

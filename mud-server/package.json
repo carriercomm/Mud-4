@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "description": "my mud",
   "scripts": {
-    "start": "node app.js"
+    "start": "coffee app.coffee"
   },
   "dependencies": {
     "body-parser": "*",
+    "coffee-script": "^1.9.2",
     "expect.js": "^0.3.1",
     "express": "4.X",
     "mocha": "*",
