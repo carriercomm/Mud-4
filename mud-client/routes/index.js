@@ -17,7 +17,10 @@ module.exports = function(app, passport) {
   });
 
   app.get('/play', ensureAuthentication, function(req, res) {
-    res.render('mud');
+    if (req.session && req.session.passport)
+    res.render('mud', {
+      user: session.passport.user
+    });
   });
 
   app.post('/newchar', ensureAuthentication, function(req, res, next) {

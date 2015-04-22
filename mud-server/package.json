@@ -6,10 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "socket.io": "*",
+    "body-parser": "*",
+    "expect.js": "^0.3.1",
     "express": "4.X",
-    "mongoose": "*",
     "mocha": "*",
-    "body-parser": "*"
+    "mongoose": "*",
+    "socket.io": "*",
+    "superagent": "^1.2.0"
   }
 }
