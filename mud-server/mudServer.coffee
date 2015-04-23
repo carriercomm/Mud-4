@@ -13,6 +13,8 @@ class MudServer
     @_socket.on 'login', (data) =>
       @doLogin data
 
+    @_socket.on 'playerMessage', (data) =>
+
   start: ->
     @handshake()
 
