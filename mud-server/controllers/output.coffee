@@ -6,7 +6,7 @@ class Output
       text: "Welcome to tralala MUD"
 
   chooseCharacter: (data) ->
-    chars = ""
+    chars = "Select your character: </br>"
 
     for char, i in data
       chars += "#{i + 1} - #{char.name} </br>"
