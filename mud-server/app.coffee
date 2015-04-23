@@ -13,5 +13,5 @@ server.listen 8080
 players = {}
 
 io.on 'connection', (socket) ->
-  server = new MudServer io, socket, players
+  server = new MudServer socket
   server.start()

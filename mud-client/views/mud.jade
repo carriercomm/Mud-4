@@ -5,11 +5,12 @@ html
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/mud.css')
   body()
-    //- div(id='header', class='header')
-    div(id='content', class='content')
-      div(id='container', class='container')
-    div(id='prompt', class='prompt')
-      input(id='prompt_input', type='text', autofocus)
+    #content.content
+      #container.container
+        .scroll-filler
+
+    #prompt.prompt
+      input#prompt_input(type='text', autofocus)
     
     input#user-id(type='hidden', value=user)
 

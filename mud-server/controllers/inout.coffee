@@ -5,7 +5,6 @@ class Inout
   constructor: ->
 
   logUser: (user) ->
-    Character.find {user: user}, (err, character) ->    
-      character
+    
 
 module.exports = Inout

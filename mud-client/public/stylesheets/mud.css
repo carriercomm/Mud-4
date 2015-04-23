@@ -10,16 +10,20 @@
 .content {
   background-color: #000;
   width: 100%;
-}
-
-.container {
   height: 100vh;
   color: #fff;
-  background-color: #000;
   overflow: scroll;
   overflow-x: hidden;
   box-sizing: border-box;
   padding: 20px 30px 30px 30px;
+}
+
+.container {
+  width: 100%;
+}
+
+.element {
+  padding-bottom: 8px;
 }
 
 .prompt {
@@ -37,4 +41,8 @@
   border: 0;
   padding: 0 10px;
   box-sizing: border-box;
+}
+
+.hidden {
+  visibility: hidden;
 }
