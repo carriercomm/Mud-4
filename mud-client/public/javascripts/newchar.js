@@ -159,7 +159,7 @@ confirmChar = function () {
 
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/newchar',
+    url: 'http://localhost:3000/profile/newchar',
     data: data,
     success: function(responseData, textStatus, jqXHR) {
       console.log(responseData)

@@ -1,12 +1,18 @@
 extends ../layout
 
 block content
-  .space-around
-    span Area name
-  .space-around
-    input.text(type='text')
+  form(method='post', action='/admin/newarea')
+    .grid-flex-start.nomargin-bottom
+      span Area name
+    .grid-flex-start
+      input.text(type='text', name='area-name')
 
-  .space-around
-    span Description
-  .space-around
-    textarea
+    .grid-flex-start.nomargin-bottom
+      span Description
+    .grid-flex-start
+      textarea(name='area-description')
+
+    .grid-flex-start
+      .buttons
+        section.flat
+          button#newarea-button(type='submit') Create

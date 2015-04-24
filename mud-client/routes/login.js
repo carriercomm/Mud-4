@@ -1,21 +1,25 @@
-module.exports = function(app, passport) {
+var express = require('express')
+var router = express.Router()
+var passport = require('passport')
 
-  app.get('/login', isLoggedIn, function(req, res) {
-    res.render('login', {
-      message: req.flash('loginMessage')
-    })
+// router.use(isLoggedIn)
+
+router.get('/', function(req, res) {
+  res.render('login', {
+    message: req.flash('loginMessage')
   })
+})
+.post('/', passport.authenticate('local-login', {
+  successRedirect : '/profile',
+  failureRedirect : '/login',
+  failureFlash : true
+}))
 
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/profile',
-    failureRedirect : '/login',
-    failureFlash : true
-  }))
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated())
+    res.redirect('/')
 
-  function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-      res.redirect('/')
-
-    next()
-  }
+  next()
 }
+
+module.exports = router

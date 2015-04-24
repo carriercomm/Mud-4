@@ -1,67 +1,29 @@
-var login = require('./login')
-var signup = require('./signup')
-var profile = require('./profile')
-var admin = require('./admin')
-var mongoose = require('mongoose')
-var Character = mongoose.model('Character')
+var express = require('express')
+var router = express.Router()
 
-module.exports = function(app, passport) {
-  app.get('/', ensureAuthentication, function(req, res) {
-    res.render('index', {
-      isLoggedIn: req.isAuthenticated(),
-      isAdmin: req.user.group == 'admins'
-    })
+// router.use(ensureAuthentication)
+
+router.get('/', function(req, res, next) {
+  res.render('index', {
+    isLoggedIn: req.isAuthenticated()
   })
+})
+.get('/play', function(req, res) {
+  if (req.session && req.session.passport) {
+    res.render('mud')
+  }
+})
+.get('/logout', function(req, res) {
+  req.logout()
+  res.redirect('/')
+})
 
-  app.get('/logout', function(req, res) {
-    req.logout()
-    res.redirect('/')
-  })
-
-  app.get('/play', ensureAuthentication, function(req, res) {
-    if (req.session && req.session.passport) {
-      res.render('mud', {
-        user: req.session.passport.user
-      })
-    }
-  })
-
-  app.post('/newchar', ensureAuthentication, function(req, res, next) {
-    if (!req.body.charGender || !req.body.charRace || !req.body.charClass || !req.body.charName) {
-      res.json({error: true, message: 'Error creating character. Missing parameter.'})
-    } else {
-      if (req.session && req.session.passport) {
-        var newChar = new Character()
-        newChar.charClass = req.body.charClass
-        newChar.gender = req.body.charGender
-        newChar.race = req.body.charRace
-        newChar.name = req.body.charName
-        newChar.user = req.session.passport.user
-
-        newChar.save(function(err, data) {
-          if (err) {
-            res.json({error: true, message: 'Error creating character.'})
-          } else {
-            req.flash('newChar', '' + data.name + ' created!')
-            res.json({error: false, message: 'Character created successfully.'})
-          }
-        })
-      } else {
-        res.json({error: false, message: 'Error reading user.'})
-      }
-    }
-  })
-
-  login(app, passport)
-  signup(app, passport)
-  profile(app)
-  admin(app)
-
-  function ensureAuthentication(req, res, next) {
-    if (req.isAuthenticated()) {
-      next()
-    } else {
-      res.render('login')
-    }
+function ensureAuthentication(req, res, next) {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.render('login')
   }
 }
+
+module.exports = router

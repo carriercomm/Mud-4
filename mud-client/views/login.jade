@@ -7,14 +7,14 @@ block content
       span.error= message
     else
       span.error.hidden Placeholder
-    form(class='register-form' method='post', action='/login')
+    form.register-form(method='post', action='/login')
       div
-        ul(class="input-list style-1 clearfix")
+        ul.input-list.style-1.clearfix
           input(type="text", id="si-username" placeholder="username", name="username")
           input(type="password", id="si-passwd" placeholder="password", name="password")
 
-        div(class='buttons')
-          section(class='flat')
+        .buttons
+          section.flat
             button(id='login-button', type='submit') Sign in!
         span No account? &nbsp;
         a(href='/signup') Sign up!

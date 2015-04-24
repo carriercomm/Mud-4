@@ -209,12 +209,12 @@ PROFILE
 ADMIN
 */
 .text {
-  width: 500px;
+  width: 380px;
 }
 
 textarea {
   resize: none;
-  width: 500px;
+  width: 374px;
   height: 100px;
 }
 
@@ -321,4 +321,8 @@ section.flat button.active {
 
 .g-recaptcha {
   margin-bottom: 10px;
+}
+
+.nomargin-bottom {
+  margin-bottom: 0;
 }
