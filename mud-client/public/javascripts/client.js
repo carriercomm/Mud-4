@@ -29,7 +29,7 @@
       } else {
         this.appendText({
           text: "What do you want to " + splitCommand[0] + "?"
-        })  
+        })
       }
     } else {
       this.appendText({

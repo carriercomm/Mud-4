@@ -7,3 +7,5 @@ class Commands
 
   commandIsValid: (command) ->
     true
+
+module.exports = Commands

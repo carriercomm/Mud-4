@@ -20,6 +20,7 @@ module.exports = function(app) {
           res.render('profile', {
             user: user,
             isLoggedIn: req.isAuthenticated(),
+            isAdmin: req.user.group == 'admins',
             message: req.flash('newChar'),
             characters: characters
           });
@@ -30,7 +31,8 @@ module.exports = function(app) {
 
   app.get('/profile/:id/newchar', ensureAuthentication, function(req, res) {
     res.render('newchar', {
-      isLoggedIn: req.isAuthenticated()
+      isLoggedIn: req.isAuthenticated(),
+      isAdmin: req.user.group == 'admins'
     });
   });
 

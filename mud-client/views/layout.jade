@@ -8,16 +8,18 @@ html
     link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
   body()
     div(class='header')
-      div.header-container
-        a.logo(href='/') SS MUD
-        nav.navbar
-          a(href='/play') Play
-          if isLoggedIn
-            a(href='/profile') Profile
-            a(href='/logout') Logout
-          else
-            a(id='log-in', href='/login') Log in
-            a(id='log-in', href='/signup') Register
+      a.logo(href='/') SS MUD
+      nav.navbar
+        a.play(href='/play') PLAY
+        if isLoggedIn
+          a(href='/profile') PROFILE
+          span |
+          if isAdmin
+            a(href='/admin') ADMIN PANEL
+          a(href='/logout') LOGOUT
+        else
+          a(id='log-in', href='/login') LOG IN
+          a(id='log-in', href='/signup') REGISTER
     div.content
       block content
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')

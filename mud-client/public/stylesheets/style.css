@@ -4,7 +4,7 @@ html {
 }
 
 .content {
-  margin: 150px auto 50px auto;
+  margin: 120px auto 50px auto;
   width: 70%;
 }
 
@@ -21,7 +21,6 @@ html {
   flex-flow: row wrap;
   padding: 0;
   margin-bottom: 1em;
-  /*margin: -1em 0 1em -1em;*/
   align-items: center;
 }
 
@@ -81,6 +80,10 @@ HEADER
   top: 0;
   background-color: #fff;
   border-bottom: solid 1px #6496c8;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .header-container {
@@ -105,7 +108,7 @@ HEADER
 .navbar { 
   line-height: 23px;
   font-weight: 500;
-  font-size: 100%;
+  font-size: 85%;
   margin: 15px 0;
 }
 
@@ -200,6 +203,19 @@ PROFILE
 
 .char-frame-rogue {
   border: 2px solid yellow;
+}
+
+/*
+ADMIN
+*/
+.text {
+  width: 500px;
+}
+
+textarea {
+  resize: none;
+  width: 500px;
+  height: 100px;
 }
 
 /*

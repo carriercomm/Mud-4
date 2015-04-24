@@ -46,10 +46,6 @@ module.exports = function (app, passport) {
   function validateData(data) {
     var error = "";
 
-    // if (!validatePasswords(data.password, data.retypepassword)) {
-    //   error = "Passwords do not match";
-    // }
-
     if (!validateEmail(data.email)) {
       error = "Invalid e-mail address";
     }

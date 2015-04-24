@@ -1,10 +1,12 @@
 UserService = require './service/UserService'
 Output = require './controllers/output'
+Commands = require './controllers/commands'
 
 class MudServer
   constructor: (@_socket) ->
     @_userService = new UserService()
     @_out = new Output()
+    @_commands = new Commands()
 
     # Welcome message fired on connection
     @_socket.emit 'simpleText', @_out.welcome()
