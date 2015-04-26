@@ -1,16 +1,27 @@
 extends ../layout
 
 block content
+  nav.navbar
+    a(href='/admin/areas') AREAS
+    a(href='/admin/users') USERS
+
+  h2 New area:
+
   form(method='post', action='/admin/newarea')
     .grid-flex-start.nomargin-bottom
-      span Area name
+      span Identifier
     .grid-flex-start
-      input.text(type='text', name='area-name')
+      input.text(type='text', name='areaIdentifier')
+
+    .grid-flex-start.nomargin-bottom
+      span Name
+    .grid-flex-start
+      input.text(type='text', name='areaName')
 
     .grid-flex-start.nomargin-bottom
       span Description
     .grid-flex-start
-      textarea(name='area-description')
+      textarea(name='areaDescription')
 
     .grid-flex-start
       .buttons

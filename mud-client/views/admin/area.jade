@@ -1,5 +1,19 @@
 extends ../layout
 
 block content
+  nav.navbar
+    a(href='/admin/areas') AREAS
+    a(href='/admin/users') USERS
+
   .grid-space-around
     a.add-char(href='/admin/newarea') Create new area
+
+  .separator
+
+  if (areas && areas.length)
+    each area in areas
+      .glid-flex-start
+        span= area.name
+        a(href='/admin/editarea/#{area._id}') &nbsp; Edit &nbsp;
+        span |
+        a(href='#') &nbsp; Delete

@@ -4,6 +4,7 @@ html
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/vis/dist/vis.min.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
   body()
@@ -12,7 +13,7 @@ html
       nav.navbar
         a.play(href='/play') PLAY
         if isLoggedIn
-          a(href='/profile') PROFILE
+          a(href='/profile') PROFILE (#{user._id})
           span |
           if isAdmin
             a(href='/admin') ADMIN PANEL
@@ -23,7 +24,9 @@ html
     div.content
       block content
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
+    script(type='text/javascript', src='/vis/dist/vis.min.js')
     script(type='text/javascript', src='/javascripts/validation.js')
     script(type='text/javascript', src='/javascripts/cookie.js')
     script(type='text/javascript', src='/javascripts/newchar.js')
+    script(type='text/javascript', src='/javascripts/area.js')
     script(src='https://www.google.com/recaptcha/api.js')

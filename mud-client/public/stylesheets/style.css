@@ -78,8 +78,8 @@ HEADER
   min-height: 50px;
   position: fixed;
   top: 0;
-  background-color: #fff;
-  border-bottom: solid 1px #6496c8;
+  background-color: #bada55;
+  border-bottom: solid 1px #000;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -100,7 +100,8 @@ HEADER
 }
 
 .navbar a {
-  color: #1e73be;
+  /*color: #1e73be;*/
+  color: #000;
   text-decoration: none;
   margin: 0 15px;
 }
@@ -325,4 +326,12 @@ section.flat button.active {
 
 .nomargin-bottom {
   margin-bottom: 0;
+}
+
+.separator {
+  width: 144%;
+  margin-left: -22%;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  border-bottom: 1px solid #000;
 }

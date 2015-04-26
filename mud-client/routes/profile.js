@@ -4,7 +4,17 @@ var mongoose = require('mongoose')
 var User = mongoose.model('User')
 var Character = mongoose.model('Character')
 
-// router.use(ensureAuthentication)
+router.use(function(req, res, next) {
+  if (req.method === 'GET') {
+    if (req.isAuthenticated()) {
+      next()
+    } else {
+      res.render('login')
+    }
+  } else {
+    next()
+  }
+})
 
 router.get('/', function(req, res) {
   if (req.session && req.session.passport) {
@@ -28,6 +38,8 @@ router.get('/', function(req, res) {
           characters: characters
         })
       })
+    } else {
+      res.redirect('/')
     }
   })
 })
@@ -64,13 +76,5 @@ router.get('/', function(req, res) {
     }
   }
 })
-
-function ensureAuthentication (req, res, next) {
-  if (req.isAuthenticated()) {
-    next()
-  } else {
-    res.render('login')
-  }
-}
 
 module.exports = router

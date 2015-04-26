@@ -1,11 +1,11 @@
 var express = require('express')
 var router = express.Router()
 
-// router.use(ensureAuthentication)
-
-router.get('/', function(req, res, next) {
+router.get('/', ensureAuthentication, function(req, res, next) {
   res.render('index', {
-    isLoggedIn: req.isAuthenticated()
+    isLoggedIn: req.isAuthenticated(),
+    isAdmin: req.user.group === 'admins',
+    user: req.user
   })
 })
 .get('/play', function(req, res) {

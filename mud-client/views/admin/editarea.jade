@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+  nav.navbar
+    a(href='/admin/areas') AREAS
+    a(href='/admin/users') USERS
+
+  h2= area.name
+
+  nav.navbar
+    a(href='#', onclick='editAreaInfo();') Area info
+    a(href='#', onclick='editAreaRooms();') Rooms
+    a(href='#', onclick='editAreaUnits();') Units
+    a(href='#', onclick='editAreaItems();') Items
+
+  form#area-info(method='post', action='/admin/editarea/#{area._id}')
+    .grid-flex-start.nomargin-bottom
+      span Identifier
+    .grid-flex-start
+      input.text(type='text', name='areaIdentifier', value=area._id)
+
+    .grid-flex-start.nomargin-bottom
+      span Name
+    .grid-flex-start
+      input.text(type='text', name='areaName', value=area.name)
+
+    .grid-flex-start.nomargin-bottom
+      span Description
+    .grid-flex-start
+      textarea(name='areaDescription')= area.description
+
+    .grid-flex-start
+      .buttons
+        section.flat
+          button#newarea-button(type='submit') Save
+
+  form#area-rooms.display-none(method='post', action='/admin/editarea/rooms/#{area._id}')
+    span Rooms
+
+  form#area-units.display-none(method='post', action='/admin/editarea/units/#{area._id}')
+    span Units  
+
+  form#area-items.display-none(method='post', action='/admin/editarea/items/#{area._id}')
+    span Items

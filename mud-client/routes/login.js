@@ -2,9 +2,7 @@ var express = require('express')
 var router = express.Router()
 var passport = require('passport')
 
-// router.use(isLoggedIn)
-
-router.get('/', function(req, res) {
+router.get('/', isLoggedIn, function(req, res) {
   res.render('login', {
     message: req.flash('loginMessage')
   })
