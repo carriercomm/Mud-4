@@ -21,11 +21,13 @@
     "jade": "1.X",
     "method-override": "*",
     "mongoose": "^4.0.1",
+    "mongoose-auto-increment": "^4.0.0",
     "morgan": "~1.0.0",
     "passport": "*",
     "passport-local": "*",
     "serve-favicon": "*",
     "socket.io": "^1.3.5",
+    "underscore": "^1.8.3",
     "xmlhttprequest": "^1.7.0"
   }
 }

@@ -12,9 +12,9 @@ var charGender = (function () {
       this.selected = gender
 
       if (this.selectedImage)
-        this.selectedImage.removeClass('selected')
+        this.selectedImage.removeClass('selected-border')
       this.selectedImage = $(image)
-      this.selectedImage.addClass('selected')
+      this.selectedImage.addClass('selected-border')
 
       setCookie('charGender', gender, 1)
       this.hide()
@@ -39,9 +39,9 @@ var charRace = (function () {
       this.selected = race
 
       if (this.selectedImage)
-        this.selectedImage.removeClass('selected')
+        this.selectedImage.removeClass('selected-border')
       this.selectedImage = $(image)
-      this.selectedImage.addClass('selected')
+      this.selectedImage.addClass('selected-border')
 
       setCookie('charRace', race, 1)
       this.hide()
@@ -66,9 +66,9 @@ var charClass = (function () {
       this.selected = c
 
       if (this.selectedImage)
-        this.selectedImage.removeClass('selected')
+        this.selectedImage.removeClass('selected-border')
       this.selectedImage = $(image)
-      this.selectedImage.addClass('selected')
+      this.selectedImage.addClass('selected-border')
 
       setCookie('charClass', c, 1)
       this.hide()
@@ -127,9 +127,9 @@ redoChar = function () {
   setCookie('charRace', '', 1);
   setCookie('charClass', '', 1);
 
-  charGender.selectedImage.removeClass('selected')
-  charRace.selectedImage.removeClass('selected')
-  charClass.selectedImage.removeClass('selected')
+  charGender.selectedImage.removeClass('selected-border')
+  charRace.selectedImage.removeClass('selected-border')
+  charClass.selectedImage.removeClass('selected-border')
 
   $('.selected-gender').hide()
   $('.selected-race').hide()

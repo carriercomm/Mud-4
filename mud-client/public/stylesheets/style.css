@@ -16,6 +16,7 @@ html {
 }
 
 .grid-flex-start,
+.grid-flex-end,
 .grid-space-around {
   display: flex;
   flex-flow: row wrap;
@@ -30,6 +31,10 @@ html {
 
 .grid-flex-start {
   justify-content: flex-start;
+}
+
+.grid-flex-end {
+  justify-content: flex-end;
 }
 
 .error {
@@ -74,6 +79,7 @@ a {
 HEADER
 */
 .header {
+  z-index: 999;
   width: 100%;
   min-height: 50px;
   position: fixed;
@@ -165,7 +171,7 @@ PROFILE
   box-sizing: border-box;
 }
 
-.selected {
+.selected-border
   /*border: 10px solid #66cd00;*/
   outline: solid 10px #66cd00;
   outline-offset: -10px;
@@ -329,9 +335,13 @@ section.flat button.active {
 }
 
 .separator {
-  width: 144%;
-  margin-left: -22%;
+  width: 142%;
+  margin-left: -21%;
   margin-bottom: 15px;
   margin-top: 15px;
   border-bottom: 1px solid #000;
+}
+
+#rooms-nodes {
+  border: 1px solid #ddd;
 }

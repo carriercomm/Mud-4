@@ -5,13 +5,17 @@ block content
     a(href='/admin/areas') AREAS
     a(href='/admin/users') USERS
 
+  .separator
+
   h2= area.name
 
   nav.navbar
     a(href='#', onclick='editAreaInfo();') Area info
-    a(href='#', onclick='editAreaRooms();') Rooms
+    a(href='#', onclick='editAreaRooms(#{area});') Rooms
     a(href='#', onclick='editAreaUnits();') Units
     a(href='#', onclick='editAreaItems();') Items
+
+  .separator
 
   form#area-info(method='post', action='/admin/editarea/#{area._id}')
     .grid-flex-start.nomargin-bottom
@@ -34,8 +38,61 @@ block content
         section.flat
           button#newarea-button(type='submit') Save
 
-  form#area-rooms.display-none(method='post', action='/admin/editarea/rooms/#{area._id}')
-    span Rooms
+  form#area-rooms.display-none(method='post', action='/admin/editroom/#{area._id}')
+    #rooms-nodes
+
+    .grid-space-around(style='margin-top: 20px; align-items: flex-start')
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span Id
+        .grid-flex-start
+          input.text(type='text', name='roomId', placeholder='Insert id to edit a room')
+
+        .grid-flex-start.nomargin-bottom
+          span Title
+        .grid-flex-start
+          input.text(type='text', name='roomTitle')
+
+        .grid-flex-start.nomargin-bottom
+          span Description
+        .grid-flex-start
+          textarea(name='roomDescription')
+
+        .grid-flex-start
+          .buttons
+            section.flat
+              button#editroom-button(type='submit') Save
+
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span North exit
+        .grid-flex-start
+          input.text(type='text', name='roomExitNorth')
+
+        .grid-flex-start.nomargin-bottom
+          span East exit
+        .grid-flex-start
+          input.text(type='text', name='roomExitEast')
+
+        .grid-flex-start.nomargin-bottom
+          span South exit
+        .grid-flex-start
+          input.text(type='text', name='roomExitSouth')
+
+        .grid-flex-start.nomargin-bottom
+          span West exit
+        .grid-flex-start
+          input.text(type='text', name='roomExitWest')
+
+        .grid-flex-start.nomargin-bottom
+          span Up exit
+        .grid-flex-start
+          input.text(type='text', name='roomExitUp')
+
+        .grid-flex-start.nomargin-bottom
+          span Down exit
+        .grid-flex-start
+          input.text(type='text', name='roomExitDown')
 
   form#area-units.display-none(method='post', action='/admin/editarea/units/#{area._id}')
     span Units  

@@ -1,12 +1,25 @@
 var mongoose = require('mongoose')
-var Room = mongoose.model('Room')
 var Schema = mongoose.Schema
+var autoIncrement = require('mongoose-auto-increment')
+
+autoIncrement.initialize(mongoose.connection)
+
+var roomSchema = new Schema({
+  title: String,
+  description: String,
+  exits: Object
+})
 
 var areaSchema = new Schema({
   _id: String,
   name: String,
   description: String,
-  rooms: [Room]
+  rooms: [roomSchema]
 })
 
+roomSchema.plugin(autoIncrement.plugin, {
+  model: 'Room',
+  startAt: 1
+})
+module.exports = mongoose.model('Room', roomSchema)
 module.exports = mongoose.model('Area', areaSchema)
