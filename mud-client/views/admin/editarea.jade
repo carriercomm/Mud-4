@@ -41,13 +41,15 @@ block content
   form#area-rooms.display-none(method='post', action='/admin/editroom/#{area._id}')
     #rooms-nodes
 
-    .grid-space-around(style='margin-top: 20px; align-items: flex-start')
-      .grid-cell
-        .grid-flex-start.nomargin-bottom
-          span Id
-        .grid-flex-start
-          input.text(type='text', name='roomId', placeholder='Insert id to edit a room')
+    .grid-space-around
+      .buttons
+        section.flat
+          button#button-newroom(onclick='createNewRoom(); return false;') Create new room
 
+    #room-fields.grid-space-around.display-none(style='margin-top: 20px; align-items: flex-start')
+      input#roomId(type='hidden', name='roomId', value='')
+
+      .grid-cell
         .grid-flex-start.nomargin-bottom
           span Title
         .grid-flex-start

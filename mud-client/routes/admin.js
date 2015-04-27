@@ -73,7 +73,7 @@ router.get('/', function (req, res) {
 })
 
 .post('/newarea', function (req, res) {
-  addNewArea(req.body, function (err, data) {
+  createArea(req.body, function (err, data) {
     if (err) {
       req.flash('addArea', 'Error creating new area.')
       res.redirect('/admin/areas')
@@ -108,7 +108,7 @@ router.get('/', function (req, res) {
   })
 })
 
-function addNewArea (data, cb) {
+function createArea (data, cb) {
   var area = new Area()
 
   area._id = data.areaIdentifier
@@ -146,61 +146,32 @@ function updateArea (id, data, cb) {
 }
 
 function createOrUpdateRoom (areaId, data, cb) {
-  Area.findById(areaId, function (err, area) {
-    if (err) {
-      cb(err)
-    }
+  if (data.roomId !== '') {
+    updateRoom(areaId, data, cb)
+  } else {
+    createRoom(areaId, data, cb)
+  }
+}
 
-    if (area) {
-      var room = _.find(area.rooms, function (room) {
-        return room._id === data.roomId
-      })
+function createRoom (areaId, data, cb) {
+  var query = {
+    _id: areaId
+  }
 
-      if (room) {
-        room.title = data.roomTitle
-        room.description = data.roomDescription
-        room.exits = []
+  var room = new Room()
+  room.title = data.roomTitle
+  room.description = data.roomDescription
+  room.exits = []
 
-        if (data.roomExitNorth) room.exits.push(room._id + '-' + data.roomExitNorth + '-n')
-        if (data.roomExistSouth) room.exits.push(room._id + '-' + data.roomExitSouth + '-s')
-        if (data.roomExistWest) room.exits.push(room._id + '-' + data.roomExitWest + '-w')
-        if (data.roomExistEast) room.exits.push(room._id + '-' + data.roomExitEast + '-e')
-        if (data.roomExistUp) room.exits.push(room._id + '-' + data.roomExitUp + '-u')
-        if (data.roomExistDown) room.exits.push(room._id + '-' + data.roomExitDown + '-d')
-
-        area.rooms.push(room)
-
-        area.save(function (err, result) {
-          cb(err, result)
-        })
-      } else {
-        Room.nextCount(function (err, nextid) {
-          if (err) {
-            throw (err)
-          }
-
-          var newRoom = new Room()
-
-          newRoom.title = data.roomTitle
-          newRoom.description = data.roomDescription
-          newRoom.exits = []
-
-          if (data.roomExitNorth) newRoom.exits.push(nextid + '-' + data.roomExitNorth + '-n')
-          if (data.roomExitSouth) newRoom.exits.push(nextid + '-' + data.roomExitSouth + '-s')
-          if (data.roomExitWest) newRoom.exits.push(nextid + '-' + data.roomExitWest + '-w')
-          if (data.roomExitEast) newRoom.exits.push(nextid + '-' + data.roomExitEast + '-e')
-          if (data.roomExitUp) newRoom.exits.push(nextid + '-' + data.roomExitUp + '-u')
-          if (data.roomExitDown) newRoom.exits.push(nextid + '-' + data.roomExitDown + '-d')
-
-          area.rooms.push(newRoom)
-
-          area.save(function (err, result) {
-            cb(err, result)
-          })
-        })
-      }
-    }
+  Area.update(query, {
+    $push: {room}
+  }, function(err, rawResponse) {
+    cb(err, rawResponse)
   })
+}
+
+function updateRoom (areaUd, data, cb) {
+
 }
 
 module.exports = router

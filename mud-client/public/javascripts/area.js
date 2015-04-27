@@ -8,12 +8,20 @@ var areaInfoPane = $('#area-info'),
     selectedPane = areaInfoPane
 
 function editAreaInfo () {
+  if (selectedPane == areaInfoPane) {
+    return
+  }
+
   areaInfoPane.show()
   selectedPane.hide()
   selectedPane = areaInfoPane
 }
 
 function editAreaRooms (area) {
+  if (selectedPane == areaRoomsPane) {
+    return
+  }
+
   areaRoomsPane.show()
   selectedPane.hide()
   selectedPane = areaRoomsPane
@@ -22,19 +30,35 @@ function editAreaRooms (area) {
 }
 
 function editAreaUnits () {
+  if (selectedPane == areaUnitsPane) {
+    return
+  }
+
   areaUnitsPane.show()
   selectedPane.hide()
   selectedPane = areaUnitsPane
 }
 
 function editAreaItems () {
+  if (selectedPane == areaItemsPane) {
+    return
+  }
+
   areaItemsPane.show()
   selectedPane.hide()
   selectedPane = areaItemsPane
 }
 
 function editRoom (room) {
+  document.getElementById('area-rooms').reset()
+  $('#roomId').val(room.nodes[0])
+  $('#room-fields').removeClass('display-none')
+}
 
+function createNewRoom () {
+  document.getElementById('area-rooms').reset()
+  $('#roomId').val('')
+  $('#room-fields').removeClass('display-none')
 }
 
 var showRoomNodes = function (rooms) {
