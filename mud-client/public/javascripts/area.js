@@ -1,36 +1,43 @@
+var $ = window.$,
+    vis = window.vis
+
 var areaInfoPane = $('#area-info'),
     areaRoomsPane = $('#area-rooms'),
     areaUnitsPane = $('#area-units'),
     areaItemsPane = $('#area-items'),
     selectedPane = areaInfoPane
 
-editAreaInfo = function() {
+function editAreaInfo () {
   areaInfoPane.show()
   selectedPane.hide()
-  selectedPane = areaInfoPane 
+  selectedPane = areaInfoPane
 }
 
-editAreaRooms = function(area) {
+function editAreaRooms (area) {
   areaRoomsPane.show()
   selectedPane.hide()
-  selectedPane = areaRoomsPane 
+  selectedPane = areaRoomsPane
 
   showRoomNodes(area.rooms)
 }
 
-editAreaUnits = function() {
+function editAreaUnits () {
   areaUnitsPane.show()
   selectedPane.hide()
-  selectedPane = areaUnitsPane 
+  selectedPane = areaUnitsPane
 }
 
-editAreaItems = function() {
+function editAreaItems () {
   areaItemsPane.show()
   selectedPane.hide()
-  selectedPane = areaItemsPane 
+  selectedPane = areaItemsPane
 }
 
-var showRoomNodes = function(rooms) {
+function editRoom (room) {
+
+}
+
+var showRoomNodes = function (rooms) {
   var nodes = [],
       edges = []
 
@@ -48,7 +55,7 @@ var showRoomNodes = function(rooms) {
   var container = document.getElementById('rooms-nodes')
   var data = {
     nodes: nodes,
-    edges: edges,
+    edges: edges
   }
 
   var options = {
@@ -60,13 +67,9 @@ var showRoomNodes = function(rooms) {
     }
   }
 
-  var network = new vis.Network(container, data, options)  
+  var network = new vis.Network(container, data, options)
 
-  network.on('select', function(properties) {
+  network.on('select', function (properties) {
     editRoom(properties)
   })
-}
-
-editRoom = function(room) {
-
 }

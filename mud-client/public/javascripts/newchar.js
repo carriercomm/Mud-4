@@ -1,3 +1,5 @@
+var $ = window.$
+
 var charGender = (function () {
   return {
     show: function () {
@@ -8,11 +10,12 @@ var charGender = (function () {
       $('#select-gender').hide()
     },
 
-    setSelected: function(gender, image) {
+    setSelected: function (gender, image) {
       this.selected = gender
 
-      if (this.selectedImage)
+      if (this.selectedImage) {
         this.selectedImage.removeClass('selected-border')
+      }
       this.selectedImage = $(image)
       this.selectedImage.addClass('selected-border')
 
@@ -35,11 +38,12 @@ var charRace = (function () {
       $('#select-race').hide()
     },
 
-    setSelected: function(race, image) {
+    setSelected: function (race, image) {
       this.selected = race
 
-      if (this.selectedImage)
+      if (this.selectedImage) {
         this.selectedImage.removeClass('selected-border')
+      }
       this.selectedImage = $(image)
       this.selectedImage.addClass('selected-border')
 
@@ -65,8 +69,9 @@ var charClass = (function () {
     setSelected: function(c, image) {
       this.selected = c
 
-      if (this.selectedImage)
+      if (this.selectedImage) {
         this.selectedImage.removeClass('selected-border')
+      }
       this.selectedImage = $(image)
       this.selectedImage.addClass('selected-border')
 
@@ -80,7 +85,7 @@ var charConfirm = (function () {
   return {
     show: function () {
       $('#confirm-newchar').show()
-      $('#char-name-alert').addClass('hidden');
+      $('#char-name-alert').addClass('hidden')
       $('.selected-class').attr('src', '/images/characters/' + charClass.selected + '.png')
       $('.selected-class').show()
       $('.selected-class-label').html(charClass.selected)
@@ -92,17 +97,17 @@ var charConfirm = (function () {
   }
 })()
 
-selectGender = function(gender, image) {
+selectGender = function (gender, image) {
   charGender.setSelected(gender, image)
   charRace.show()
 }
 
-selectRace = function(race, image) {
+selectRace = function (race, image) {
   charRace.setSelected(race, image)
   charClass.show()
 }
 
-selectClass = function(c, image) {
+selectClass = function (c, image) {
   charClass.setSelected(c, image)
   charConfirm.show()
 }
@@ -123,9 +128,9 @@ backToClasses = function () {
 }
 
 redoChar = function () {
-  setCookie('charGender', '', 1);
-  setCookie('charRace', '', 1);
-  setCookie('charClass', '', 1);
+  setCookie('charGender', '', 1)
+  setCookie('charRace', '', 1)
+  setCookie('charClass', '', 1)
 
   charGender.selectedImage.removeClass('selected-border')
   charRace.selectedImage.removeClass('selected-border')
@@ -145,12 +150,12 @@ redoChar = function () {
 }
 
 confirmChar = function () {
-  if ($('#char-name').val() === "") {
+  if ($('#char-name').val() === '') {
     $('#char-name-alert').removeClass('hidden')
-    return;
+    return
   }
 
-  data = {
+  var data = {
     charGender: getCookie('charGender'),
     charRace: getCookie('charRace'),
     charClass: getCookie('charClass'),
@@ -161,12 +166,12 @@ confirmChar = function () {
     type: 'POST',
     url: 'http://localhost:3000/profile/newchar',
     data: data,
-    success: function(responseData, textStatus, jqXHR) {
+    success: function (responseData, textStatus, jqXHR) {
       console.log(responseData)
       window.location.replace('http://localhost:3000/profile')
     },
     error: function (responseData, textStatus, errorThrown) {
-      console.log("error posting")
+      console.log('error posting')
       console.log(responseData)
       console.log(textStatus)
     }

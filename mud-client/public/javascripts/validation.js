@@ -1,40 +1,38 @@
-$('#signup-button').click(function() {
-  return validateSignUp();
+var $ = window.$
+
+$('#signup-button').click(function () {
+  return validateSignUp()
 })
 
-$('.register-form :input[type="text"]').focus(function() {
-  $('.error').addClass('hidden');
-});
+$('.register-form :input[type="text"]').focus(function () {
+  $('.error').addClass('hidden')
+})
 
 function validateSignUp () {
   var username = $('input[name="username"]').val(),
       password = $('input[name="password"]').val(),
       email = $('input[name="email"]').val(),
-      isValid = true;
+      isValid = true
 
   if (!grecaptcha.getResponse()) {
-    $('.error').removeClass('hidden');
-    $('.error').html("Are you a robot?");
+    $('.error').removeClass('hidden')
+    $('.error').html('Are you a robot?')
 
-    isValid = false;
+    isValid = false
   }
 
-  if (username == "" || password == "" || email == "") {
-        $('.error').removeClass('hidden');
-        $('.error').html("All fields are mandatory");
+  if (username === '' || password === '' || email === '') {
+    $('.error').removeClass('hidden')
+    $('.error').html('All fields are mandatory')
 
-        isValid = false;
+    isValid = false
   }
 
-  return isValid;
+  return isValid
 }
 
-function validatePasswords(pass1, pass2) {
-  return pass1 === pass2;
-}
-
-function commandIsValid(command) {
-  validCommands = [
+function commandIsValid (command) {
+  var validCommands = [
     'say'
   ]
 

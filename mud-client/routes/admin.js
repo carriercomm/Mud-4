@@ -6,7 +6,7 @@ var mongoose = require('mongoose')
 var Area = mongoose.model('Area')
 var Room = mongoose.model('Room')
 
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
   if (req.method === 'GET') {
     if (req.isAuthenticated() && req.user.group === 'admins') {
       next()
@@ -18,35 +18,39 @@ router.use(function(req, res, next) {
   }
 })
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   res.render('admin', {
     isLoggedIn: req.isAuthenticated(),
-    isAdmin: req.user.group == 'admins',
+    isAdmin: req.user.group === 'admins',
     user: req.user
   })
 })
 
-.get('/areas', function(req, res) {
-  Area.find(function(err, areas) {
+.get('/areas', function (req, res) {
+  Area.find(function (err, areas) {
+    if (err) throw err
+
     res.render('admin/area', {
       isLoggedIn: req.isAuthenticated(),
-      isAdmin: req.user.group == 'admins',
+      isAdmin: req.user.group === 'admins',
       user: req.user,
       areas: areas
     })
   })
 })
 
-.get('/newarea', function(req, res) {
+.get('/newarea', function (req, res) {
   res.render('admin/newarea', {
     isLoggedIn: req.isAuthenticated(),
-    isAdmin: req.user.group == 'admins',
+    isAdmin: req.user.group === 'admins',
     user: req.user
   })
 })
 
-.get('/editarea/:id', function(req, res) {
-  Area.findById(req.params.id, function(err, area) {
+.get('/editarea/:id', function (req, res) {
+  Area.findById(req.params.id, function (err, area) {
+    if (err) throw err
+
     if (area) {
       res.render('admin/editarea', {
         isLoggedIn: req.isAuthenticated(),
@@ -60,16 +64,16 @@ router.get('/', function(req, res) {
   })
 })
 
-.get('/users', function(req, res) {
+.get('/users', function (req, res) {
   res.render('admin/user', {
     isLoggedIn: req.isAuthenticated(),
-    isAdmin: req.user.group == 'admins',
+    isAdmin: req.user.group === 'admins',
     user: req.user
   })
 })
 
-.post('/newarea', function(req, res) {
-  addNewArea(req.body, function(err, data) {
+.post('/newarea', function (req, res) {
+  addNewArea(req.body, function (err, data) {
     if (err) {
       req.flash('addArea', 'Error creating new area.')
       res.redirect('/admin/areas')
@@ -80,8 +84,8 @@ router.get('/', function(req, res) {
   })
 })
 
-.post('/editarea/:id', function(req, res) {
-  updateArea(req.params.id, req.body, function(err, data) {
+.post('/editarea/:id', function (req, res) {
+  updateArea(req.params.id, req.body, function (err, data) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
       res.redirect('/admin/areas')
@@ -92,8 +96,8 @@ router.get('/', function(req, res) {
   })
 })
 
-.post('/editroom/:id', function(req, res) {
-  createOrUpdateRoom(req.params.id, req.body, function(err, data) {
+.post('/editroom/:id', function (req, res) {
+  createOrUpdateRoom(req.params.id, req.body, function (err, data) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
       res.redirect('/admin/areas')
@@ -104,7 +108,7 @@ router.get('/', function(req, res) {
   })
 })
 
-function addNewArea(data, cb) {
+function addNewArea (data, cb) {
   var area = new Area()
 
   area._id = data.areaIdentifier
@@ -118,29 +122,37 @@ function addNewArea(data, cb) {
   area.rooms = []
   area.rooms.push(room)
 
-  area.save(function(err, data) {
+  area.save(function (err, data) {
     cb(err, data)
   })
 }
 
-function updateArea(id, data, cb) {
-  Area.findById(id, function(err, area) {
+function updateArea (id, data, cb) {
+  Area.findById(id, function (err, area) {
+    if (err) {
+      cb(err)
+    }
+
     if (area) {
       area.identifier = data.areaIdentifier
       area.name = data.areaName
       area.description = data.areaDescription
 
-      area.save(function(err, result) {
+      area.save(function (err, result) {
         cb(err, result)
       })
     }
   })
 }
 
-function createOrUpdateRoom(areaId, data, cb) {
-  Area.findById(areaId, function(err, area) {
+function createOrUpdateRoom (areaId, data, cb) {
+  Area.findById(areaId, function (err, area) {
+    if (err) {
+      cb(err)
+    }
+
     if (area) {
-      var room = _.find(area.rooms, function(room) {
+      var room = _.find(area.rooms, function (room) {
         return room._id === data.roomId
       })
 
@@ -149,36 +161,40 @@ function createOrUpdateRoom(areaId, data, cb) {
         room.description = data.roomDescription
         room.exits = []
 
-        if (data.roomExitNorth)  room.exits.push(room._id + '-' + data.roomExitNorth + '-n')
+        if (data.roomExitNorth) room.exits.push(room._id + '-' + data.roomExitNorth + '-n')
         if (data.roomExistSouth) room.exits.push(room._id + '-' + data.roomExitSouth + '-s')
-        if (data.roomExistWest)  room.exits.push(room._id + '-' + data.roomExitWest  + '-w')
-        if (data.roomExistEast)  room.exits.push(room._id + '-' + data.roomExitEast  + '-e')
-        if (data.roomExistUp)    room.exits.push(room._id + '-' + data.roomExitUp    + '-u')
-        if (data.roomExistDown)  room.exits.push(room._id + '-' + data.roomExitDown  + '-d')
+        if (data.roomExistWest) room.exits.push(room._id + '-' + data.roomExitWest + '-w')
+        if (data.roomExistEast) room.exits.push(room._id + '-' + data.roomExitEast + '-e')
+        if (data.roomExistUp) room.exits.push(room._id + '-' + data.roomExitUp + '-u')
+        if (data.roomExistDown) room.exits.push(room._id + '-' + data.roomExitDown + '-d')
 
         area.rooms.push(room)
 
-        area.save(function(err, result) {
+        area.save(function (err, result) {
           cb(err, result)
         })
       } else {
-        Room.nextCount(function(err, nextid) {
+        Room.nextCount(function (err, nextid) {
+          if (err) {
+            throw (err)
+          }
+
           var newRoom = new Room()
-        
+
           newRoom.title = data.roomTitle
           newRoom.description = data.roomDescription
           newRoom.exits = []
 
           if (data.roomExitNorth) newRoom.exits.push(nextid + '-' + data.roomExitNorth + '-n')
           if (data.roomExitSouth) newRoom.exits.push(nextid + '-' + data.roomExitSouth + '-s')
-          if (data.roomExitWest)  newRoom.exits.push(nextid + '-' + data.roomExitWest  + '-w')
-          if (data.roomExitEast)  newRoom.exits.push(nextid + '-' + data.roomExitEast  + '-e')
-          if (data.roomExitUp)    newRoom.exits.push(nextid + '-' + data.roomExitUp    + '-u')
-          if (data.roomExitDown)  newRoom.exits.push(nextid + '-' + data.roomExitDown  + '-d')
+          if (data.roomExitWest) newRoom.exits.push(nextid + '-' + data.roomExitWest + '-w')
+          if (data.roomExitEast) newRoom.exits.push(nextid + '-' + data.roomExitEast + '-e')
+          if (data.roomExitUp) newRoom.exits.push(nextid + '-' + data.roomExitUp + '-u')
+          if (data.roomExitDown) newRoom.exits.push(nextid + '-' + data.roomExitDown + '-d')
 
           area.rooms.push(newRoom)
 
-          area.save(function(err, result) {
+          area.save(function (err, result) {
             cb(err, result)
           })
         })
