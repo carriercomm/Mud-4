@@ -149,12 +149,12 @@ function createOrUpdateRoom(areaId, data, cb) {
         room.description = data.roomDescription
         room.exits = []
 
-        if (data.roomExitNorth)  room.exits.push({from: room._id, to: data.roomExitNorth, direction: 'n'})
-        if (data.roomExistSouth) room.exits.push({from: room._id, to: data.roomExitSouth, direction: 's'})
-        if (data.roomExistWest)  room.exits.push({from: room._id, to: data.roomExitWest,  direction: 'w'})
-        if (data.roomExistEast)  room.exits.push({from: room._id, to: data.roomExitEast,  direction: 'e'})
-        if (data.roomExistUp)    room.exits.push({from: room._id, to: data.roomExitUp,    direction: 'u'})
-        if (data.roomExistDown)  room.exits.push({from: room._id, to: data.roomExitSouth, direction: 'd'})
+        if (data.roomExitNorth)  room.exits.push(room._id + '-' + data.roomExitNorth + '-n')
+        if (data.roomExistSouth) room.exits.push(room._id + '-' + data.roomExitSouth + '-s')
+        if (data.roomExistWest)  room.exits.push(room._id + '-' + data.roomExitWest  + '-w')
+        if (data.roomExistEast)  room.exits.push(room._id + '-' + data.roomExitEast  + '-e')
+        if (data.roomExistUp)    room.exits.push(room._id + '-' + data.roomExitUp    + '-u')
+        if (data.roomExistDown)  room.exits.push(room._id + '-' + data.roomExitDown  + '-d')
 
         area.rooms.push(room)
 
@@ -169,12 +169,12 @@ function createOrUpdateRoom(areaId, data, cb) {
           newRoom.description = data.roomDescription
           newRoom.exits = []
 
-          if (data.roomExitNorth)  newRoom.exits.push({from: nextid, to: data.roomExitNorth, direction: 'n'})
-          if (data.roomExistSouth) newRoom.exits.push({from: nextid, to: data.roomExitSouth, direction: 's'})
-          if (data.roomExistWest)  newRoom.exits.push({from: nextid, to: data.roomExitWest,  direction: 'w'})
-          if (data.roomExistEast)  newRoom.exits.push({from: nextid, to: data.roomExitEast,  direction: 'e'})
-          if (data.roomExistUp)    newRoom.exits.push({from: nextid, to: data.roomExitUp,    direction: 'u'})
-          if (data.roomExistDown)  newRoom.exits.push({from: nextid, to: data.roomExitSouth, direction: 'd'})
+          if (data.roomExitNorth) newRoom.exits.push(nextid + '-' + data.roomExitNorth + '-n')
+          if (data.roomExitSouth) newRoom.exits.push(nextid + '-' + data.roomExitSouth + '-s')
+          if (data.roomExitWest)  newRoom.exits.push(nextid + '-' + data.roomExitWest  + '-w')
+          if (data.roomExitEast)  newRoom.exits.push(nextid + '-' + data.roomExitEast  + '-e')
+          if (data.roomExitUp)    newRoom.exits.push(nextid + '-' + data.roomExitUp    + '-u')
+          if (data.roomExitDown)  newRoom.exits.push(nextid + '-' + data.roomExitDown  + '-d')
 
           area.rooms.push(newRoom)
 

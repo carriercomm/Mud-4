@@ -40,7 +40,8 @@ var showRoomNodes = function(rooms) {
 
     for (var j = 0; j < room.exits; j++) {
       var exit = room.exits[j]
-      edges.push({from: exit.from, to: exit.to, label: exit.direction})
+      var directions = exit.split('-')
+      edges.push({from: directions[0], to: directions[1], label: directions[2]})
     }
   }
 
@@ -53,7 +54,7 @@ var showRoomNodes = function(rooms) {
   var options = {
     width: '900px',
     height: '600px',
-    dragNodes: false,
+    // dragNodes: false,
     nodes: {
       shape: 'box'
     }

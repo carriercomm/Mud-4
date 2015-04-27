@@ -7,7 +7,7 @@ autoIncrement.initialize(mongoose.connection)
 var roomSchema = new Schema({
   title: String,
   description: String,
-  exits: Object
+  exits: [String]
 })
 
 var areaSchema = new Schema({
