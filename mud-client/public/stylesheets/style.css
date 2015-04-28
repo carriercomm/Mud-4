@@ -124,6 +124,10 @@ HEADER
   margin: 15px 0;
 }
 
+.subnav a:hover {
+  border-bottom: solid 6px #6496c8;
+}
+
 /*
 REGISTER
 */

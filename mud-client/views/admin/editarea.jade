@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  nav.navbar
+  nav.navbar.subnav
     a(href='/admin/areas') AREAS
     a(href='/admin/users') USERS
 
@@ -9,7 +9,7 @@ block content
 
   h2= area.name
 
-  nav.navbar
+  nav.navbar.subnav
     a(href='#', onclick='editAreaInfo()') Area info
     a(href='#', onclick='editAreaRooms(#{area})') Rooms
     a(href='#', onclick='editAreaUnits()') Units
