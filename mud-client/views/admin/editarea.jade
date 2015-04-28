@@ -5,7 +5,7 @@ block content
     a(href='/admin/areas') AREAS
     a(href='/admin/users') USERS
 
-  .separator
+  hr
 
   h2= area.name
 
@@ -15,7 +15,7 @@ block content
     a(href='#', onclick='editAreaUnits()') Units
     a(href='#', onclick='editAreaItems()') Items
 
-  .separator
+  hr
 
   form#area-info(method='post', action='/admin/editarea/#{area._id}')
     .grid-flex-start.nomargin-bottom
@@ -51,22 +51,6 @@ block content
 
       .grid-cell
         .grid-flex-start.nomargin-bottom
-          span Title
-        .grid-flex-start
-          input#roomTitle.text(type='text', name='roomTitle')
-
-        .grid-flex-start.nomargin-bottom
-          span Description
-        .grid-flex-start
-          textarea#roomDescription(name='roomDescription')
-
-        .grid-flex-start
-          .buttons
-            section.flat
-              button#editroom-button(type='submit') Save
-
-      .grid-cell
-        .grid-flex-start.nomargin-bottom
           span North exit
         .grid-flex-start
           input.text(type='text', name='roomExitNorth')
@@ -95,6 +79,22 @@ block content
           span Down exit
         .grid-flex-start
           input.text(type='text', name='roomExitDown')
+
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span Title
+        .grid-flex-start
+          input#roomTitle.text(type='text', name='roomTitle')
+
+        .grid-flex-start.nomargin-bottom
+          span Description
+        .grid-flex-start
+          textarea#roomDescription(name='roomDescription')
+
+        .grid-flex-start
+          .buttons
+            section.flat
+              button#editroom-button(type='submit') Save
 
   form#area-units.display-none(method='post', action='/admin/editarea/units/#{area._id}')
     span Units  

@@ -1,10 +1,10 @@
 html {
   font-family: 'Open Sans', sans-serif;
-  background-color: #fff;
+  background-color: #f9f9f9
 }
 
 .content {
-  margin: 120px auto 50px auto;
+  margin: 0px auto 50px auto;
   width: 70%;
 }
 
@@ -47,6 +47,12 @@ html {
   font-size: 15px;
 }
 
+hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 23px;
+}
+
 /*
 LOGIN
 */
@@ -79,13 +85,12 @@ a {
 HEADER
 */
 .header {
-  z-index: 999;
   width: 100%;
-  min-height: 50px;
-  position: fixed;
-  top: 0;
-  background-color: #bada55;
-  border-bottom: solid 1px #000;
+  min-height: 120px;
+  margin-bottom: 1.5rem;
+  background-color: #fff;
+  border-top: solid 6px #6496c8;
+  border-bottom:solid 1px #f2f2f2;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -332,14 +337,6 @@ section.flat button.active {
 
 .nomargin-bottom {
   margin-bottom: 0;
-}
-
-.separator {
-  width: 142%;
-  margin-left: -21%;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  border-bottom: 1px solid #000;
 }
 
 #rooms-nodes {
