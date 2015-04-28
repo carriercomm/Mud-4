@@ -1,5 +1,3 @@
-var $ = window.$
-
 var charGender = (function () {
   return {
     show: function () {

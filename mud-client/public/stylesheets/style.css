@@ -114,7 +114,7 @@ HEADER
   /*color: #1e73be;*/
   color: #000;
   text-decoration: none;
-  margin: 0 15px;
+  margin-right: 15px;
 }
 
 .navbar { 
@@ -125,6 +125,10 @@ HEADER
 }
 
 .subnav a:hover {
+  border-bottom: solid 6px #6496c8;
+}
+
+.a-selected {
   border-bottom: solid 6px #6496c8;
 }
 
@@ -180,8 +184,7 @@ PROFILE
   box-sizing: border-box;
 }
 
-.selected-border
-  /*border: 10px solid #66cd00;*/
+.selected-border {
   outline: solid 10px #66cd00;
   outline-offset: -10px;
 }
@@ -341,6 +344,10 @@ section.flat button.active {
 
 .nomargin-bottom {
   margin-bottom: 0;
+}
+
+.margin-left-15 {
+  margin-left: 15px;
 }
 
 #rooms-nodes {

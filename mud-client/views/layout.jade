@@ -3,8 +3,8 @@ html
   head
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/vis/dist/vis.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
   body()
@@ -16,7 +16,7 @@ html
           a(href='/profile') PROFILE (#{user._id})
           span |
           if isAdmin
-            a(href='/admin') ADMIN PANEL
+            a.margin-left-15(href='/admin') ADMIN PANEL
           a(href='/logout') LOGOUT
         else
           a(id='log-in', href='/login') LOG IN

@@ -116,8 +116,8 @@ function createArea (data, cb) {
 
   var room = new Room()
   room._id = '1'
-  room.title = 'Room 1'
-  room.description = 'Room 1 is a very big room, uhul!'
+  room.title = 'Edit me!'
+  room.description = 'This is my description'
 
   area.rooms = []
   area.rooms.push(room)

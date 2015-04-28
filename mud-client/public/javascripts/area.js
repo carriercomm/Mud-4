@@ -14,6 +14,9 @@ function editAreaInfo () {
     return
   }
 
+  $('#area-info-link').addClass('a-selected')
+  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
+
   areaInfoPane.show()
   selectedPane.hide()
   selectedPane = areaInfoPane
@@ -25,6 +28,9 @@ function editAreaRooms (data) {
   if (selectedPane === areaRoomsPane) {
     return
   }
+
+  $('#area-rooms-link').addClass('a-selected')
+  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
 
   areaRoomsPane.show()
   selectedPane.hide()
@@ -38,6 +44,9 @@ function editAreaUnits () {
     return
   }
 
+  $('#area-units-link').addClass('a-selected')
+  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
+
   areaUnitsPane.show()
   selectedPane.hide()
   selectedPane = areaUnitsPane
@@ -48,9 +57,13 @@ function editAreaItems () {
     return
   }
 
+  $('#area-items-link').addClass('a-selected')
+  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
+
   areaItemsPane.show()
   selectedPane.hide()
   selectedPane = areaItemsPane
+
 }
 
 function editRoom (data) {
