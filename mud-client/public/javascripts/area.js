@@ -1,5 +1,7 @@
 var $ = window.$,
-    vis = window.vis
+    vis = window.vis,
+    _ = window._,
+    area = null
 
 var areaInfoPane = $('#area-info'),
     areaRoomsPane = $('#area-rooms'),
@@ -8,7 +10,7 @@ var areaInfoPane = $('#area-info'),
     selectedPane = areaInfoPane
 
 function editAreaInfo () {
-  if (selectedPane == areaInfoPane) {
+  if (selectedPane === areaInfoPane) {
     return
   }
 
@@ -17,8 +19,10 @@ function editAreaInfo () {
   selectedPane = areaInfoPane
 }
 
-function editAreaRooms (area) {
-  if (selectedPane == areaRoomsPane) {
+function editAreaRooms (data) {
+  area = data
+
+  if (selectedPane === areaRoomsPane) {
     return
   }
 
@@ -30,7 +34,7 @@ function editAreaRooms (area) {
 }
 
 function editAreaUnits () {
-  if (selectedPane == areaUnitsPane) {
+  if (selectedPane === areaUnitsPane) {
     return
   }
 
@@ -40,7 +44,7 @@ function editAreaUnits () {
 }
 
 function editAreaItems () {
-  if (selectedPane == areaItemsPane) {
+  if (selectedPane === areaItemsPane) {
     return
   }
 
@@ -49,10 +53,19 @@ function editAreaItems () {
   selectedPane = areaItemsPane
 }
 
-function editRoom (room) {
+function editRoom (data) {
   document.getElementById('area-rooms').reset()
-  $('#roomId').val(room.nodes[0])
+  $('#roomId').val(data.nodes[0])
   $('#room-fields').removeClass('display-none')
+
+  var roomToEdit = _.find(area.rooms, function (room) {
+    return room._id === data.nodes[0]
+  })
+
+  if (roomToEdit) {
+    $('#roomTitle').val(roomToEdit.title)
+    $('#roomDescription').val(roomToEdit.description)
+  }
 }
 
 function createNewRoom () {
@@ -85,7 +98,6 @@ var showRoomNodes = function (rooms) {
   var options = {
     width: '900px',
     height: '600px',
-    // dragNodes: false,
     nodes: {
       shape: 'box'
     }

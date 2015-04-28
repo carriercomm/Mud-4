@@ -1,6 +1,5 @@
 var express = require('express')
 var router = express.Router()
-var _ = require('underscore')
 
 var mongoose = require('mongoose')
 var Area = mongoose.model('Area')
@@ -116,6 +115,7 @@ function createArea (data, cb) {
   area.description = data.areaDescription
 
   var room = new Room()
+  room._id = '1'
   room.title = 'Room 1'
   room.description = 'Room 1 is a very big room, uhul!'
 
@@ -154,24 +154,44 @@ function createOrUpdateRoom (areaId, data, cb) {
 }
 
 function createRoom (areaId, data, cb) {
-  var query = {
-    _id: areaId
-  }
+  Area.findById(areaId, function (err, area) {
+    if (err) throw err
 
-  var room = new Room()
-  room.title = data.roomTitle
-  room.description = data.roomDescription
-  room.exits = []
+    var query = {
+      _id: areaId
+    }
 
-  Area.update(query, {
-    $push: {room}
-  }, function(err, rawResponse) {
-    cb(err, rawResponse)
+    var room = new Room()
+    room._id = String(area.rooms.length + 1)
+    room.title = data.roomTitle
+    room.description = data.roomDescription
+    room.exits = []
+
+    Area.update(query, {
+      $push: { rooms: room }
+    }, function (err, rawResponse) {
+      cb(err, rawResponse)
+    })
   })
 }
 
-function updateRoom (areaUd, data, cb) {
+function updateRoom (areaId, data, cb) {
+  var query = {
+    _id: areaId,
+    'rooms._id': data.roomId
+  }
 
+  var exits = []
+
+  Area.update(query, {
+    $set: {
+      'rooms.$.title': data.roomTitle,
+      'rooms.$.description': data.roomDescription,
+      'rooms.$.exits': exits
+    }
+  }, function (err, rawResponse) {
+    cb(err, rawResponse)
+  })
 }
 
 module.exports = router

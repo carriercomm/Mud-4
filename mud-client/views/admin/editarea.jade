@@ -10,10 +10,10 @@ block content
   h2= area.name
 
   nav.navbar
-    a(href='#', onclick='editAreaInfo();') Area info
-    a(href='#', onclick='editAreaRooms(#{area});') Rooms
-    a(href='#', onclick='editAreaUnits();') Units
-    a(href='#', onclick='editAreaItems();') Items
+    a(href='#', onclick='editAreaInfo()') Area info
+    a(href='#', onclick='editAreaRooms(#{area})') Rooms
+    a(href='#', onclick='editAreaUnits()') Units
+    a(href='#', onclick='editAreaItems()') Items
 
   .separator
 
@@ -53,12 +53,12 @@ block content
         .grid-flex-start.nomargin-bottom
           span Title
         .grid-flex-start
-          input.text(type='text', name='roomTitle')
+          input#roomTitle.text(type='text', name='roomTitle')
 
         .grid-flex-start.nomargin-bottom
           span Description
         .grid-flex-start
-          textarea(name='roomDescription')
+          textarea#roomDescription(name='roomDescription')
 
         .grid-flex-start
           .buttons
