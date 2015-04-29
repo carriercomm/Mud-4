@@ -3,6 +3,10 @@ html {
   background-color: #f9f9f9
 }
 
+select {
+  width: 380px;
+}
+
 .content {
   margin: 0px auto 50px auto;
   width: 70%;

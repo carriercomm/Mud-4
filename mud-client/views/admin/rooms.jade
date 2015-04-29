@@ -27,9 +27,9 @@ block content
     .grid-space-around
       a.add-char(href='#', onclick='createNewRoom()') Create new room
 
-  form#area-rooms(method='post', action='/admin/editarea/#{area._id}/room')
-    #room-fields.grid-space-around.display-none(style='margin-top: 20px; align-items: flex-start')
-      input#roomId(type='hidden', name='roomId', value='')
+  form#area-rooms.display-none(method='post', action='/admin/editarea/#{area._id}/room')
+    .grid-space-around(style='align-items: flex-start')
+      input.roomId(type='hidden', name='roomId', value='')
 
       .grid-cell
         .grid-flex-start.nomargin-bottom
@@ -53,12 +53,80 @@ block content
             section.flat
               button#editroom-button(type='submit') Save
 
-  #rooms-nodes.display-none
+  form#room-exits.display-none(method='post', action='/admin/editarea/#{area._id}/roomexits')
+    input.roomId(type='hidden', name='roomId', value='')
+
+    .grid-space-around
+      span#room-title
+
+    .grid-space-around
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span North Exit
+        .grid-flex-start
+          select.north-exit(name='roomNorthExit')
+            option(value='')
+            if (rooms && rooms.length)
+              each room in rooms
+                option(value=room._id)= room.title
+
+        .grid-flex-start.nomargin-bottom
+          span East Exit
+        .grid-flex-start
+          select.north-exit(name='roomEastExit')
+            option(value='')
+            if (rooms && rooms.length)
+              each room in rooms
+                option(value=room._id)= room.title
+
+        .grid-flex-start.nomargin-bottom
+          span South Exit
+        .grid-flex-start
+          select.north-exit(name='roomSouthExit')
+            option(value='')
+            if (rooms && rooms.length)
+              each room in rooms
+                option(value=room._id)= room.title
+
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span West Exit
+        .grid-flex-start
+          select.north-exit(name='roomWestExit')
+            option(value='')
+            if (rooms && rooms.length)
+              each room in rooms
+                option(value=room._id)= room.title
+
+        .grid-flex-start.nomargin-bottom
+          span Up Exit
+        .grid-flex-start
+          select.north-exit(name='roomUpExit')
+            option(value='')
+            if (rooms && rooms.length)
+              each room in rooms
+                option(value=room._id)= room.title
+
+        .grid-flex-start.nomargin-bottom
+          span Down Exit
+        .grid-flex-start
+          select.north-exit(name='roomDownExit')
+            option(value='')
+            if (rooms && rooms.length)
+              each room in rooms
+                option(value=room._id)= room.title
+
+    .grid-space-around
+      .buttons
+        section.flat
+          button#roomexits-button(type='submit') Save
 
   if (rooms && rooms.length)
     each room in rooms
       .glid-flex-start
         a(href='#', onclick="editRoom('#{room._id}', '#{room.title}', '#{room.description}', #{room.floor})") Edit &nbsp;
         span |
-        a(href='#') &nbsp; Delete &nbsp;
+        a(href='#') &nbsp; Delete
+        span |
+        a(href='#', onclick="editRoomExits('#{room._id}', '#{room._title}')") &nbsp; Exits &nbsp;
         span= room.title

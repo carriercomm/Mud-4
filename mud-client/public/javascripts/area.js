@@ -4,17 +4,26 @@ var $ = window.$,
 
 function editRoom (id, title, description, floor) {
   document.getElementById('area-rooms').reset()
-  $('#roomId').val(id)
+  $('.roomId').val(id)
   $('#roomTitle').val(title)
   $('#roomDescription').val(description)
   $('#roomFloor').val(floor)
-  $('#room-fields').removeClass('display-none')
+  $('#area-rooms').removeClass('display-none')
+  $('#room-exits').addClass('display-none')
 }
 
 function createNewRoom () {
   document.getElementById('area-rooms').reset()
   $('#roomId').val('')
-  $('#room-fields').removeClass('display-none')
+  $('#area-rooms').removeClass('display-none')
+  $('#room-exits').addClass('display-none')
+}
+
+function editRoomExits (id, title) {
+  $('.roomId').val(id)
+  $('#room-title').val(title)
+  $('#room-exits').removeClass('display-none')
+  $('#area-rooms').addClass('display-none')
 }
 
 var showRoomNodes = function (rooms) {

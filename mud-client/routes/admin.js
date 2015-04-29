@@ -130,6 +130,18 @@ router.get('/', function (req, res) {
   })
 })
 
+.post('/editarea/:id/roomexits', function (req, res) {
+  updateRoomExits(req.params.id, req.body, function (err, data) {
+    if (err) {
+      req.flash('eidtArea', 'Error editing area.')
+      res.redirect('/admin/editarea/' + req.params.id + '/rooms')
+    } else {
+      req.flash('editArea', 'Room modified successfully.')
+      res.redirect('/admin/editarea/' + req.params.id + '/rooms')
+    }
+  })
+})
+
 function createArea (data, cb) {
   var roomData = {
     roomTitle: 'Edit me!',
@@ -217,64 +229,80 @@ function updateRoom (data, cb) {
   })
 }
 
-function createRoomExits (from, data) {
-  var exits = [],
-      exit = null
+function updateRoomExits (areaId, data, cb) {
+  var exits = createRoomExits(data),
+      query = {
+        _id: data.roomId
+      }
 
-  if (data.roomExitNorth) {
+  Room.update(query, {
+    $set: {
+      exits: exits
+    }
+  }, function (err, rawResponse) {
+    cb(err, rawResponse)
+  })
+}
+
+function createRoomExits (data) {
+  var exits = [],
+      exit = null,
+      from = data.roomId
+
+  if (data.roomNorthExit !== '') {
     exit = new Exit({
       from: from,
-      to: data.roomExitNorth,
+      to: data.roomNorthExit,
       direction: 'n'
     })
 
     exits.push(exit)
   }
 
-  if (data.roomExitEast) {
+  if (data.roomEastExit !== '') {
     exit = new Exit({
       from: from,
-      to: data.roomExitEast,
+      to: data.roomEastExit,
       direction: 'e'
     })
 
     exits.push(exit)
   }
 
-  if (data.roomExitSouth) {
+  if (data.roomSouthExit !== '') {
     exit = new Exit({
       from: from,
-      to: data.roomExitSouth,
+      to: data.roomSouthExit,
       direction: 's'
     })
 
     exits.push(exit)
   }
 
-  if (data.roomExitWest) {
+  if (data.roomWestExit !== '') {
     exit = new Exit({
       from: from,
-      to: data.roomExitWest,
+      to: data.roomWestExit,
       direction: 'w'
     })
 
     exits.push(exit)
   }
 
-  if (data.roomExitUp) {
+  if (data.roomUpExit !== '') {
     exit = new Exit({
       from: from,
-      to: data.roomExitUp,
+      to: data.roomUpExit,
       direction: 'u'
     })
 
     exits.push(exit)
   }
 
-  if (data.roomExitDown) {
+  if (data.roomDownExit !== '') {
     exit = new Exit({
       from: from,
-      to: data.roomExitDown,
+      to: data.roomDownExit,
       direction: 'd'
     })
 

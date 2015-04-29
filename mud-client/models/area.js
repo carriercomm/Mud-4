@@ -3,7 +3,6 @@ var Schema = mongoose.Schema
 
 var exitSchema = new Schema({
   _id: false,
-  from: String,
   to: String,
   direction: String
 })
@@ -12,6 +11,7 @@ var roomSchema = new Schema({
   title: String,
   description: String,
   floor: Number,
+  coord: String,
   exits: [exitSchema]
 })
 
