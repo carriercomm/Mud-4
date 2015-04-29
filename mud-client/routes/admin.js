@@ -144,7 +144,7 @@ function createArea (data, cb) {
 
     area._id = data.areaIdentifier
     area.name = data.areaName
-    area.description = data.areaDekscription
+    area.description = data.areaDescription
     area.rooms = [room._id]
 
     area.save(function (err, area) {
