@@ -10,10 +10,10 @@ block content
   h2= area.name
 
   nav.navbar.subnav
-    a#area-info-link.a-selected(href='#', onclick='editAreaInfo()') Area info
-    a#area-rooms-link(href='#', onclick='editAreaRooms(#{area})') Rooms
-    a#area-units-link(href='#', onclick='editAreaUnits()') Units
-    a#area-items-link(href='#', onclick='editAreaItems()') Items
+    a#area-info-link.a-selected(href='#') Area info
+    a#area-rooms-link(href='/admin/editarea/#{area._id}/rooms') Rooms
+    a#area-units-link(href='#') Units
+    a#area-items-link(href='#') Items
 
   hr
 
@@ -37,67 +37,3 @@ block content
       .buttons
         section.flat
           button#newarea-button(type='submit') Save
-
-  form#area-rooms.display-none(method='post', action='/admin/editroom/#{area._id}')
-    #rooms-nodes
-
-    .grid-space-around
-      .buttons
-        section.flat
-          button#button-newroom(onclick='createNewRoom(); return false;') Create new room
-
-    #room-fields.grid-space-around.display-none(style='margin-top: 20px; align-items: flex-start')
-      input#roomId(type='hidden', name='roomId', value='')
-
-      .grid-cell
-        .grid-flex-start.nomargin-bottom
-          span North exit
-        .grid-flex-start
-          input.text(type='text', name='roomExitNorth')
-
-        .grid-flex-start.nomargin-bottom
-          span East exit
-        .grid-flex-start
-          input.text(type='text', name='roomExitEast')
-
-        .grid-flex-start.nomargin-bottom
-          span South exit
-        .grid-flex-start
-          input.text(type='text', name='roomExitSouth')
-
-        .grid-flex-start.nomargin-bottom
-          span West exit
-        .grid-flex-start
-          input.text(type='text', name='roomExitWest')
-
-        .grid-flex-start.nomargin-bottom
-          span Up exit
-        .grid-flex-start
-          input.text(type='text', name='roomExitUp')
-
-        .grid-flex-start.nomargin-bottom
-          span Down exit
-        .grid-flex-start
-          input.text(type='text', name='roomExitDown')
-
-      .grid-cell
-        .grid-flex-start.nomargin-bottom
-          span Title
-        .grid-flex-start
-          input#roomTitle.text(type='text', name='roomTitle')
-
-        .grid-flex-start.nomargin-bottom
-          span Description
-        .grid-flex-start
-          textarea#roomDescription(name='roomDescription')
-
-        .grid-flex-start
-          .buttons
-            section.flat
-              button#editroom-button(type='submit') Save
-
-  form#area-units.display-none(method='post', action='/admin/editarea/units/#{area._id}')
-    span Units  
-
-  form#area-items.display-none(method='post', action='/admin/editarea/items/#{area._id}')
-    span Items

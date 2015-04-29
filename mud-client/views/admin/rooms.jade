@@ -1,5 +1,58 @@
 extends ../layout
 
 block content
+  nav.navbar.subnav
+    a.a-selected(href='/admin/areas') AREAS
+    a(href='/admin/users') USERS
+
+  hr
+
+  h2= area.name
+
+  nav.navbar.subnav
+    a#area-info-link(href='/admin/editarea/#{area._id}') Area info
+    a#area-rooms-link.a-selected(href='#') Rooms
+    a#area-units-link(href='#') Units
+    a#area-items-link(href='#') Items
+
+  hr
+
   .grid-space-around
-    a.add-char(href='/admin/' + area._id + '/rooms/newroom') Create new room
+    .grid-space-around
+      a.add-char(href='#', onclick='createNewRoom()') Create new room
+
+  form#area-rooms(method='post', action='/admin/editarea/#{area._id}/room')
+    #room-fields.grid-space-around.display-none(style='margin-top: 20px; align-items: flex-start')
+      input#roomId(type='hidden', name='roomId', value='')
+
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span Title
+        .grid-flex-start
+          input#roomTitle.text(type='text', name='roomTitle')
+
+        .grid-flex-start.nomargin-bottom
+          span Description
+        .grid-flex-start
+          textarea#roomDescription(name='roomDescription')
+
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span Floor
+        .grid-flex-start
+          input#roomFloor.text(type='text', name='roomFloor')
+
+        .grid-flex-start
+          .buttons
+            section.flat
+              button#editroom-button(type='submit') Save
+
+  #rooms-nodes.display-none
+
+  if (rooms && rooms.length)
+    each room in rooms
+      .glid-flex-start
+        a(href='#', onclick="editRoom('#{room._id}', '#{room.title}', '#{room.description}', #{room.floor})") Edit &nbsp;
+        span |
+        a(href='#') &nbsp; Delete &nbsp;
+        span= room.title

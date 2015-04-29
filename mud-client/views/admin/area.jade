@@ -13,7 +13,7 @@ block content
   if (areas && areas.length)
     each area in areas
       .glid-flex-start
-        span= area.name
-        a(href='/admin/editarea/#{area._id}') &nbsp; Edit &nbsp;
+        a(href='/admin/editarea/#{area._id}') Edit &nbsp;
         span |
-        a(href='#') &nbsp; Delete
+        a(href='#') &nbsp; Delete &nbsp;
+        span= area.name
