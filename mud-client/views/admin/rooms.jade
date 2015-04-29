@@ -18,6 +18,12 @@ block content
   hr
 
   .grid-space-around
+    if message && message.length > 0
+      span.error= message
+    else
+      span.error.hidden Placeholder
+
+  .grid-space-around
     .grid-space-around
       a.add-char(href='#', onclick='createNewRoom()') Create new room
 

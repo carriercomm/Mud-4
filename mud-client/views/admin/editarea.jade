@@ -17,11 +17,17 @@ block content
 
   hr
 
+  .grid-space-around
+    if message && message.length > 0
+      span.error= message
+    else
+      span.error.hidden Placeholder
+
   form#area-info(method='post', action='/admin/editarea/#{area._id}')
     .grid-flex-start.nomargin-bottom
       span Identifier
     .grid-flex-start
-      input.text(type='text', name='areaIdentifier', value=area._id)
+      input.text(type='text', name='areaIdentifier', value=area._id, disabled)
 
     .grid-flex-start.nomargin-bottom
       span Name

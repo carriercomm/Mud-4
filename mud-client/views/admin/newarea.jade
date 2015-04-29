@@ -7,9 +7,15 @@ block content
 
   hr
 
+  .grid-space-around
+    if message && message.length > 0
+      span.error= message
+    else
+      span.error.hidden Placeholder
+
   h2 New area:
 
-  form(method='post', action='/admin/newarea')
+  form#area-info(method='post', action='/admin/newarea')
     .grid-flex-start.nomargin-bottom
       span Identifier
     .grid-flex-start

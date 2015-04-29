@@ -4,7 +4,23 @@ $('#signup-button').click(function () {
   return validateSignUp()
 })
 
+$('#editroom-button').click(function () {
+  return validateEditRoom()
+})
+
+$('#newarea-button').click(function () {
+  return validateEditArea()
+})
+
 $('.register-form :input[type="text"]').focus(function () {
+  $('.error').addClass('hidden')
+})
+
+$('#area-rooms :input[type="text"]').focus(function () {
+  $('.error').addClass('hidden')
+})
+
+$('#area-info :input[type="text"]').focus(function () {
   $('.error').addClass('hidden')
 })
 
@@ -29,6 +45,38 @@ function validateSignUp () {
   }
 
   return isValid
+}
+
+function validateEditRoom () {
+  var roomTitle = $('#roomTitle').val(),
+      roomDescription = $('#roomDescription').val(),
+      roomFloor = $('#roomFloor').val(),
+      isValid = true
+
+  if (roomTitle === '' || roomDescription === '' || roomFloor === '') {
+    $('.error').removeClass('hidden')
+    $('.error').html('All fields are mandatory')
+
+    isValid = false
+  }
+
+  return isValid    
+}
+
+function validateEditArea () {
+  var id = $('input[name="areaIdentifier"]').val(),
+      name = $('input[name="areaName"]').val(),
+      description = $('input[name="areaDescription"]').val(),
+      isValid = true
+
+  if (id === '' || name === '' || description === '') {
+    $('.error').removeClass('hidden')
+    $('.error').html('All fields are mandatory')
+
+    isValid = false
+  }
+
+  return isValid    
 }
 
 function commandIsValid (command) {

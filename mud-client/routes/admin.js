@@ -110,10 +110,10 @@ router.get('/', function (req, res) {
   updateArea(req.params.id, req.body, function (err, rawResponse) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
-      res.redirect('/admin/editarea/' + req.params.id)
+      res.redirect('/admin/areas')
     } else {
       req.flash('editArea', 'Area modified successfully.')
-      res.redirect('/admin/editarea/' + req.params.id)
+      res.redirect('/admin/areas')
     }
   })
 })
