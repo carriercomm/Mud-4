@@ -14,9 +14,9 @@ html
         a.play(href='/play') PLAY
         if isLoggedIn
           a(href='/profile') PROFILE (#{user._id})
-          span |
+          span.margin-right-15 |
           if isAdmin
-            a.margin-left-15(href='/admin') ADMIN PANEL
+            a(href='/admin') ADMIN PANEL
           a(href='/logout') LOGOUT
         else
           a(id='log-in', href='/login') LOG IN

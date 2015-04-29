@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+  nav.navbar.subnav
+    a.a-selected(href='/admin/areas') AREAS
+    a(href='/admin/users') USERS
+
+  hr
+
+  h2= area.name
+
+  nav.navbar.subnav
+    a#area-info-link(href='/admin/editarea/#{area._id}') Area info
+    a#area-rooms-link.a-selected(href='#') Rooms
+    a#area-units-link(href='#') Units
+    a#area-items-link(href='#') Items
+
+  hr
+
+  .grid-space-around
+    if message && message.length > 0
+      span.error= message
+    else
+      span.error.hidden Placeholder
+
+  form#area-rooms(method='post', action='/admin/editarea/#{area._id}/editroom/#{room._id}')
+    .grid-space-around(style='align-items: flex-start')
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span Title
+        .grid-flex-start
+          input.text(type='text', name='roomTitle', value='#{room.title}')
+
+        .grid-flex-start.nomargin-bottom
+          span Description
+        .grid-flex-start
+          textarea(name='roomDescription')= room.description
+
+      .grid-cell
+        .grid-flex-start.nomargin-bottom
+          span Floor
+        .grid-flex-start
+          input.text(type='text', name='roomFloor', value='#{room.floor}')
+
+        .grid-flex-start
+          .buttons
+            section.flat
+              button#editroom-button(type='submit') Save

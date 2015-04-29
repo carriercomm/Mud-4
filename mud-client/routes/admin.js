@@ -94,6 +94,25 @@ router.get('/', function (req, res) {
   })
 })
 
+.get('/editarea/:areaId/editroom/:roomId', function (req, res) {
+  Area.findById(req.params.areaId, function (err, area) {
+    if (err) throw err
+    Room.findById(req.params.roomId, function (err, room) {
+      if (err) throw err
+
+      if (room) {
+        res.render('admin/editroom', {
+          isLoggedIn: req.isAuthenticated(),
+          isAdmin: req.user.group == 'admins',
+          user: req.user,
+          area: area,
+          room: room
+        })
+      }
+    })
+  })
+})
+
 .post('/newarea', function (req, res) {
   createArea(req.body, function (err, data) {
     if (err) {
@@ -138,6 +157,18 @@ router.get('/', function (req, res) {
     } else {
       req.flash('editArea', 'Room modified successfully.')
       res.redirect('/admin/editarea/' + req.params.id + '/rooms')
+    }
+  })
+})
+
+.post('/editarea/:areaId/editroom/:roomId', function (req, res) {
+  updateRoom(req.params.roomId, req.body, function (err, rawResponse) {
+    if (err) {
+      req.flash('eidtArea', 'Error editing area.')
+      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+    } else {
+      req.flash('editArea', 'Room modified successfully.')
+      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
     }
   })
 })
@@ -214,9 +245,9 @@ function createRoom (areaId, data, cb) {
   })
 }
 
-function updateRoom (data, cb) {
+function updateRoom (roomId, data, cb) {
   var query = {
-    _id: data.roomId
+    _id: roomId
   }
 
   Room.update(query, {
