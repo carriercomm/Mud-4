@@ -1,84 +1,14 @@
 var $ = window.$,
     vis = window.vis,
-    _ = window._,
-    area = null
+    _ = window._
 
-var areaInfoPane = $('#area-info'),
-    areaRoomsPane = $('#area-rooms'),
-    areaUnitsPane = $('#area-units'),
-    areaItemsPane = $('#area-items'),
-    selectedPane = areaInfoPane
-
-function editAreaInfo () {
-  if (selectedPane === areaInfoPane) {
-    return
-  }
-
-  $('#area-info-link').addClass('a-selected')
-  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
-
-  areaInfoPane.show()
-  selectedPane.hide()
-  selectedPane = areaInfoPane
-}
-
-function editAreaRooms (data) {
-  area = data
-
-  if (selectedPane === areaRoomsPane) {
-    return
-  }
-
-  $('#area-rooms-link').addClass('a-selected')
-  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
-
-  areaRoomsPane.show()
-  selectedPane.hide()
-  selectedPane = areaRoomsPane
-
-  showRoomNodes(area.rooms)
-}
-
-function editAreaUnits () {
-  if (selectedPane === areaUnitsPane) {
-    return
-  }
-
-  $('#area-units-link').addClass('a-selected')
-  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
-
-  areaUnitsPane.show()
-  selectedPane.hide()
-  selectedPane = areaUnitsPane
-}
-
-function editAreaItems () {
-  if (selectedPane === areaItemsPane) {
-    return
-  }
-
-  $('#area-items-link').addClass('a-selected')
-  $('#' + selectedPane.attr('id') + '-link').removeClass('a-selected')
-
-  areaItemsPane.show()
-  selectedPane.hide()
-  selectedPane = areaItemsPane
-
-}
-
-function editRoom (data) {
+function editRoom (id, title, description, floor) {
   document.getElementById('area-rooms').reset()
-  $('#roomId').val(data.nodes[0])
+  $('#roomId').val(id)
+  $('#roomTitle').val(title)
+  $('#roomDescription').val(description)
+  $('#roomFloor').val(floor)
   $('#room-fields').removeClass('display-none')
-
-  var roomToEdit = _.find(area.rooms, function (room) {
-    return room._id === data.nodes[0]
-  })
-
-  if (roomToEdit) {
-    $('#roomTitle').val(roomToEdit.title)
-    $('#roomDescription').val(roomToEdit.description)
-  }
 }
 
 function createNewRoom () {
