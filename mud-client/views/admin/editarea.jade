@@ -25,11 +25,6 @@ block content
 
   form#area-info(method='post', action='/admin/editarea/#{area._id}')
     .grid-flex-start.nomargin-bottom
-      span Identifier
-    .grid-flex-start
-      input.text(type='text', name='areaIdentifier', value=area._id, disabled)
-
-    .grid-flex-start.nomargin-bottom
       span Name
     .grid-flex-start
       input.text(type='text', name='areaName', value=area.name)

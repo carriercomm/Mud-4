@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var utils = require('../helper/utils')
 
 var mongoose = require('mongoose')
 var Area = mongoose.model('Area')
@@ -103,7 +104,7 @@ router.get('/', function (req, res) {
       if (room) {
         res.render('admin/editroom', {
           isLoggedIn: req.isAuthenticated(),
-          isAdmin: req.user.group == 'admins',
+          isAdmin: req.user.group === 'admins',
           user: req.user,
           area: area,
           room: room
@@ -137,32 +138,20 @@ router.get('/', function (req, res) {
   })
 })
 
-.post('/editarea/:id/room', function (req, res) {
-  createOrUpdateRoom(req.params.id, req.body, function (err, data) {
-    if (err) {
-      req.flash('eidtArea', 'Error editing area.')
-      res.redirect('/admin/editarea/' + req.params.id + '/rooms')
-    } else {
-      req.flash('editArea', 'Room modified successfully.')
-      res.redirect('/admin/editarea/' + req.params.id + '/rooms')
-    }
-  })
-})
-
-.post('/editarea/:id/roomexits', function (req, res) {
-  updateRoomExits(req.params.id, req.body, function (err, data) {
-    if (err) {
-      req.flash('eidtArea', 'Error editing area.')
-      res.redirect('/admin/editarea/' + req.params.id + '/rooms')
-    } else {
-      req.flash('editArea', 'Room modified successfully.')
-      res.redirect('/admin/editarea/' + req.params.id + '/rooms')
-    }
-  })
-})
-
 .post('/editarea/:areaId/editroom/:roomId', function (req, res) {
   updateRoom(req.params.roomId, req.body, function (err, rawResponse) {
+    if (err) {
+      req.flash('eidtArea', 'Error editing area.')
+      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+    } else {
+      req.flash('editArea', 'Room modified successfully.')
+      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+    }
+  })
+})
+
+.post('/editarea/:areaId/roomexit/:roomId', function (req, res) {
+  createRoomConnection(req.params.areaId, req.params.roomId, req.body.direction, function (err, rawResponse) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
       res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
@@ -177,7 +166,7 @@ function createArea (data, cb) {
   var roomData = {
     roomTitle: 'Edit me!',
     roomDescription: 'This is my description',
-    roomFloor: 1
+    roomFloor: 0
   }
 
   createRoom(null, roomData, function (err, room) {
@@ -185,7 +174,6 @@ function createArea (data, cb) {
 
     var area = new Area()
 
-    area._id = data.areaIdentifier
     area.name = data.areaName
     area.description = data.areaDescription
     area.rooms = [room._id]
@@ -209,14 +197,6 @@ function updateArea (id, data, cb) {
   }, function (err, rawResponse) {
     cb(err, rawResponse)
   })
-}
-
-function createOrUpdateRoom (areaId, data, cb) {
-  if (data.roomId !== '') {
-    updateRoom(data, cb)
-  } else {
-    createRoom(areaId, data, cb)
-  }
 }
 
 function createRoom (areaId, data, cb) {
@@ -260,87 +240,48 @@ function updateRoom (roomId, data, cb) {
   })
 }
 
-function updateRoomExits (areaId, data, cb) {
-  var exits = createRoomExits(data),
-      query = {
-        _id: data.roomId
+function createRoomConnection (areaId, roomId, direction, cb) {
+  Room.findById(roomId, function (err, room) {
+    if (err) throw err
+
+    if (room) {
+      var newRoom = new Room()
+      newRoom.title = 'Edit me!'
+      newRoom.description = 'Edit me!'
+      newRoom.floor = room.floor
+
+      if (direction === 'u') {
+        newRoom.floor++
+      } else if (direction === 'd') {
+        newRoom.floor--
       }
 
-  Room.update(query, {
-    $set: {
-      exits: exits
+      var exit = new Exit()
+      exit.to = roomId
+      exit.direction = utils.ROOM_OPOSITE[direction]
+      newRoom.exits = [exit]
+
+      newRoom.save(function (err, newRoom) {
+        if (err) throw err
+
+        var query = {
+          _id: roomId
+        }
+
+        var exit = new Exit()
+        exit.to = newRoom._id
+        exit.direction = direction
+
+        Room.update(query, {
+          $push: {
+            exits: exit
+          }
+        }, function (err, rawResponse) {
+          cb(err, rawResponse)
+        })
+      })
     }
-  }, function (err, rawResponse) {
-    cb(err, rawResponse)
   })
-}
-
-function createRoomExits (data) {
-  var exits = [],
-      exit = null,
-      from = data.roomId
-
-  if (data.roomNorthExit !== '') {
-    exit = new Exit({
-      from: from,
-      to: data.roomNorthExit,
-      direction: 'n'
-    })
-
-    exits.push(exit)
-  }
-
-  if (data.roomEastExit !== '') {
-    exit = new Exit({
-      from: from,
-      to: data.roomEastExit,
-      direction: 'e'
-    })
-
-    exits.push(exit)
-  }
-
-  if (data.roomSouthExit !== '') {
-    exit = new Exit({
-      from: from,
-      to: data.roomSouthExit,
-      direction: 's'
-    })
-
-    exits.push(exit)
-  }
-
-  if (data.roomWestExit !== '') {
-    exit = new Exit({
-      from: from,
-      to: data.roomWestExit,
-      direction: 'w'
-    })
-
-    exits.push(exit)
-  }
-
-  if (data.roomUpExit !== '') {
-    exit = new Exit({
-      from: from,
-      to: data.roomUpExit,
-      direction: 'u'
-    })
-
-    exits.push(exit)
-  }
-
-  if (data.roomDownExit !== '') {
-    exit = new Exit({
-      from: from,
-      to: data.roomDownExit,
-      direction: 'd'
-    })
-
-    exits.push(exit)
-  }
-
-  return exits
 }
 
 module.exports = router

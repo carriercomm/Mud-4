@@ -24,3 +24,26 @@ block content
         span |
         a(href='#') &nbsp; Delete &nbsp;
         span= room.title
+
+      .grid-space-around
+        .grid-cell
+          .grid-flex-start.nomargin-bottom
+            span.small-text North exit: &nbsp;
+            a.small-link(href='#', onclick="addRoomNorthExit('#{room._id}', '#{area._id}')") + add room
+          .grid-flex-start.nomargin-bottom
+            span.small-text East exit: &nbsp;
+            a.small-link(href='#', onclick="addRoomEastExit('#{room._id}', '#{area._id}')") + add room
+          .grid-flex-start
+            span.small-text South exit: &nbsp;
+            a.small-link(href='#', onclick="addRoomSouthExit('#{room._id}', '#{area._id}')") + add room
+
+        .grid-cell
+          .grid-flex-start.nomargin-bottom
+            span.small-text West exit: &nbsp;
+            a.small-link(href='#', onclick="addRoomWestExit('#{room._id}', '#{area._id}')") + add room
+          .grid-flex-start.nomargin-bottom
+            span.small-text Up exit: &nbsp;
+            a.small-link(href='#', onclick="addRoomUpExit('#{room._id}', '#{area._id}')") + add room
+          .grid-flex-start
+            span.small-text Down exit: &nbsp;
+            a.small-link(href='#', onclick="addRoomDownExit('#{room._id}', '#{area._id}')") + add room

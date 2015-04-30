@@ -60,13 +60,13 @@ function validateEditRoom () {
     isValid = false
   }
 
-  return isValid    
+  return isValid
 }
 
 function validateEditArea () {
   var id = $('input[name="areaIdentifier"]').val(),
       name = $('input[name="areaName"]').val(),
-      description = $('input[name="areaDescription"]').val(),
+      description = $('textarea[name="areaDescription"]').val(),
       isValid = true
 
   if (id === '' || name === '' || description === '') {
@@ -76,7 +76,7 @@ function validateEditArea () {
     isValid = false
   }
 
-  return isValid    
+  return isValid
 }
 
 function commandIsValid (command) {

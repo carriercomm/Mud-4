@@ -19,13 +19,6 @@ function createNewRoom () {
   $('#room-exits').addClass('display-none')
 }
 
-function editRoomExits (id, title) {
-  $('.roomId').val(id)
-  $('#room-title').val(title)
-  $('#room-exits').removeClass('display-none')
-  $('#area-rooms').addClass('display-none')
-}
-
 var showRoomNodes = function (rooms) {
   var nodes = [],
       edges = []
@@ -59,5 +52,22 @@ var showRoomNodes = function (rooms) {
 
   network.on('select', function (properties) {
     editRoom(properties)
+  })
+}
+
+function addRoomNorthExit (roomId, areaId) {
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/admin/editarea/areaId/roomexit/roomId',
+    data: {direction: 'n'},
+    success: function (responseData, textStatus, jqXHR) {
+      console.log(responseData)
+      window.location.replace('http://localhost:3000/admin/editarea/areaId/rooms')
+    },
+    error: function (responseData, textStatus, errorThrown) {
+      console.log('error posting')
+      console.log(responseData)
+      console.log(textStatus)
+    }
   })
 }

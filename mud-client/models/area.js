@@ -16,7 +16,6 @@ var roomSchema = new Schema({
 })
 
 var areaSchema = new Schema({
-  _id: String,
   name: String,
   description: String,
   rooms: [{type: Schema.Types.ObjectId, ref: 'Room'}]
