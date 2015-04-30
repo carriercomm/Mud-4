@@ -3,6 +3,7 @@ html
   head
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
+    link(rel='stylesheet', href='/vis/dist/vis.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
@@ -21,10 +22,14 @@ html
           a(id='log-in', href='/login') LOG IN
           a(id='log-in', href='/signup') REGISTER
     div.content
+      nav.navbar.subnav
+        a.a-selected(href='/admin/areas') AREAS
+        a(href='/admin/users') USERS
+
+      hr
       block content
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/underscore/underscore-min.js')
+    script(type='text/javascript', src='/vis/dist/vis.min.js')
     script(type='text/javascript', src='/javascripts/validation.js')
-    script(type='text/javascript', src='/javascripts/cookie.js')
-    script(type='text/javascript', src='/javascripts/newchar.js')
-    script(src='https://www.google.com/recaptcha/api.js')
+    script(type='text/javascript', src='/javascripts/area.js')

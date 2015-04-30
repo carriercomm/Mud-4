@@ -1,12 +1,6 @@
-extends ../layout
+extends adminLayout
 
 block content
-  nav.navbar.subnav
-    a.a-selected(href='/admin/areas') AREAS
-    a(href='/admin/users') USERS
-
-  hr
-
   h2= area.name
 
   nav.navbar.subnav
@@ -17,33 +11,36 @@ block content
 
   hr
 
-  if (rooms && rooms.length)
-    each room in rooms
-      .glid-flex-start
-        a(href='/admin/editarea/#{area._id}/editroom/#{room._id}') Edit &nbsp;
-        span |
-        a(href='#') &nbsp; Delete &nbsp;
-        span= room.title
+  input#areaId(type='hidden', value='#{area._id}')
 
-      .grid-space-around
-        .grid-cell
-          .grid-flex-start.nomargin-bottom
-            span.small-text North exit: &nbsp;
-            a.small-link(href='#', onclick="addRoomNorthExit('#{room._id}', '#{area._id}')") + add room
-          .grid-flex-start.nomargin-bottom
-            span.small-text East exit: &nbsp;
-            a.small-link(href='#', onclick="addRoomEastExit('#{room._id}', '#{area._id}')") + add room
-          .grid-flex-start
-            span.small-text South exit: &nbsp;
-            a.small-link(href='#', onclick="addRoomSouthExit('#{room._id}', '#{area._id}')") + add room
+  #roomInfo.grid-space-around.display-none(style='align-items: flex-start')
+    .grid-cell
+      .grid-flex-start.nomargin-bottom
+        span Title
+      .grid-flex-start
+        input#roomTitle.text(type='text')
 
-        .grid-cell
-          .grid-flex-start.nomargin-bottom
-            span.small-text West exit: &nbsp;
-            a.small-link(href='#', onclick="addRoomWestExit('#{room._id}', '#{area._id}')") + add room
-          .grid-flex-start.nomargin-bottom
-            span.small-text Up exit: &nbsp;
-            a.small-link(href='#', onclick="addRoomUpExit('#{room._id}', '#{area._id}')") + add room
-          .grid-flex-start
-            span.small-text Down exit: &nbsp;
-            a.small-link(href='#', onclick="addRoomDownExit('#{room._id}', '#{area._id}')") + add room
+      .grid-flex-start.nomargin-bottom
+        span Description
+      .grid-flex-start
+        textarea#roomDescription
+
+    .grid-cell
+      .grid-flex-start.nomargin-bottom
+        span Floor
+      .grid-flex-start
+        input#roomFloor.text(type='text', disabled)
+
+      .grid-flex-start.nomargin-bottom
+
+    .grid-cell
+      .grid-flex-end
+        .buttons
+          section.flat
+            button#editroom-button.small Save
+
+        .buttons.margin-left-15
+          section.flat
+            button#cancel-editroom-button.small Cancel
+
+  #rooms-nodes

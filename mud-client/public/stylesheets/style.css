@@ -310,6 +310,10 @@ button {
   border-radius: 0;
 }
 
+button.small {
+  line-height: 1;
+}
+
 button:focus {
   outline: none;
 }

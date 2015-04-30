@@ -1,12 +1,6 @@
-extends ../layout
+extends adminLayout
 
 block content
-  nav.navbar.subnav
-    a.a-selected(href='/admin/areas') AREAS
-    a(href='/admin/users') USERS
-
-  hr
-
   .grid-space-around
     if message && message.length > 0
       span.error= message
@@ -29,4 +23,8 @@ block content
     .grid-flex-start
       .buttons
         section.flat
-          button#newarea-button(type='submit') Create
+          button#newarea-button.small(type='submit') Create
+
+      .buttons.margin-left-15
+        section.flat
+            button.area-cancel.small Cancel

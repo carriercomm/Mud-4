@@ -20,11 +20,7 @@ router.use(function (req, res, next) {
 })
 
 router.get('/', function (req, res) {
-  res.render('admin', {
-    isLoggedIn: req.isAuthenticated(),
-    isAdmin: req.user.group === 'admins',
-    user: req.user
-  })
+  res.redirect('/admin/areas')
 })
 
 .get('/areas', function (req, res) {
@@ -95,22 +91,25 @@ router.get('/', function (req, res) {
   })
 })
 
-.get('/editarea/:areaId/editroom/:roomId', function (req, res) {
-  Area.findById(req.params.areaId, function (err, area) {
+.get('/area/:id/rooms', function (req, res) {
+  Area.findById(req.params.id, function (err, area) {
     if (err) throw err
-    Room.findById(req.params.roomId, function (err, room) {
-      if (err) throw err
 
-      if (room) {
-        res.render('admin/editroom', {
-          isLoggedIn: req.isAuthenticated(),
-          isAdmin: req.user.group === 'admins',
-          user: req.user,
-          area: area,
-          room: room
-        })
+    Room.find({
+      _id: {
+        $in: area.rooms
       }
+    }, function (err, rooms) {
+      if (err) throw err
+      res.json(rooms)
     })
+  })
+})
+
+.get('/room/:id', function (req, res) {
+  Room.findById(req.params.id, function (err, room) {
+    if (err) throw err
+    res.json(room)
   })
 })
 
@@ -141,11 +140,15 @@ router.get('/', function (req, res) {
 .post('/editarea/:areaId/editroom/:roomId', function (req, res) {
   updateRoom(req.params.roomId, req.body, function (err, rawResponse) {
     if (err) {
-      req.flash('eidtArea', 'Error editing area.')
-      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+      res.json({
+        error: true,
+        message: 'Error editing room!'
+      })
     } else {
-      req.flash('editArea', 'Room modified successfully.')
-      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+      res.json({
+        error: false,
+        message: 'Room modified successfully!'
+      })
     }
   })
 })
@@ -232,8 +235,8 @@ function updateRoom (roomId, data, cb) {
 
   Room.update(query, {
     $set: {
-      title: data.roomTitle,
-      description: data.roomDescription
+      title: data.title,
+      description: data.description
     }
   }, function (err, rawResponse) {
     cb(err, rawResponse)

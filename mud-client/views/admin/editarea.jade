@@ -1,12 +1,6 @@
-extends ../layout
+extends adminLayout
 
 block content
-  nav.navbar.subnav
-    a.a-selected(href='/admin/areas') AREAS
-    a(href='/admin/users') USERS
-
-  hr
-
   h2= area.name
 
   nav.navbar.subnav
@@ -37,4 +31,8 @@ block content
     .grid-flex-start
       .buttons
         section.flat
-          button#newarea-button(type='submit') Save
+          button#newarea-button.small(type='submit') Save
+
+      .buttons.margin-left-15
+        section.flat
+          button.area-cancel.small Cancel
