@@ -116,7 +116,7 @@ Rooms.prototype.showRoomNodes = function () {
 
   this.getRooms(function (rooms) {
     if (rooms.length) {
-      rooms.forEach(function (room, index, rooms) {
+      _.each(rooms, function (room, index, rooms) {
         var coord = room.coordinates.split(',')
 
         var node = {
@@ -142,6 +142,8 @@ Rooms.prototype.showRoomNodes = function () {
 
         self.checkForNextRooms(room, node, g)
       })
+
+      self.removeAmbiguousEdges(g.edges)
 
       self.s = new sigma({
         graph: g,
@@ -178,6 +180,23 @@ Rooms.prototype.showRoomNodes = function () {
       })
 
       self.s.refresh()
+    }
+  })
+}
+
+Rooms.prototype.removeAmbiguousEdges = function (edges) {
+  _.each(edges, function (edge, index) {
+    if (edge) {
+      var from = edge.source,
+          to = edge.target
+
+      var ambiguousEdge = _.find(edges, function (edge) {
+        return (edge.source === to && edge.target === from)
+      })
+
+      if (ambiguousEdge) {
+        edges = edges.splice(_.indexOf(edges, ambiguousEdge), 1)
+      }
     }
   })
 }
