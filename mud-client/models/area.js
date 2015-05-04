@@ -11,7 +11,7 @@ var roomSchema = new Schema({
   title: String,
   description: String,
   floor: Number,
-  coord: String,
+  coordinates: String,
   exits: [exitSchema]
 })
 

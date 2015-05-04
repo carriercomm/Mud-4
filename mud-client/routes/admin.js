@@ -154,13 +154,13 @@ router.get('/', function (req, res) {
 })
 
 .post('/editarea/:areaId/roomexit/:roomId', function (req, res) {
-  createRoomConnection(req.params.areaId, req.params.roomId, req.body.direction, function (err, rawResponse) {
+  createRoomConnection(req.params.areaId, req.params.roomId, req.body.direction, function (err, newRoom) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
       res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
     } else {
       req.flash('editArea', 'Room modified successfully.')
-      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+      res.json(newRoom)
     }
   })
 })
@@ -169,7 +169,8 @@ function createArea (data, cb) {
   var roomData = {
     roomTitle: 'Edit me!',
     roomDescription: 'This is my description',
-    roomFloor: 0
+    roomFloor: 0,
+    coordinates: '0,0,0'
   }
 
   createRoom(null, roomData, function (err, room) {
@@ -207,6 +208,7 @@ function createRoom (areaId, data, cb) {
 
   room.title = data.roomTitle
   room.description = data.roomDescription
+  room.coordinates = data.coordinates
   room.floor = data.roomFloor
 
   room.save(function (err, room) {
@@ -253,10 +255,35 @@ function createRoomConnection (areaId, roomId, direction, cb) {
       newRoom.description = 'Edit me!'
       newRoom.floor = room.floor
 
-      if (direction === 'u') {
-        newRoom.floor++
-      } else if (direction === 'd') {
-        newRoom.floor--
+      var coordinates = room.coordinates.split(','),
+          x = parseInt(coordinates[0], 2),
+          y = parseInt(coordinates[1], 2),
+          z = parseInt(coordinates[2], 2)
+
+      switch (direction) {
+        case 'n':
+          newRoom.coordinates = x + ',' + (y + 1) + ',' + z
+          break
+
+        case 'e':
+          newRoom.coordinates = (x + 1) + ',' + y + ',' + z
+          break
+
+        case 's':
+          newRoom.coordinates = x + ',' + (y - 1) + ',' + z
+          break
+
+        case 'w':
+          newRoom.coordinates = (x - 1) + ',' + y + ',' + z
+          break
+
+        case 'u':
+          newRoom.coordinates = x + ',' + y + ',' + (z + 1)
+          break
+
+        case 'd':
+          newRoom.coordinates = x + ',' + y + ',' + (z - 1)
+          break
       }
 
       var exit = new Exit()
@@ -275,12 +302,20 @@ function createRoomConnection (areaId, roomId, direction, cb) {
         exit.to = newRoom._id
         exit.direction = direction
 
-        Room.update(query, {
-          $push: {
+        Room.update(query, {$push: {
             exits: exit
           }
         }, function (err, rawResponse) {
-          cb(err, rawResponse)
+          if (err) throw err
+          Area.update({
+            _id: areaId
+          }, {
+            $push: {
+              rooms: newRoom._id
+            }
+          }, function (err, rawResponse) {
+            cb(err, newRoom)
+          })
         })
       })
     }
