@@ -256,13 +256,13 @@ function createRoomConnection (areaId, roomId, direction, cb) {
       newRoom.floor = room.floor
 
       var coordinates = room.coordinates.split(','),
-          x = parseInt(coordinates[0], 2),
-          y = parseInt(coordinates[1], 2),
-          z = parseInt(coordinates[2], 2)
+          x = parseInt(coordinates[0], 10),
+          y = parseInt(coordinates[1], 10),
+          z = parseInt(coordinates[2], 10)
 
       switch (direction) {
         case 'n':
-          newRoom.coordinates = x + ',' + (y + 1) + ',' + z
+          newRoom.coordinates = x + ',' + (y - 1) + ',' + z
           break
 
         case 'e':
@@ -270,7 +270,7 @@ function createRoomConnection (areaId, roomId, direction, cb) {
           break
 
         case 's':
-          newRoom.coordinates = x + ',' + (y - 1) + ',' + z
+          newRoom.coordinates = x + ',' + (y + 1) + ',' + z
           break
 
         case 'w':

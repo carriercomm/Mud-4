@@ -70,8 +70,8 @@ Rooms.prototype.addNewNode = function (roomId, room) {
       node = {
         id: room._id,
         label: room.title,
-        x: parseInt(coord[0], 2),
-        y: parseInt(coord[1], 2),
+        x: parseInt(coord[0], 10),
+        y: parseInt(coord[1], 10),
         size: 1
       },
       edge = {
@@ -107,6 +107,8 @@ Rooms.prototype.addNewRoomFromNode = function (roomId, direction) {
   })
 }
 
+Rooms.prototype.addNewJointRoomFromNode = function (joinId) {}
+
 Rooms.prototype.showRoomNodes = function () {
   var self = this,
       g = {
@@ -122,8 +124,8 @@ Rooms.prototype.showRoomNodes = function () {
         var node = {
           id: room._id,
           label: room.title,
-          x: parseInt(coord[0], 2),
-          y: parseInt(coord[1], 2),
+          x: parseInt(coord[0], 10),
+          y: parseInt(coord[1], 10),
           size: 1
         }
 
@@ -165,13 +167,17 @@ Rooms.prototype.showRoomNodes = function () {
       })
 
       self.s.bind('clickNode', function (e) {
-        var id = e.data.node.id
-
-        if (id.split('_').length > 1) {
-          var splitted = id.split('_')
-          self.addNewRoomFromNode(splitted[0], splitted[1])
+        if (e.data.node.joinId) {
+          self.addNewJointRoomFromNode(e.data.node.joinId)
         } else {
-          self.editRoom(id)
+          var id = e.data.node.id
+
+          if (id.split('_').length > 1) {
+            var splitted = id.split('_')
+            self.addNewRoomFromNode(splitted[0], splitted[1])
+          } else {
+            self.editRoom(id)
+          }
         }
       })
 
@@ -209,80 +215,66 @@ Rooms.prototype.checkForNextRooms = function (room, node, g) {
   })
 
   if (usedExits.indexOf('n') === -1) {
-    g.nodes.push({
-      id: room._id + '_n',
-      label: 'North',
-      x: node.x,
-      y: node.y - 0.2,
-      size: 1
-    })
+    existingRoom = this.checkForExistingRoom(g.nodes, node.x, node.y - 1)
 
-    g.edges.push({
-      id: room._id + '-to-_n',
-      source: room._id,
-      target: room._id + '_n',
-      size: 3,
-      color: '#ccc',
-      hover_color: '#000'
-    })
+    if (existingRoom) {
+      existingRoom.color = 'red'
+      existingRoom.label = 'Joint'
+      existingRoom.joinId = room._id + '_n_' + existingRoom.id
+      g.edges.push({ id: room._id + '-to-_n', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+    } else {
+      g.nodes.push({ id: room._id + '_n', label: 'North', x: node.x, y: node.y - 1, size: 1, color: 'orange' })
+      g.edges.push({ id: room._id + '-to-_n', source: room._id, target: room._id + '_n', size: 3, color: '#ccc', hover_color: '#000' })
+    }
   }
 
   if (usedExits.indexOf('e') === -1) {
-    g.nodes.push({
-      id: room._id + '_e',
-      label: 'East',
-      x: node.x + 0.2,
-      y: node.y,
-      size: 1
-    })
+    existingRoom = this.checkForExistingRoom(g.nodes, node.x + 1, node.y)
 
-    g.edges.push({
-      id: room._id + '-to-_e',
-      source: room._id,
-      target: room._id + '_e',
-      size: 3,
-      color: '#ccc',
-      hover_color: '#000'
-    })
+    if (existingRoom) {
+      existingRoom.color = 'red'
+      existingRoom.label = 'Joint'
+      existingRoom.joinId = room._id + '_e_' + existingRoom.id
+      g.edges.push({ id: room._id + '-to-_e', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+    } else {
+      g.nodes.push({ id: room._id + '_e', label: 'East', x: node.x + 1, y: node.y, size: 1, color: 'orange'})
+      g.edges.push({ id: room._id + '-to-_e', source: room._id, target: room._id + '_e', size: 3, color: '#ccc', hover_color: '#000' })
+    }
   }
 
   if (usedExits.indexOf('s') === -1) {
-    g.nodes.push({
-      id: room._id + '_s',
-      label: 'South',
-      x: node.x,
-      y: node.y + 0.2,
-      size: 1
-    })
+    existingRoom = this.checkForExistingRoom(g.nodes, node.x, node.y + 1)
 
-    g.edges.push({
-      id: room._id + '-to-_s',
-      source: room._id,
-      target: room._id + '_s',
-      size: 3,
-      color: '#ccc',
-      hover_color: '#000'
-    })
+    if (existingRoom) {
+      existingRoom.color = 'red'
+      existingRoom.label = 'Joint'
+      existingRoom.joinId = room._id + '_s_' + existingRoom.id
+      g.edges.push({ id: room._id + '-to-_s', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+    } else {
+      g.nodes.push({ id: room._id + '_s', label: 'South', x: node.x, y: node.y + 1, size: 1, color: 'orange' })
+      g.edges.push({ id: room._id + '-to-_s', source: room._id, target: room._id + '_s', size: 3, color: '#ccc', hover_color: '#000' })
+    }
   }
 
   if (usedExits.indexOf('w') === -1) {
-    g.nodes.push({
-      id: room._id + '_w',
-      label: 'West',
-      x: node.x - 0.2,
-      y: node.y,
-      size: 1
-    })
+    existingRoom = this.checkForExistingRoom(g.nodes, node.x - 1, node.y)
 
-    g.edges.push({
-      id: room._id + '-to-_w',
-      source: room._id,
-      target: room._id + '_w',
-      size: 3,
-      color: '#ccc',
-      hover_color: '#000'
-    })
+    if (existingRoom) {
+      existingRoom.color = 'red'
+      existingRoom.label = 'Joint'
+      existingRoom.joinId = room._id + '_w_' + existingRoom.id
+      g.edges.push({ id: room._id + '-to-_w', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+    } else {
+      g.nodes.push({ id: room._id + '_w', label: 'West', x: node.x - 1, y: node.y, size: 1, color: 'orange' })
+      g.edges.push({ id: room._id + '-to-_w', source: room._id, target: room._id + '_w', size: 3, color: '#ccc', hover_color: '#000' })
+    }
   }
+}
+
+Rooms.prototype.checkForExistingRoom = function (nodes, x, y) {
+  return _.find(nodes, function (node) {
+    return (node.x === x && node.y === y)
+  })
 }
 
 $(document).ready(function () {
