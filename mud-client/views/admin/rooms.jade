@@ -13,6 +13,15 @@ block content
 
   input#areaId(type='hidden', value='#{area._id}')
 
+  .room-options.display-none
+    .grid-space-around
+      span What do you want to do?
+    .grid-space-around
+      a#editRoomInfo(href='#') Edit info
+      a#addRoomExit(href='#') Add exit
+      a#deleteRoom(href='#') Delete
+      a#cancelRoomEdit(href='#') Nothing
+
   #roomInfo.grid-space-around.display-none(style='align-items: flex-start')
     .grid-cell
       .grid-flex-start.nomargin-bottom

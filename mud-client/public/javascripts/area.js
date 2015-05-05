@@ -5,7 +5,13 @@ var Rooms = function () {
   this.areaId = $('#areaId').val()
 }
 
-Rooms.prototype.getRooms = function (cb) {
+Rooms.prototype.getRoom = function (id, cb) {
+  $.get('http://localhost:3000/admin/room/' + id, function (room) {
+    cb(room)
+  })
+}
+
+Rooms.prototype.getAreaRooms = function (cb) {
   if (this.areaId) {
     $.get('http://localhost:3000/admin/area/' + this.areaId + '/rooms', function (rooms) {
       cb(rooms)
@@ -15,10 +21,10 @@ Rooms.prototype.getRooms = function (cb) {
   }
 }
 
-Rooms.prototype.editRoom = function (id) {
+Rooms.prototype.editRoom = function () {
   var self = this
 
-  $.get('http://localhost:3000/admin/room/' + id, function (room) {
+  this.getRoom(this.selectedNode.id, function (room) {
     if (room) {
       $('#roomInfo').removeClass('display-none')
       $('#roomTitle').val(room.title)
@@ -116,7 +122,7 @@ Rooms.prototype.showRoomNodes = function () {
     edges: []
   }
 
-  this.getRooms(function (rooms) {
+  this.getAreaRooms(function (rooms) {
     if (rooms.length) {
       _.each(rooms, function (room, index, rooms) {
         var coord = room.coordinates.split(',')
@@ -141,8 +147,6 @@ Rooms.prototype.showRoomNodes = function () {
             hover_color: '#000'
           })
         })
-
-        self.checkForNextRooms(room, node, g)
       })
 
       self.removeAmbiguousEdges(g.edges)
@@ -156,33 +160,20 @@ Rooms.prototype.showRoomNodes = function () {
         settings: {
           minEdgeSize: 0.5,
           maxEdgeSize: 4,
-          enableEdgeHovering: true,
-          edgeHoverColor: 'edge',
-          defaultEdgeHoverColor: '#000',
-          edgeHoverSizeRatio: 1,
-          edgeHoverExtremities: true,
           defaultNodeType: 'square',
           defaultNodeColor: '#6496c8'
         }
       })
 
       self.s.bind('clickNode', function (e) {
-        if (e.data.node.joinId) {
-          self.addNewJointRoomFromNode(e.data.node.joinId)
-        } else {
-          var id = e.data.node.id
+        self.selectedNode = e.data.node
+        self.selectedRoom = room
+        $('.room-options').removeClass('display-none')
 
-          if (id.split('_').length > 1) {
-            var splitted = id.split('_')
-            self.addNewRoomFromNode(splitted[0], splitted[1])
-          } else {
-            self.editRoom(id)
-          }
-        }
-      })
-
-      self.s.bind('clickEdge', function (e) {
-        console.log(e)
+        $('#cancelRoomEdit').click(function () {
+          $('.room-options').addClass('display-none')
+          self.selectedNode = null
+        })
       })
 
       self.s.refresh()
@@ -207,68 +198,73 @@ Rooms.prototype.removeAmbiguousEdges = function (edges) {
   })
 }
 
-Rooms.prototype.checkForNextRooms = function (room, node, g) {
-  var usedExits = []
+// Rooms.prototype.checkForNextRooms = function (room, node, g) {
+//   var usedExits = [],
+//       existingRoom
 
-  room.exits.forEach(function (exit, index, exits) {
-    usedExits.push(exit.direction)
-  })
+//   room.exits.forEach(function (exit, index, exits) {
+//     usedExits.push(exit.direction)
+//   })
 
-  if (usedExits.indexOf('n') === -1) {
-    existingRoom = this.checkForExistingRoom(g.nodes, node.x, node.y - 1)
+//   if (usedExits.indexOf('n') === -1) {
+//     existingRoom = this.checkForExistingRoom(g.nodes, node.x, node.y - 1)
 
-    if (existingRoom) {
-      existingRoom.color = 'red'
-      existingRoom.label = 'Joint'
-      existingRoom.joinId = room._id + '_n_' + existingRoom.id
-      g.edges.push({ id: room._id + '-to-_n', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
-    } else {
-      g.nodes.push({ id: room._id + '_n', label: 'North', x: node.x, y: node.y - 1, size: 1, color: 'orange' })
-      g.edges.push({ id: room._id + '-to-_n', source: room._id, target: room._id + '_n', size: 3, color: '#ccc', hover_color: '#000' })
-    }
-  }
+//     if (existingRoom) {
+//       existingRoom.color = 'red'
+//       existingRoom.label = 'Joint'
+//       existingRoom.joinId = room._id + '_n_' + existingRoom.id
+//       g.edges.push({ id: room._id + '-to-_n', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+//     } else {
+//       g.nodes.push({ id: room._id + '_n', label: 'North', x: node.x, y: node.y - 1, size: 1, color: 'orange' })
+//       g.edges.push({ id: room._id + '-to-_n', source: room._id, target: room._id + '_n', size: 3, color: '#ccc', hover_color: '#000' })
+//     }
+//   }
 
-  if (usedExits.indexOf('e') === -1) {
-    existingRoom = this.checkForExistingRoom(g.nodes, node.x + 1, node.y)
+//   if (usedExits.indexOf('e') === -1) {
+//     existingRoom = this.checkForExistingRoom(g.nodes, node.x + 1, node.y)
 
-    if (existingRoom) {
-      existingRoom.color = 'red'
-      existingRoom.label = 'Joint'
-      existingRoom.joinId = room._id + '_e_' + existingRoom.id
-      g.edges.push({ id: room._id + '-to-_e', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
-    } else {
-      g.nodes.push({ id: room._id + '_e', label: 'East', x: node.x + 1, y: node.y, size: 1, color: 'orange'})
-      g.edges.push({ id: room._id + '-to-_e', source: room._id, target: room._id + '_e', size: 3, color: '#ccc', hover_color: '#000' })
-    }
-  }
+//     if (existingRoom) {
+//       existingRoom.color = 'red'
+//       existingRoom.label = 'Joint'
+//       existingRoom.joinId = room._id + '_e_' + existingRoom.id
+//       g.edges.push({ id: room._id + '-to-_e', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+//     } else {
+//       g.nodes.push({ id: room._id + '_e', label: 'East', x: node.x + 1, y: node.y, size: 1, color: 'orange'})
+//       g.edges.push({ id: room._id + '-to-_e', source: room._id, target: room._id + '_e', size: 3, color: '#ccc', hover_color: '#000' })
+//     }
+//   }
 
-  if (usedExits.indexOf('s') === -1) {
-    existingRoom = this.checkForExistingRoom(g.nodes, node.x, node.y + 1)
+//   if (usedExits.indexOf('s') === -1) {
+//     existingRoom = this.checkForExistingRoom(g.nodes, node.x, node.y + 1)
 
-    if (existingRoom) {
-      existingRoom.color = 'red'
-      existingRoom.label = 'Joint'
-      existingRoom.joinId = room._id + '_s_' + existingRoom.id
-      g.edges.push({ id: room._id + '-to-_s', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
-    } else {
-      g.nodes.push({ id: room._id + '_s', label: 'South', x: node.x, y: node.y + 1, size: 1, color: 'orange' })
-      g.edges.push({ id: room._id + '-to-_s', source: room._id, target: room._id + '_s', size: 3, color: '#ccc', hover_color: '#000' })
-    }
-  }
+//     if (existingRoom) {
+//       existingRoom.color = 'red'
+//       existingRoom.label = 'Joint'
+//       existingRoom.joinId = room._id + '_s_' + existingRoom.id
+//       g.edges.push({ id: room._id + '-to-_s', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+//     } else {
+//       g.nodes.push({ id: room._id + '_s', label: 'South', x: node.x, y: node.y + 1, size: 1, color: 'orange' })
+//       g.edges.push({ id: room._id + '-to-_s', source: room._id, target: room._id + '_s', size: 3, color: '#ccc', hover_color: '#000' })
+//     }
+//   }
 
-  if (usedExits.indexOf('w') === -1) {
-    existingRoom = this.checkForExistingRoom(g.nodes, node.x - 1, node.y)
+//   if (usedExits.indexOf('w') === -1) {
+//     existingRoom = this.checkForExistingRoom(g.nodes, node.x - 1, node.y)
 
-    if (existingRoom) {
-      existingRoom.color = 'red'
-      existingRoom.label = 'Joint'
-      existingRoom.joinId = room._id + '_w_' + existingRoom.id
-      g.edges.push({ id: room._id + '-to-_w', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
-    } else {
-      g.nodes.push({ id: room._id + '_w', label: 'West', x: node.x - 1, y: node.y, size: 1, color: 'orange' })
-      g.edges.push({ id: room._id + '-to-_w', source: room._id, target: room._id + '_w', size: 3, color: '#ccc', hover_color: '#000' })
-    }
-  }
+//     if (existingRoom) {
+//       existingRoom.color = 'red'
+//       existingRoom.label = 'Joint'
+//       existingRoom.joinId = room._id + '_w_' + existingRoom.id
+//       g.edges.push({ id: room._id + '-to-_w', source: room._id, target: existingRoom.id, size: 3, color: '#ccc', hover_color: '#000' })
+//     } else {
+//       g.nodes.push({ id: room._id + '_w', label: 'West', x: node.x - 1, y: node.y, size: 1, color: 'orange' })
+//       g.edges.push({ id: room._id + '-to-_w', source: room._id, target: room._id + '_w', size: 3, color: '#ccc', hover_color: '#000' })
+//     }
+//   }
+// }
+
+Rooms.prototype.checkForNextRooms = function () {
+  this.getRoom(this.selectedNode.id, function (room) {})
 }
 
 Rooms.prototype.checkForExistingRoom = function (nodes, x, y) {
@@ -281,6 +277,14 @@ $(document).ready(function () {
   if ($('#rooms-nodes').length) {
     var rooms = new Rooms()
     rooms.showRoomNodes()
+
+    $('#editRoomInfo').click(function () {
+      rooms.editRoom()
+    })
+
+    $('#addRoomExit').click(function () {
+      rooms.checkForNextRooms()
+    })
   }
 
   $('.area-cancel').click(function () {
