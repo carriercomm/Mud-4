@@ -153,14 +153,27 @@ router.get('/', function (req, res) {
   })
 })
 
-.post('/editarea/:areaId/roomexit/:roomId', function (req, res) {
-  createRoomConnection(req.params.areaId, req.params.roomId, req.body.direction, function (err, newRoom) {
+.post('/editarea/:areaId/newroom/:roomId', function (req, res) {
+  createNewRoom(req.params.areaId, req.params.roomId, req.body.direction, function (err, newRoom) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
       res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
     } else {
       req.flash('editArea', 'Room modified successfully.')
       res.json(newRoom)
+    }
+  })
+})
+
+.post('/editarea/:areaId/connectrooms', function (req, res) {
+  console.log(req.body)
+  createRoomConnection(req.body, function (err, response) {
+    if (err) {
+      req.flash('eidtArea', 'Error editing area.')
+      res.redirect('/admin/editarea/' + req.params.areaId + '/rooms')
+    } else {
+      req.flash('editArea', 'Room modified successfully.')
+      res.json(response)
     }
   })
 })
@@ -173,7 +186,7 @@ function createArea (data, cb) {
     coordinates: '0,0,0'
   }
 
-  createRoom(null, roomData, function (err, room) {
+  createBasicRoom(null, roomData, function (err, room) {
     if (err) throw err
 
     var area = new Area()
@@ -203,7 +216,7 @@ function updateArea (id, data, cb) {
   })
 }
 
-function createRoom (areaId, data, cb) {
+function createBasicRoom (areaId, data, cb) {
   var room = new Room()
 
   room.title = data.roomTitle
@@ -245,7 +258,7 @@ function updateRoom (roomId, data, cb) {
   })
 }
 
-function createRoomConnection (areaId, roomId, direction, cb) {
+function createNewRoom (areaId, roomId, direction, cb) {
   Room.findById(roomId, function (err, room) {
     if (err) throw err
 
@@ -317,6 +330,48 @@ function createRoomConnection (areaId, roomId, direction, cb) {
             cb(err, newRoom)
           })
         })
+      })
+    }
+  })
+}
+
+function createRoomConnection (data, cb) {
+  Room.findById(data.from, function (err, fromRoom) {
+    if (err) {
+      cb(err, null)
+    } else {
+      Room.findById(data.to, function (err, toRoom) {
+        if (err) {
+          cb(err, null)
+        } else {
+          var exit = new Exit()
+          exit.to = toRoom._id
+          exit.direction = data.direction
+
+          fromRoom.exits.push(exit)
+          fromRoom.save(function (err, fromRoom) {
+            if (err) {
+              cb(err, null)
+            } else {
+              var exit = new Exit()
+              exit.to = fromRoom._id
+              exit.direction = utils.ROOM_OPOSITE[data.direction]
+
+              toRoom.exits.push(exit)
+              toRoom.save(function (err, toRoom) {
+                if (err) {
+                  cb(err, null)
+                } else {
+                  cb(null, {
+                    from: fromRoom,
+                    to: toRoom,
+                    direction: data.direction
+                  })
+                }
+              })
+            }
+          })
+        }
       })
     }
   })

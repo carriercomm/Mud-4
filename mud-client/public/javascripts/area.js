@@ -3,7 +3,7 @@ var $ = window.$,
 
 var Rooms = function () {
   this.areaId = $('#areaId').val()
-  this.addRoomAction = false
+  this.connectRoomAction = false
 }
 
 Rooms.prototype.getRoom = function (id, cb) {
@@ -61,6 +61,48 @@ Rooms.prototype.editRoom = function () {
   })
 }
 
+Rooms.prototype.connectRooms = function (from, to, direction) {
+  var self = this
+
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/admin/editarea/' + this.areaId + '/connectrooms',
+    data: {
+      from: from,
+      to: to,
+      direction: direction
+    },
+    success: function (responseData, textStatus, jqXHR) {
+      $('#roomInfo').addClass('display-none')
+      self.addNewEdge(responseData.from._id, responseData.to._id, responseData.direction)
+    },
+    error: function (responseData, textStatus, errorThrown) {
+      console.log('error posting')
+      console.log(responseData)
+      console.log(textStatus)
+    }
+  })
+}
+
+Rooms.prototype.addNewRoomFromNode = function (roomId, direction) {
+  var self = this
+
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/admin/editarea/' + this.areaId + '/newroom/' + roomId,
+    data: {direction: direction},
+    success: function (responseData, textStatus, jqXHR) {
+      $('#roomInfo').addClass('display-none')
+      self.addNewNode(roomId, responseData)
+    },
+    error: function (responseData, textStatus, errorThrown) {
+      console.log('error posting')
+      console.log(responseData)
+      console.log(textStatus)
+    }
+  })
+}
+
 Rooms.prototype.updateNodeName = function (roomId, title) {
   var nodes = this.s.graph.nodes()
 
@@ -72,7 +114,7 @@ Rooms.prototype.updateNodeName = function (roomId, title) {
   this.s.refresh()
 }
 
-Rooms.prototype.addNewRoomConnection = function (node) {
+Rooms.prototype.connectRoom = function (node) {
   if (this.selectedNode.id === node.id) return
 
   var splitted = node.id.split('_'),
@@ -82,13 +124,61 @@ Rooms.prototype.addNewRoomConnection = function (node) {
   if (node.color === 'orange') {
     this.addNewRoomFromNode(this.selectedNode.id, direction)
   } else {
-    var split
-    this.createRoomConnection(this.selectedNode.id, id, direction)
+    this.createRoomConnection(this.selectedNode.id, id, direction, node)
   }
 }
 
-Rooms.prototype.createRoomConnection = function () {
+Rooms.prototype.createRoomConnection = function (from, to, direction, node) {
+  var self = this,
+      canConnect = true
 
+  this.getRoom(from, function (room) {
+    _.each(room.exits, function (exit) {
+      if (exit.to === to) {
+        canConnect = false
+      }
+    })
+
+    if (self.canConnect(room, node) && canConnect) {
+      self.connectRooms(room._id, node.id, self.getConnectionDirection(room, node))
+    } else {
+      return
+    }
+  })
+}
+
+Rooms.prototype.getConnectionDirection = function (from, to) {
+  var coordinates = from.coordinates.split(','),
+    fromX = parseInt(coordinates[0], 10),
+    fromY = parseInt(coordinates[1], 10)
+
+  if (fromX - to.x === 0) {
+    if (fromY - to.y > fromY) {
+      return 'n'
+    } else {
+      return 's'
+    }
+  }
+
+  if (fromY - to.y === 0) {
+    if (fromX - to.x > fromX) {
+      return 'w'
+    } else {
+      return 'e'
+    }
+  }
+}
+
+Rooms.prototype.canConnect = function (from, to) {
+  var coordinates = from.coordinates.split(','),
+      fromX = parseInt(coordinates[0], 10),
+      fromY = parseInt(coordinates[1], 10)
+
+  if ((fromX !== to.x) && (fromY !== to.y)) {
+    return false
+  } else {
+    return true
+  }
 }
 
 Rooms.prototype.addNewNode = function (roomId, room) {
@@ -105,32 +195,25 @@ Rooms.prototype.addNewNode = function (roomId, room) {
         source: room._id,
         target: roomId,
         size: 3,
-        color: '#ccc',
-        hover_color: '#000'
+        color: '#ccc'
       }
 
   this.s.graph.addNode(node)
   this.s.graph.addEdge(edge)
-  this.s.refresh()
+  this.unselectNode()
 }
 
-Rooms.prototype.addNewRoomFromNode = function (roomId, direction) {
-  var self = this
+Rooms.prototype.addNewEdge = function (from, to, direction) {
+  var edge = {
+    id: from + '-to-' + to,
+    source: from,
+    target: to,
+    size: 3,
+    color: '#ccc'
+  }
 
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:3000/admin/editarea/' + this.areaId + '/roomexit/' + roomId,
-    data: {direction: direction},
-    success: function (responseData, textStatus, jqXHR) {
-      $('#roomInfo').addClass('display-none')
-      self.addNewNode(roomId, responseData)
-    },
-    error: function (responseData, textStatus, errorThrown) {
-      console.log('error posting')
-      console.log(responseData)
-      console.log(textStatus)
-    }
-  })
+  this.s.graph.addEdge(edge)
+  this.unselectNode()
 }
 
 Rooms.prototype.showRoomNodes = function () {
@@ -161,8 +244,7 @@ Rooms.prototype.showRoomNodes = function () {
             source: room._id,
             target: exit.to,
             size: 3,
-            color: '#ccc',
-            hover_color: '#000'
+            color: '#ccc'
           })
         })
       })
@@ -184,15 +266,19 @@ Rooms.prototype.showRoomNodes = function () {
       })
 
       self.s.bind('clickNode', function (e) {
-        if (self.addRoomAction) {
-          self.addNewRoomConnection(e.data.node)
+        if (self.connectRoomAction) {
+          self.connectRoom(e.data.node)
         } else {
+          if (self.selectedNode) {
+            self.selectedNode.size = 1
+          }
           self.selectedNode = e.data.node
+          e.data.node.size = 2
+          self.s.refresh()
           $('.room-options').removeClass('display-none')
 
           $('#cancelRoomEdit').click(function () {
-            $('.room-options').addClass('display-none')
-            self.selectedNode = null
+            self.unselectNode()
           })
         }
       })
@@ -217,6 +303,26 @@ Rooms.prototype.removeAmbiguousEdges = function (edges) {
   })
 }
 
+Rooms.prototype.removeTempNodes = function () {
+  var tempNodes = _.filter(this.s.graph.nodes(), function (node) {
+    return node.color === 'orange'
+  })
+
+  var tempEdges = _.filter(this.s.graph.edges(), function (edge) {
+    return edge.color === 'orange'
+  })
+
+  _.each(tempNodes, function (node) {
+    this.s.graph.dropNode(node.id)
+  }, this)
+
+  _.each(tempEdges, function (edge) {
+    this.s.graph.dropEdge(edge.id)
+  }, this)
+
+  this.s.refresh()
+}
+
 Rooms.prototype.checkForNextRooms = function () {
   var usedExits = [],
       existingRoom,
@@ -225,41 +331,73 @@ Rooms.prototype.checkForNextRooms = function () {
       self = this
 
   this.getRoom(this.selectedNode.id, function (room) {
-    room.exits.forEach(function (exit, index, exits) {
+    _.each(room.exits, function (exit, index) {
       usedExits.push(exit.direction)
     })
 
     if (usedExits.indexOf('n') === -1) {
-      existingRoom = self.checkForExistingRoom(g.nodes, node.x, node.y - 1)
+      existingRoom = self.checkForExistingRoom(g.nodes(), node.x, node.y - 1)
 
-      if (!existingRoom) {
+      if (existingRoom) {
+        g.addEdge({
+          id: room._id + '-to-' + existingRoom.id + '-temp',
+          source: room._id,
+          target: existingRoom.id,
+          size: 3,
+          color: 'orange'
+        })
+      } else {
         g.addNode({ id: room._id + '_n', label: 'North', x: node.x, y: node.y - 1, size: 1, color: 'orange' })
         g.addEdge({ id: room._id + '-to-_n', source: room._id, target: room._id + '_n', size: 3, color: '#ccc' })
       }
     }
 
     if (usedExits.indexOf('e') === -1) {
-      existingRoom = self.checkForExistingRoom(g.nodes, node.x + 1, node.y)
+      existingRoom = self.checkForExistingRoom(g.nodes(), node.x + 1, node.y)
 
-      if (!existingRoom) {
+      if (existingRoom) {
+        g.addEdge({
+          id: room._id + '-to-' + existingRoom.id + '-temp',
+          source: room._id,
+          target: existingRoom.id,
+          size: 3,
+          color: 'orange'
+        })
+      } else {
         g.addNode({ id: room._id + '_e', label: 'East', x: node.x + 1, y: node.y, size: 1, color: 'orange'})
         g.addEdge({ id: room._id + '-to-_e', source: room._id, target: room._id + '_e', size: 3, color: '#ccc' })
       }
     }
 
     if (usedExits.indexOf('s') === -1) {
-      existingRoom = self.checkForExistingRoom(g.nodes, node.x, node.y + 1)
+      existingRoom = self.checkForExistingRoom(g.nodes(), node.x, node.y + 1)
 
-      if (!existingRoom) {
+      if (existingRoom) {
+        g.addEdge({
+          id: room._id + '-to-' + existingRoom.id + '-temp',
+          source: room._id,
+          target: existingRoom.id,
+          size: 3,
+          color: 'orange'
+        })
+      } else {
         g.addNode({ id: room._id + '_s', label: 'South', x: node.x, y: node.y + 1, size: 1, color: 'orange' })
         g.addEdge({ id: room._id + '-to-_s', source: room._id, target: room._id + '_s', size: 3, color: '#ccc' })
       }
     }
 
     if (usedExits.indexOf('w') === -1) {
-      existingRoom = self.checkForExistingRoom(g.nodes, node.x - 1, node.y)
+      existingRoom = self.checkForExistingRoom(g.nodes(), node.x - 1, node.y)
 
-      if (!existingRoom) {
+      if (existingRoom) {
+        g.addEdge({
+          id: room._id + '-to-' + existingRoom.id + '-temp',
+          source: room._id,
+          target: existingRoom.id,
+          size: 3,
+          color: 'orange'
+        })
+      } else {
         g.addNode({ id: room._id + '_w', label: 'West', x: node.x - 1, y: node.y, size: 1, color: 'orange' })
         g.addEdge({ id: room._id + '-to-_w', source: room._id, target: room._id + '_w', size: 3, color: '#ccc' })
       }
@@ -275,6 +413,15 @@ Rooms.prototype.checkForExistingRoom = function (nodes, x, y) {
   })
 }
 
+Rooms.prototype.unselectNode = function () {
+  $('.room-options').addClass('display-none')
+  this.removeTempNodes()
+  this.connectRoomAction = false
+  this.selectedNode.size = 1
+  this.selectedNode = null
+  this.s.refresh()
+}
+
 $(document).ready(function () {
   if ($('#rooms-nodes').length) {
     var rooms = new Rooms()
@@ -286,7 +433,7 @@ $(document).ready(function () {
 
     $('#addRoomExit').click(function () {
       rooms.checkForNextRooms()
-      rooms.addRoomAction = true
+      rooms.connectRoomAction = true
     })
   }
 
