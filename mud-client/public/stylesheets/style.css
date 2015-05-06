@@ -384,3 +384,8 @@ section.flat button.active {
 .small-text {
   font-size: 13px;
 }
+
+.span-link {
+  color: #6496c8;
+  cursor: pointer;
+}

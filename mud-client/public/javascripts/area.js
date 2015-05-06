@@ -22,7 +22,7 @@ Rooms.prototype.getAreaRooms = function (cb) {
   }
 }
 
-Rooms.prototype.editRoom = function () {
+Rooms.prototype.showEditRoomInfo = function () {
   var self = this
 
   this.getRoom(this.selectedNode.id, function (room) {
@@ -32,32 +32,30 @@ Rooms.prototype.editRoom = function () {
       $('#roomDescription').val(room.description)
       $('#roomFloor').val(room.floor)
     }
+  })
+}
 
-    $('#editroom-button').click(function () {
-      var roomData = {
-        title: $('#roomTitle').val(),
-        description: $('#roomDescription').val()
-      }
+Rooms.prototype.editRoom = function () {
+  var self = this
+  var roomData = {
+    title: $('#roomTitle').val(),
+    description: $('#roomDescription').val()
+  }
 
-      $.ajax({
-        type: 'POST',
-        url: 'http://localhost:3000/admin/editarea/' + this.areaId + '/editroom/' + room._id,
-        data: roomData,
-        success: function (responseData, textStatus, jqXHR) {
-          $('#roomInfo').addClass('display-none')
-          self.updateNodeName(room._id, roomData.title)
-        },
-        error: function (responseData, textStatus, errorThrown) {
-          console.log('error posting')
-          console.log(responseData)
-          console.log(textStatus)
-        }
-      })
-    })
-
-    $('#cancel-editroom-button').click(function () {
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/admin/editarea/' + this.areaId + '/editroom/' + this.selectedNode.id,
+    data: roomData,
+    success: function (responseData, textStatus, jqXHR) {
       $('#roomInfo').addClass('display-none')
-    })
+      self.updateNodeName(self.selectedNode.id, roomData.title)
+      self.unselectNode()
+    },
+    error: function (responseData, textStatus, errorThrown) {
+      console.log('error posting')
+      console.log(responseData)
+      console.log(textStatus)
+    }
   })
 }
 
@@ -266,21 +264,7 @@ Rooms.prototype.showRoomNodes = function () {
       })
 
       self.s.bind('clickNode', function (e) {
-        if (self.connectRoomAction) {
-          self.connectRoom(e.data.node)
-        } else {
-          if (self.selectedNode) {
-            self.selectedNode.size = 1
-          }
-          self.selectedNode = e.data.node
-          e.data.node.size = 2
-          self.s.refresh()
-          $('.room-options').removeClass('display-none')
-
-          $('#cancelRoomEdit').click(function () {
-            self.unselectNode()
-          })
-        }
+        self.selectNode(e.data.node)
       })
     }
   })
@@ -413,6 +397,20 @@ Rooms.prototype.checkForExistingRoom = function (nodes, x, y) {
   })
 }
 
+Rooms.prototype.selectNode = function (node) {
+  if (this.connectRoomAction) {
+    this.connectRoom(node)
+  } else {
+    $('.room-options').removeClass('display-none')
+    if (this.selectedNode) {
+      this.selectedNode.size = 1
+    }
+    this.selectedNode = node
+    this.selectedNode.size = 2
+    this.s.refresh()
+  }
+}
+
 Rooms.prototype.unselectNode = function () {
   $('.room-options').addClass('display-none')
   this.removeTempNodes()
@@ -428,12 +426,24 @@ $(document).ready(function () {
     rooms.showRoomNodes()
 
     $('#editRoomInfo').click(function () {
-      rooms.editRoom()
+      rooms.showEditRoomInfo()
     })
 
     $('#addRoomExit').click(function () {
       rooms.checkForNextRooms()
       rooms.connectRoomAction = true
+    })
+
+    $('#cancelRoomEdit').click(function () {
+      rooms.unselectNode()
+    })
+
+    $('#editroom-button').click(function () {
+      rooms.editRoom()
+    })
+
+    $('#cancel-editroom-button').click(function () {
+      $('#roomInfo').addClass('display-none')
     })
   }
 

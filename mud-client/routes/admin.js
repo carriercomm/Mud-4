@@ -166,7 +166,6 @@ router.get('/', function (req, res) {
 })
 
 .post('/editarea/:areaId/connectrooms', function (req, res) {
-  console.log(req.body)
   createRoomConnection(req.body, function (err, response) {
     if (err) {
       req.flash('eidtArea', 'Error editing area.')
