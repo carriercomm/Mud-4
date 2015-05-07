@@ -1,25 +1,28 @@
-(function(window){
-  MudClient = function(){
+(function (window) {
+  var $ = window.$,
+      io = window.io
+
+  var MudClient = function () {
     $('.scroll-filler').height($('#content').height() - $('#container').height() - $('#prompt').height())
 
-    this._socket = io("http://localhost:8080")
+    this._socket = io('http://localhost:8080')
 
     this._socket.on('connect', function () {
       console.log('connected with mud server')
     })
 
-    this._socket.on('connect_error', function(data) {
+    this._socket.on('connect_error', function (data) {
       console.log('connection error: ' + data)
     })
   }
 
-  MudClient.prototype.getSocket = function() {
+  MudClient.prototype.getSocket = function () {
     return this._socket
   }
 
-  MudClient.prototype.sendCommand = function(command) {    
-    splitCommand = command.split(/ (.+)/)
-    
+  MudClient.prototype.sendCommand = function (command) {
+    var splitCommand = command.split(/ (.+)/)
+
     if (commandIsValid(splitCommand[0])) {
       if (splitCommand[1]) {
         this.sendMessage({
@@ -28,30 +31,30 @@
         })
       } else {
         this.appendText({
-          text: "What do you want to " + splitCommand[0] + "?"
+          text: 'What do you want to ' + splitCommand[0] + '?'
         })
       }
     } else {
       this.appendText({
-        text: "Invalid command: " + splitCommand[0]
+        text: 'Invalid command: ' + splitCommand[0]
       })
     }
   }
 
-  MudClient.prototype.appendText = function(data) {
-     $('#container').append("<div class='element'>" + data.text + "</div>")
-     $("#content").animate({ scrollTop: $('#container').height() }, 1000)
+  MudClient.prototype.appendText = function (data) {
+    $('#container').append('<div class="element">' + data.text + '</div>')
+    $('#content').animate({ scrollTop: $('#container').height() }, 1000)
   }
 
-  MudClient.prototype.sendMessage = function(data) {
+  MudClient.prototype.sendMessage = function (data) {
     this._socket.emit('playerMessage', data)
-  };
+  }
 
-  MudClient.prototype.onSimpleText = function(data) {
+  MudClient.prototype.onSimpleText = function (data) {
     this.appendText(data)
   }
 
-  MudClient.prototype.onHandshake = function(data) {
+  MudClient.prototype.onHandshake = function (data) {
     var user = $('#user-id').val()
 
     this._socket.emit('login', {

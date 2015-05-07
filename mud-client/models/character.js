@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var charSchema = new Schema({
   charClass: String,
@@ -7,6 +7,6 @@ var charSchema = new Schema({
   gender: String,
   race: String,
   user: String
-});
+})
 
-module.exports = mongoose.model('Character', charSchema);
+module.exports = mongoose.model('Character', charSchema)

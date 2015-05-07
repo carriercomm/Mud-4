@@ -1,11 +1,23 @@
 mongoose = require 'mongoose'
-Room = mongoose.model 'Room'
 Schema = mongoose.Schema
 
+exitSchema = new Schema
+  _id: false
+  to: String
+  direction: String
+
+roomSchema = new Schema
+  title: String
+  description: String
+  floor: Number
+  coordinates: String
+  exits: [exitSchema]
+
 areaSchema = new Schema
-  _id: String
   name: String
   description: String
-  rooms: [Room]
+  rooms: [{type: Schema.Types.ObjectId, ref: 'Room'}]
 
+module.exports = mongoose.model 'Exit', exitSchema
+module.exports = mongoose.model 'Room', roomSchema
 module.exports = mongoose.model 'Area', areaSchema

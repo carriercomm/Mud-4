@@ -1,3 +1,3 @@
 exports.Character = require './character'
-exports.Room = require './room'
+exports.User = require './user'
 exports.Area = require './area'

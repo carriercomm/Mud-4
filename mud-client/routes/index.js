@@ -10,7 +10,9 @@ router.get('/', ensureAuthentication, function (req, res, next) {
 })
 .get('/play', function (req, res) {
   if (req.session && req.session.passport) {
-    res.render('mud')
+    res.render('mud', {
+      user: req.user._id
+    })
   }
 })
 .get('/logout', function (req, res) {
