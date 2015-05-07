@@ -1,8 +1,11 @@
 (function (window) {
   var $ = window.$,
-      io = window.io
+      io = window.io,
+      PlayerStatus = window.PlayerStatus
 
   var MudClient = function () {
+    this.playerStatus = PlayerStatus.ENTER_WORLD
+
     $('.scroll-filler').height($('#content').height() - $('#container').height() - $('#prompt').height())
 
     this._socket = io('http://localhost:8080')
@@ -23,7 +26,7 @@
   MudClient.prototype.sendCommand = function (command) {
     var splitCommand = command.split(/ (.+)/)
 
-    if (commandIsValid(splitCommand[0])) {
+    if (commandIsValid(splitCommand[0], this.playerStatus)) {
       if (splitCommand[1]) {
         this.sendMessage({
           command: splitCommand[0],

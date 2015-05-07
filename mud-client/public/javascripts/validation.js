@@ -79,10 +79,10 @@ function validateEditArea () {
   return isValid
 }
 
-function commandIsValid (command) {
-  var validCommands = [
-    'say'
-  ]
+function commandIsValid (command, state) {
+  var validCommands = {
+    enterWorld: ['1', '2', '3', '4']
+  }
 
-  return (validCommands.indexOf(command) !== -1)
+  return (validCommands[state].indexOf(command) !== -1)
 }
