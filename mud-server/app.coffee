@@ -6,7 +6,6 @@ config = require './config/database'
 models = require './models'
 
 MudServer = require './mudServer'
-Communicator = require './controllers/communicator'
 
 mongoose.connect config.url
 server.listen 8080
@@ -15,5 +14,7 @@ server = new MudServer()
 server.start()
 
 io.on 'connection', (socket) ->
-  communicator = new Communicator socket, server
-  communicator.handshake()
+  socket.emit 'handshake'
+
+  socket.on 'login', (data) ->
+    server.doLogin data, socket

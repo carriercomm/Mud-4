@@ -4,8 +4,9 @@
       PlayerStatus = window.PlayerStatus
 
   var MudClient = function () {
-    this.playerStatus = PlayerStatus.ENTER_WORLD
+    this.setPlayerStatus(PlayerStatus.ENTER_WORLD)
 
+    // filler div to force the content to appear at the bottom of the terminal
     $('.scroll-filler').height($('#content').height() - $('#container').height() - $('#prompt').height())
 
     this._socket = io('http://localhost:8080')
@@ -23,20 +24,38 @@
     return this._socket
   }
 
-  MudClient.prototype.sendCommand = function (command) {
-    var splitCommand = command.split(/ (.+)/)
+  MudClient.prototype.setPlayerStatus = function (status) {
+    this.playerStatus = status
+  }
 
-    if (commandIsValid(splitCommand[0], this.playerStatus)) {
-      if (splitCommand[1]) {
+  MudClient.prototype.getPlayerStatus = function () {
+    return this.playerStatus
+  }
+
+  MudClient.prototype.sendCommand = function (c) {
+    var splitCommand = c.split(/ (.+)/),
+        command = commandIsValid(splitCommand[0], this.playerStatus)
+
+    if (command.isValid) {
+      // some commands require parameters, others don't
+      if (command.needsParam) {
+        if (splitCommand[1]) {
+          this.sendMessage({
+            command: splitCommand[0],
+            body: splitCommand[1]
+          })
+        } else {
+          this.appendText({
+            text: 'What do you want to ' + splitCommand[0] + '?'
+          })
+        }
+      } else {
         this.sendMessage({
           command: splitCommand[0],
-          body: splitCommand[1]
-        })
-      } else {
-        this.appendText({
-          text: 'What do you want to ' + splitCommand[0] + '?'
+          body: null
         })
       }
+
     } else {
       this.appendText({
         text: 'Invalid command: ' + splitCommand[0]
@@ -52,6 +71,10 @@
   MudClient.prototype.sendMessage = function (data) {
     this._socket.emit('playerMessage', data)
   }
+
+  /**
+   * Socket events
+   */
 
   MudClient.prototype.onSimpleText = function (data) {
     this.appendText(data)

@@ -5,7 +5,7 @@
   }
 
   Events.prototype._registerEvents = function () {
-    var _this = this
+    var self = this
     this._socket = this._client.getSocket()
 
     $('#prompt').keydown(function(event) {
@@ -15,7 +15,7 @@
 
           break
         case 13:
-          _this._client.sendCommand($('#prompt_input').val())
+          self._client.sendCommand($('#prompt_input').val())
           $('#prompt_input').val('')
 
           break
@@ -25,11 +25,11 @@
     })
 
     this._socket.on('simpleText', function (data) {
-      _this._client.onSimpleText(data)
+      self._client.onSimpleText(data)
     })
 
     this._socket.on('handshake', function (data) {
-      _this._client.onHandshake(data)
+      self._client.onHandshake(data)
     })
   }
 

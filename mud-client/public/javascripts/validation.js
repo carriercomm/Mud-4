@@ -84,5 +84,12 @@ function commandIsValid (command, state) {
     enterWorld: ['1', '2', '3', '4']
   }
 
-  return (validCommands[state].indexOf(command) !== -1)
+  var needParam = {
+    enterWorld: false
+  }
+
+  return  {
+    isValid: validCommands[state].indexOf(command) !== -1,
+    needsParam: needParam[state]
+  }
 }
