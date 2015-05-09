@@ -34,7 +34,7 @@
 
   MudClient.prototype.sendCommand = function (c) {
     var splitCommand = c.split(/ (.+)/),
-        command = commandIsValid(splitCommand[0], this.playerStatus)
+        command = window.commandIsValid(splitCommand[0], this.playerStatus)
 
     if (command.isValid) {
       // some commands require parameters, others don't
@@ -55,7 +55,6 @@
           body: null
         })
       }
-
     } else {
       this.appendText({
         text: 'Invalid command: ' + splitCommand[0]
@@ -69,7 +68,14 @@
   }
 
   MudClient.prototype.sendMessage = function (data) {
-    this._socket.emit('playerMessage', data)
+    var user = $('#user-id').val()
+    data.user = user
+
+    if (this.playerStatus === PlayerStatus.ENTER_WORLD) {
+      this._socket.emit('chooseCharacter', data)
+    } else {
+      this._socket.emit('playerMessage', data)
+    }
   }
 
   /**
@@ -84,7 +90,7 @@
     var user = $('#user-id').val()
 
     this._socket.emit('login', {
-      user: user
+      id: user
     })
   }
 

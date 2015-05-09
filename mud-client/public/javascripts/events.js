@@ -1,4 +1,6 @@
 (function (window) {
+  var $ = window.$
+
   var Events = function (client) {
     this._client = client
     this._registerEvents()
@@ -8,7 +10,7 @@
     var self = this
     this._socket = this._client.getSocket()
 
-    $('#prompt').keydown(function(event) {
+    $('#prompt').keydown(function (event) {
       switch (event.keyCode) {
         case 27:
           $('#prompt_input').val('')

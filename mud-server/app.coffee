@@ -18,3 +18,6 @@ io.on 'connection', (socket) ->
 
   socket.on 'login', (data) ->
     server.doLogin data, socket
+
+  socket.on 'chooseCharacter', (data) ->
+    server.chooseCharacter data, socket

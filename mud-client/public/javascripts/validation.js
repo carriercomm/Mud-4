@@ -88,7 +88,7 @@ function commandIsValid (command, state) {
     enterWorld: false
   }
 
-  return  {
+  return {
     isValid: validCommands[state].indexOf(command) !== -1,
     needsParam: needParam[state]
   }
