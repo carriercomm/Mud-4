@@ -1,7 +1,8 @@
 (function (window) {
   var $ = window.$,
       io = window.io,
-      PlayerStatus = window.PlayerStatus
+      PlayerStatus = window.PlayerStatus,
+      Commands = window.Commands
 
   var MudClient = function () {
     this.setPlayerStatus(PlayerStatus.ENTER_WORLD)
@@ -18,6 +19,8 @@
     this._socket.on('connect_error', function (data) {
       console.log('connection error: ' + data)
     })
+
+    this._commands = new Commands()
   }
 
   MudClient.prototype.getSocket = function () {
@@ -34,7 +37,7 @@
 
   MudClient.prototype.sendCommand = function (c) {
     var splitCommand = c.split(/ (.+)/),
-        command = window.commandIsValid(splitCommand[0], this.playerStatus)
+        command = this._commands.isValid(splitCommand[0], this.playerStatus)
 
     if (command.isValid) {
       // some commands require parameters, others don't

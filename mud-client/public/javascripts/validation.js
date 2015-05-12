@@ -78,18 +78,3 @@ function validateEditArea () {
 
   return isValid
 }
-
-function commandIsValid (command, state) {
-  var validCommands = {
-    enterWorld: ['1', '2', '3', '4']
-  }
-
-  var needParam = {
-    enterWorld: false
-  }
-
-  return {
-    isValid: validCommands[state].indexOf(command) !== -1,
-    needsParam: needParam[state]
-  }
-}
