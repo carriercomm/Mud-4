@@ -15,4 +15,11 @@ class Communicator
   displayCharacters: (socket, characters) ->
     @_simpleText socket, @_out.chooseCharacter characters
 
+  loadCharacter: (socket, character) ->
+  	data =
+  		character: character
+  		text: @_out.loadCharacter character
+
+  	socket.emit 'loadCharacter', data
+
 module.exports = Communicator

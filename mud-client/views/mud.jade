@@ -10,17 +10,21 @@ html
       .scroll-filler
       #container.container
 
-    .hud-bottom
+    .hud-bottom.hidden
       .hud-bottom-left
-        .life#player-life
-        .energy#player-energy
-      .hud-bottom-right
-        .life#target-life
-        .energy#target-energy
+        .life
+          span#player-life
+        .energy
+          span#player-energy
+      .hud-bottom-right.hidden
+        .life
+          span#target-life
+        .energy
+          span#target-energy
       .hud-bottom-center
-        span#char-name Aragorn (30)
-        span#next-lvl Next level: 5%
-        span#area Area: Valley of ogres
+        span#char-name
+        span#next-lvl
+        span#area
     #prompt.prompt
       input#prompt_input(type='text', autofocus)
     

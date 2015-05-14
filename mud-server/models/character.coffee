@@ -7,5 +7,10 @@ charSchema = new Schema
   gender: String
   race: String
   user: String
+  level: Number
+  experience: Number
+  nextLevel: Number
+  life: Number
+  energy: Number
 
 module.exports = mongoose.model 'Character', charSchema

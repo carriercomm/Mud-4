@@ -11,6 +11,8 @@
     this._socket = this._client.getSocket()
 
     $('#prompt').keydown(function (event) {
+      if ($('#prompt_input').val() === '') return
+
       switch (event.keyCode) {
         case 27:
           $('#prompt_input').val('')
@@ -32,6 +34,10 @@
 
     this._socket.on('handshake', function (data) {
       self._client.onHandshake(data)
+    })
+
+    this._socket.on('loadCharacter', function (data) {
+      self._client.onLoadCharacter(data)
     })
   }
 

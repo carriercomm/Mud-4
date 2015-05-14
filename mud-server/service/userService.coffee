@@ -14,7 +14,7 @@ class UserService
     query =
       name: name
 
-    Character.find query, (err, character) ->
+    Character.findOne query, (err, character) ->
       cb err, character
 
 module.exports = UserService

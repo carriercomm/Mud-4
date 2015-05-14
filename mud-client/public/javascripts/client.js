@@ -5,10 +5,10 @@
       Commands = window.Commands
 
   var MudClient = function () {
-    this.setPlayerStatus(PlayerStatus.ENTER_WORLD)
-
     // filler div to force the content to appear at the bottom of the terminal
     $('.scroll-filler').height($('#content').height() - $('#container').height() - $('.hud-bottom').height())
+
+    this.setPlayerStatus(PlayerStatus.ENTER_WORLD)
 
     this._socket = io('http://localhost:8080')
 
@@ -66,9 +66,12 @@
   }
 
   MudClient.prototype.appendText = function (data) {
+    if ($('#container').height() >= $('#content').height()) {
+      $('.scroll-filler').height(0)
+    }
+
     $('#container').append('<div class="element">' + data.text + '</div>')
-    $('.scroll-filler').height($('#content').height() - $('#container').height() - $('.hud-bottom').height())
-    $('#content').animate({ scrollTop: $('#container').height()}, 1000)
+    $('#content').scrollTop($('#container').height())
   }
 
   MudClient.prototype.sendMessage = function (data) {
@@ -80,6 +83,11 @@
     } else {
       this._socket.emit('playerMessage', data)
     }
+  }
+
+  MudClient.prototype.updateHud = function (character) {
+    $('#player-life').html('Hp: ' + character.life)
+    $('#player-energy').html('Sp: ' + character.energy)
   }
 
   /**
@@ -96,6 +104,15 @@
     this._socket.emit('login', {
       id: user
     })
+  }
+
+  MudClient.prototype.onLoadCharacter = function (data) {
+    $('.hud-bottom').removeClass('hidden')
+    $('#char-name').html(data.character.name + ' (' + data.character.level + ')')
+    $('#next-lvl').html('Next level: ' + data.character.nextLevel + '%')
+
+    this.appendText(data)
+    this.updateHud(data.character)
   }
 
   window.MudClient = MudClient

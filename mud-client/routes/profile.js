@@ -66,6 +66,11 @@ router.get('/', function (req, res) {
       newChar.race = req.body.charRace
       newChar.name = req.body.charName
       newChar.user = req.session.passport.user
+      newChar.level = 1
+      newChar.nextLevel = 100
+      newChar.experience = 1
+      newChar.life = 100
+      newChar.energy = 100
 
       newChar.save(function (err, data) {
         if (err) {

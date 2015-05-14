@@ -31,7 +31,7 @@ class MudServer
     if command.isValid and !command.needsParam
       @_userService.getCharacter @_players[data.user]['characters'], data.command - 1, (err, character) =>
         unless err
-          console.log character
           @_players[data.user]['character'] = character
+          @_communicator.loadCharacter socket, character
 
 module.exports = MudServer

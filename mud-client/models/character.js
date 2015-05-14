@@ -6,7 +6,12 @@ var charSchema = new Schema({
   name: String,
   gender: String,
   race: String,
-  user: String
+  user: String,
+  level: Number,
+  experience: Number,
+  nextLevel: Number,
+  life: Number,
+  energy: Number
 })
 
 module.exports = mongoose.model('Character', charSchema)
