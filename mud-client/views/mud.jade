@@ -4,11 +4,23 @@ html
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/mud.css')
+    link(href='http://fonts.googleapis.com/css?family=Roboto:400,100', rel='stylesheet', type='text/css')
   body()
     #content.content
+      .scroll-filler
       #container.container
-        .scroll-filler
 
+    .hud-bottom
+      .hud-bottom-left
+        .life#player-life
+        .energy#player-energy
+      .hud-bottom-right
+        .life#target-life
+        .energy#target-energy
+      .hud-bottom-center
+        span#char-name Aragorn (30)
+        span#next-lvl Next level: 5%
+        span#area Area: Valley of ogres
     #prompt.prompt
       input#prompt_input(type='text', autofocus)
     

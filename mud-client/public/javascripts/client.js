@@ -8,7 +8,7 @@
     this.setPlayerStatus(PlayerStatus.ENTER_WORLD)
 
     // filler div to force the content to appear at the bottom of the terminal
-    $('.scroll-filler').height($('#content').height() - $('#container').height() - $('#prompt').height())
+    $('.scroll-filler').height($('#content').height() - $('#container').height() - $('.hud-bottom').height())
 
     this._socket = io('http://localhost:8080')
 
@@ -67,7 +67,8 @@
 
   MudClient.prototype.appendText = function (data) {
     $('#container').append('<div class="element">' + data.text + '</div>')
-    $('#content').animate({ scrollTop: $('#container').height() }, 1000)
+    $('.scroll-filler').height($('#content').height() - $('#container').height() - $('.hud-bottom').height())
+    $('#content').animate({ scrollTop: $('#container').height()}, 1000)
   }
 
   MudClient.prototype.sendMessage = function (data) {
