@@ -11,7 +11,9 @@ var charSchema = new Schema({
   experience: Number,
   nextLevel: Number,
   life: Number,
-  energy: Number
+  energy: Number,
+  area: String,
+  room: String
 })
 
 module.exports = mongoose.model('Character', charSchema)

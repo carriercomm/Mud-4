@@ -110,6 +110,7 @@
     $('.hud-bottom').removeClass('hidden')
     $('#char-name').html(data.character.name + ' (' + data.character.level + ')')
     $('#next-lvl').html('Next level: ' + data.character.nextLevel + '%')
+    $('#area').html('Area: ' + data.character.area)
 
     this.appendText(data)
     this.updateHud(data.character)

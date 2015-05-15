@@ -12,5 +12,7 @@ charSchema = new Schema
   nextLevel: Number
   life: Number
   energy: Number
+  area: String
+  room: String
 
 module.exports = mongoose.model 'Character', charSchema
