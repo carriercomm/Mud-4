@@ -14,6 +14,8 @@ server = new MudServer()
 server.start()
 
 io.on 'connection', (socket) ->
+  console.log 'player connected'
+
   socket.emit 'handshake'
 
   socket.on 'login', (data) ->
@@ -21,3 +23,9 @@ io.on 'connection', (socket) ->
 
   socket.on 'chooseCharacter', (data) ->
     server.chooseCharacter data, socket
+
+  socket.on 'playerCommand', (data) ->
+    server.playerCommand data, socket
+
+  socket.on 'disconnect', ->
+    console.log 'player disconnected.'

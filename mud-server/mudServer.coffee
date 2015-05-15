@@ -34,15 +34,28 @@ class MudServer
     if command.isValid and !command.needsParam
       @_userService.getCharacter @_players[data.user]['characters'], data.command - 1, (err, character) =>
         unless err
+          @_players[data.user]['status'] = PlayerStatus.STANDING
+
           # if the character has no set area and room, use the base one
           unless character.area
             baseArea = @_worldService.getBaseArea()
-            console.log baseArea.name
             character.area = baseArea.name
             character.room = baseArea.rooms[0]
 
-          console.log character
           @_players[data.user]['character'] = character
           @_communicator.loadCharacter socket, character
+          @_communicator.displayPlayerRoom socket, character.room
+
+  playerCommand: (data, socket) ->
+    command = @_commands.isValid data.command, @_players[data.user]['status']
+
+    if command.isValid
+      @_commands.parseCommand data.command, data.body, (err, command, body) =>
+        unless err
+          @[command](socket, body)
+
+  ## PLAYER COMMANDS ##
+  who: (socket) ->
+    # TODO: list to the player all logged in characters
 
 module.exports = MudServer

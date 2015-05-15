@@ -9,12 +9,15 @@ class UserService
       cb err, data
 
   getCharacter: (characters, index, cb) ->
-    name = characters[index]
+    if characters[index]
+      name = characters[index]
 
-    query =
-      name: name
+      query =
+        name: name
 
-    Character.findOne query, (err, character) ->
-      cb err, character
+      Character.findOne query, (err, character) ->
+        cb err, character
+    else
+      cb "Error selecting character", null
 
 module.exports = UserService

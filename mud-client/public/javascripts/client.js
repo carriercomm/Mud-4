@@ -5,6 +5,8 @@
       Commands = window.Commands
 
   var MudClient = function () {
+    var self = this
+
     // filler div to force the content to appear at the bottom of the terminal
     $('.scroll-filler').height($('#content').height() - $('#container').height() - $('.hud-bottom').height())
 
@@ -14,6 +16,9 @@
 
     this._socket.on('connect', function () {
       console.log('connected with mud server')
+      
+      $('.hud-bottom').addClass('hidden')
+      self.setPlayerStatus(PlayerStatus.ENTER_WORLD)
     })
 
     this._socket.on('connect_error', function (data) {
@@ -49,6 +54,7 @@
           })
         } else {
           this.appendText({
+            css: '',
             text: 'What do you want to ' + splitCommand[0] + '?'
           })
         }
@@ -60,6 +66,7 @@
       }
     } else {
       this.appendText({
+        css: '',
         text: 'Invalid command: ' + splitCommand[0]
       })
     }
@@ -70,7 +77,7 @@
       $('.scroll-filler').height(0)
     }
 
-    $('#container').append('<div class="element">' + data.text + '</div>')
+    $('#container').append('<div class="element ' + data.css + '">' + data.text + '</div>')
     $('#content').scrollTop($('#container').height())
   }
 
@@ -81,7 +88,7 @@
     if (this.playerStatus === PlayerStatus.ENTER_WORLD) {
       this._socket.emit('chooseCharacter', data)
     } else {
-      this._socket.emit('playerMessage', data)
+      this._socket.emit('playerCommand', data)
     }
   }
 
@@ -95,6 +102,7 @@
    */
 
   MudClient.prototype.onSimpleText = function (data) {
+    data.css = ''
     this.appendText(data)
   }
 
@@ -112,8 +120,25 @@
     $('#next-lvl').html('Next level: ' + data.character.nextLevel + '%')
     $('#area').html('Area: ' + data.character.area)
 
+    data.css = ''
     this.appendText(data)
     this.updateHud(data.character)
+    this.setPlayerStatus(PlayerStatus.STANDING)
+  }
+
+  MudClient.prototype.onRoomDescription = function (room) {
+    var title = {
+      css: 'room-title',
+      text: room.title
+    }
+
+    var description = {
+      css: 'room-description',
+      text: room.description
+    }
+
+    this.appendText(title)
+    this.appendText(description)
   }
 
   window.MudClient = MudClient

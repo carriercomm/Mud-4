@@ -39,6 +39,10 @@
     this._socket.on('loadCharacter', function (data) {
       self._client.onLoadCharacter(data)
     })
+
+    this._socket.on('roomDescription', function (data) {
+      self._client.onRoomDescription(data)
+    })
   }
 
   window.Events = Events
