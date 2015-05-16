@@ -159,5 +159,12 @@
     this.appendText(exits)
   }
 
+  MudClient.prototype.onWho = function (data) {
+    this.appendText({
+      css: 'who',
+      text: data
+    })
+  }
+
   window.MudClient = MudClient
 })(this)

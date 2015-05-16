@@ -11,9 +11,6 @@ class Communicator
   _simpleText: (socket, message) ->
     socket.emit 'simpleText', message
 
-  _roomDescription: (socket, room) ->
-    socket.emit 'roomDescription', room
-
   welcome: (socket) ->
     @_simpleText socket, @_out.welcome()
 
@@ -30,9 +27,9 @@ class Communicator
   displayPlayerRoom: (socket, room) ->
     Room.findById room, (err, room) =>
       unless err
-        @_roomDescription socket, room
+        socket.emit 'roomDescription', room
 
   who: (socket, players) ->
-
+    socket.emit 'who', @_out.who players
       
 module.exports = Communicator

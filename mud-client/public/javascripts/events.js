@@ -43,6 +43,10 @@
     this._socket.on('roomDescription', function (data) {
       self._client.onRoomDescription(data)
     })
+
+    this._socket.on('who', function (data) {
+      self._client.onWho(data)
+    })
   }
 
   window.Events = Events
