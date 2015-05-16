@@ -2,7 +2,8 @@
   var $ = window.$,
       io = window.io,
       PlayerStatus = window.PlayerStatus,
-      Commands = window.Commands
+      Commands = window.Commands,
+      _ = window._
 
   var MudClient = function () {
     var self = this
@@ -139,6 +140,23 @@
 
     this.appendText(title)
     this.appendText(description)
+
+    var exits = {
+      css: 'room-exits',
+      text: 'Exits: [ '
+    }
+
+    _.each(room.exits, function (exit, index) {
+      exits.text += exit.direction
+
+      if (index === room.exits.length - 1) {
+        exits.text += ' ]'
+      } else {
+        exits.text += ' | '
+      }
+    })
+
+    this.appendText(exits)
   }
 
   window.MudClient = MudClient

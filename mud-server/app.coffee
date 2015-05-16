@@ -28,4 +28,5 @@ io.on 'connection', (socket) ->
     server.playerCommand data, socket
 
   socket.on 'disconnect', ->
+    server.disconnectPlayer socket
     console.log 'player disconnected.'

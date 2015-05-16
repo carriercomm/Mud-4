@@ -1,3 +1,4 @@
+_ = require 'underscore'
 UserService = require './service/UserService'
 WorldService = require './service/WorldService'
 Communicator = require './controllers/communicator'
@@ -15,26 +16,59 @@ class MudServer
   start: ->
     @_worldService.loadWorld()
 
+  ## PLAYR METHODS ##
+  getPlayer: (user) ->
+    player = _.find @_players, (player) =>
+      return player.username == user
+
+  getPlayerBySocket: (socket) ->
+    player = _.find @_players, (player) =>
+      return player.socket.id == socket.id
+
+  playerStatus: (user, status) ->
+    player = @getPlayer user
+
+    if status
+      player.status = status
+    else
+      player.status
+
+  getPlayerCharacters: (user) ->
+    player = @getPlayer user
+    player.characters
+
+  setPlayerCharacter: (user, character) =>
+    player = @getPlayer user
+    player.character = character
+
   doLogin: (user, socket) ->
-    @_players[user.id] = {}
-    @_players[user.id]['socket'] = socket
-    @_players[user.id]['status'] = PlayerStatus.ENTER_WORLD
+    player =
+      username: user.id
+      socket:socket
+      status: PlayerStatus.ENTER_WORLD
 
     @_communicator.welcome socket
 
     @_userService.getUserCharacters user.id, (err, characters) =>
       playerCharacters = []
       playerCharacters.push character.name for character in characters
-      @_players[user.id]['characters'] = playerCharacters
+      player.characters = playerCharacters
+
+      @_players.push player
+
       @_communicator.displayCharacters socket, characters
 
+  disconnectPlayer: (socket) ->
+    player = @getPlayerBySocket socket
+    @_players.splice(@_players.indexOf(player), 1)
+
   chooseCharacter: (data, socket) ->
-    command = @_commands.isValid data.command, @_players[data.user]['status']
+    command = @_commands.isValid data.command, @playerStatus data.user
 
     if command.isValid and !command.needsParam
-      @_userService.getCharacter @_players[data.user]['characters'], data.command - 1, (err, character) =>
+      @_userService.getCharacter @getPlayerCharacters(data.user), data.command - 1, (err, character) =>
         unless err
-          @_players[data.user]['status'] = PlayerStatus.STANDING
+          @playerStatus data.user, PlayerStatus.STANDING
 
           # if the character has no set area and room, use the base one
           unless character.area
@@ -42,20 +76,24 @@ class MudServer
             character.area = baseArea.name
             character.room = baseArea.rooms[0]
 
-          @_players[data.user]['character'] = character
+          @setPlayerCharacter data.user, character
           @_communicator.loadCharacter socket, character
           @_communicator.displayPlayerRoom socket, character.room
 
   playerCommand: (data, socket) ->
-    command = @_commands.isValid data.command, @_players[data.user]['status']
+    command = @_commands.isValid data.command, @playerStatus data.user
 
     if command.isValid
       @_commands.parseCommand data.command, data.body, (err, command, body) =>
         unless err
-          @[command](socket, body)
+          @[command](socket, data.user, body)
 
   ## PLAYER COMMANDS ##
   who: (socket) ->
-    # TODO: list to the player all logged in characters
+    @_communicator.who socket, @_players
+
+  look: (socket, user) ->
+    console.log user
+
 
 module.exports = MudServer

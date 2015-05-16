@@ -31,5 +31,8 @@ class Communicator
     Room.findById room, (err, room) =>
       unless err
         @_roomDescription socket, room
+
+  who: (socket, players) ->
+
       
 module.exports = Communicator
