@@ -166,5 +166,12 @@
     })
   }
 
+  MudClient.prototype.onCharConnected = function (data) {
+    this.appendText({
+      css: 'char-connected',
+      text: data
+    })
+  }
+
   window.MudClient = MudClient
 })(this)

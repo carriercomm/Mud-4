@@ -111,6 +111,14 @@ html {
 /*
 * OUTPUT STYLES
 */
+.Warrior {
+  color: #f00;
+}
+
+.Ranger {
+ color: #0c0;
+}
+
 .room-title {
   font-weight: bold;
   color: #ffe39f;
@@ -127,4 +135,10 @@ html {
 
 .who {
   margin-top: 20px;
+}
+
+.char-connected {
+  font-size: 13px;
+  font-style: italic;
+  color: #0ff;
 }

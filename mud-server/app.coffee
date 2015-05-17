@@ -10,7 +10,7 @@ MudServer = require './mudServer'
 mongoose.connect config.url
 server.listen 8080
 
-server = new MudServer()
+server = new MudServer io
 server.start()
 
 io.on 'connection', (socket) ->

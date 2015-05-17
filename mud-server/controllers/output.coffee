@@ -11,7 +11,7 @@ class Output
     chars = 'Select your character: </br>'
 
     _.each data, (char, i) ->
-      chars += "#{i + 1} - #{char.name} (#{char.charClass} level #{char.level})</br>"
+      chars += "#{i + 1} - #{char.name} (#{char.race} #{char.charClass} level #{char.level})</br>"
 
     data =
       text: chars
@@ -25,8 +25,11 @@ class Output
     _.each players, (player) ->
       c = player.character
       if c
-        text += "</br>[ #{c.level} ] - #{c.name} (#{c.race} #{c.charClass})"
+        text += "</br>[ #{c.level} ] - #{c.name} (<span class='#{c.charClass}'>#{c.race} #{c.charClass}</span>)"
 
     text
+
+  charConnected: (character) ->
+    text = "#{character} has come online."
 
 module.exports = Output

@@ -47,6 +47,11 @@
     this._socket.on('who', function (data) {
       self._client.onWho(data)
     })
+
+    // BROADCASTS
+    this._socket.on('charConnected', function (data) {
+      self._client.onCharConnected(data)
+    })
   }
 
   window.Events = Events

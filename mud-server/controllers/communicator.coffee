@@ -4,7 +4,7 @@ Output = require '../controllers/output'
 Commands = require '../controllers/commands'
 
 class Communicator
-  constructor: ->
+  constructor: (@_io) ->
     @_out = new Output()
     @_commands = new Commands()
 
@@ -31,5 +31,9 @@ class Communicator
 
   who: (socket, players) ->
     socket.emit 'who', @_out.who players
+
+  ## BROADCASTS ##
+  charConnected: (socket, character) ->
+    socket.broadcast.emit 'charConnected', @_out.charConnected character
       
 module.exports = Communicator

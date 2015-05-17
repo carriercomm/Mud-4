@@ -6,10 +6,10 @@ Commands = require './controllers/commands'
 PlayerStatus = require './controllers/playerStatus'
 
 class MudServer
-  constructor: ->
+  constructor: (io) ->
     @_players = []
     @_commands = new Commands()
-    @_communicator = new Communicator()
+    @_communicator = new Communicator io
     @_userService = new UserService()
     @_worldService = new WorldService()
 
@@ -79,6 +79,7 @@ class MudServer
           @setPlayerCharacter data.user, character
           @_communicator.loadCharacter socket, character
           @_communicator.displayPlayerRoom socket, character.room
+          @_communicator.charConnected socket, character.name
 
   playerCommand: (data, socket) ->
     command = @_commands.isValid data.command, @playerStatus data.user
