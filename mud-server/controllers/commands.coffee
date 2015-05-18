@@ -11,7 +11,7 @@ class Commands
         'w'
         'who'
         'look'
-        'kill'
+        'whisper'
       ]
     }
 
@@ -21,7 +21,7 @@ class Commands
 
   needsParam: (command) ->
     commandsWithParam = [
-      'kill'
+      'whisper'
     ]
 
     commandsWithParam.indexOf(command) != -1

@@ -18,11 +18,11 @@ class Communicator
     @_simpleText socket, @_out.chooseCharacter characters
 
   loadCharacter: (socket, character) ->
-  	data =
-  		character: character
-  		text: @_out.loadCharacter character
+    data =
+      character: character
+      text: @_out.loadCharacter character
 
-  	socket.emit 'loadCharacter', data
+    socket.emit 'loadCharacter', data
 
   displayPlayerRoom: (socket, room) ->
     Room.findById room, (err, room) =>
@@ -31,6 +31,18 @@ class Communicator
 
   who: (socket, players) ->
     socket.emit 'who', @_out.who players
+
+  whisper: (toPlayer, fromPlayer, messageBody) ->
+    if toPlayer
+      if messageBody[1] and messageBody[1] != ''
+        toChar = toPlayer.character.name
+        fromChar = fromPlayer.character.name
+        toPlayer.socket.emit 'whisper', @_out.whisper toChar, fromChar, messageBody[1], false
+        fromPlayer.socket.emit 'whisper', @_out.whisper toChar, fromChar, messageBody[1], true
+      else
+        fromPlayer.socket.emit 'whisperError', @_out.whisperErrorNoMessage()
+    else
+      fromPlayer.socket.emit 'whisperError', @_out.whisperErrorInvalidTarget messageBody[0]
 
   ## BROADCASTS ##
   charConnected: (socket, character) ->

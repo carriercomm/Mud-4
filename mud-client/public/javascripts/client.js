@@ -17,7 +17,7 @@
 
     this._socket.on('connect', function () {
       console.log('connected with mud server')
-      
+
       $('.hud-bottom').addClass('hidden')
       self.setPlayerStatus(PlayerStatus.ENTER_WORLD)
     })
@@ -55,7 +55,7 @@
           })
         } else {
           this.appendText({
-            css: '',
+            css: 'error',
             text: 'What do you want to ' + splitCommand[0] + '?'
           })
         }
@@ -67,7 +67,7 @@
       }
     } else {
       this.appendText({
-        css: '',
+        css: 'error',
         text: 'Invalid command: ' + splitCommand[0]
       })
     }
@@ -103,8 +103,17 @@
    */
 
   MudClient.prototype.onSimpleText = function (data) {
-    data.css = ''
-    this.appendText(data)
+    this.appendText({
+      css: '',
+      text: data
+    })
+  }
+
+  MudClient.prototype.onError = function (data) {
+    this.appendText({
+      css: 'error',
+      text: data
+    })
   }
 
   MudClient.prototype.onHandshake = function (data) {
@@ -169,6 +178,13 @@
   MudClient.prototype.onCharConnected = function (data) {
     this.appendText({
       css: 'char-connected',
+      text: data
+    })
+  }
+
+  MudClient.prototype.onWhisper = function (data) {
+    this.appendText({
+      css: 'whisper',
       text: data
     })
   }

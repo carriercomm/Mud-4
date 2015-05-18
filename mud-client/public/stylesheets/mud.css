@@ -111,12 +111,29 @@ html {
 /*
 * OUTPUT STYLES
 */
+/* Class colors */
 .Warrior {
   color: #f00;
 }
 
 .Ranger {
  color: #0c0;
+}
+
+.Mage {
+  color: #0ff;
+}
+
+/* Messages */
+.error {
+  font-size: 13px;
+  font-style: italic;
+  color: #f00;
+}
+
+.whisper {
+  font-style: italic;
+  color: #f0f;
 }
 
 .room-title {

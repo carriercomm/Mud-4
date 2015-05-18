@@ -11,7 +11,7 @@
         'w',
         'who',
         'look',
-        'kill'
+        'whisper'
       ]
     }
 
@@ -23,7 +23,7 @@
 
   Commands.prototype.needsParam = function (command) {
     var commandsWithParam = [
-      'kill'
+      'whisper'
     ]
 
     return commandsWithParam.indexOf(command) !== -1

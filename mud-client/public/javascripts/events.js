@@ -48,6 +48,14 @@
       self._client.onWho(data)
     })
 
+    this._socket.on('whisper', function (data) {
+      self._client.onWhisper(data)
+    })
+
+    this._socket.on('whisperError', function (data) {
+      self._client.onError(data)
+    })
+
     // BROADCASTS
     this._socket.on('charConnected', function (data) {
       self._client.onCharConnected(data)

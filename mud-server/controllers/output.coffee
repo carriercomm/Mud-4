@@ -4,8 +4,7 @@ class Output
   constructor: ->
 
   welcome: ->
-    data =
-      text: 'Welcome to tralala MUD'
+    'Welcome to tralala MUD'
 
   chooseCharacter: (data) ->
     chars = 'Select your character: </br>'
@@ -13,8 +12,7 @@ class Output
     _.each data, (char, i) ->
       chars += "#{i + 1} - #{char.name} (#{char.race} #{char.charClass} level #{char.level})</br>"
 
-    data =
-      text: chars
+    chars
 
   loadCharacter: (data) ->
     "You feel the essence of #{data.name} entering your soul..."
@@ -30,6 +28,18 @@ class Output
     text
 
   charConnected: (character) ->
-    text = "#{character} has come online."
+    "#{character} has come online."
+
+  whisper: (to, from, message, invert) ->
+    if invert
+      "You whisper to #{to}: #{message}"
+    else
+      "#{from} whispers to you: #{message}"
+
+  whisperErrorNoMessage: ->
+    "What do you want to whisper?"
+
+  whisperErrorInvalidTarget: (target) ->
+    "There's no \"#{target}\" online"
 
 module.exports = Output

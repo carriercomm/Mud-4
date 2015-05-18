@@ -25,6 +25,10 @@ class MudServer
     player = _.find @_players, (player) =>
       return player.socket.id == socket.id
 
+  getPlayerByCharacter: (character) ->
+    player = _.find @_players, (player) =>
+      return player.character.name.toLowerCase() == character.toLowerCase()
+
   playerStatus: (user, status) ->
     player = @getPlayer user
 
@@ -94,7 +98,15 @@ class MudServer
     @_communicator.who socket, @_players
 
   look: (socket, user) ->
-    console.log user
+    player = @getPlayer user
+    @_communicator.displayPlayerRoom socket, player.character.room
 
+  whisper: (socket, user, body) ->
+    body = body.split(/ (.+)/)
+
+    toPlayer = @getPlayerByCharacter body[0]
+    fromPlayer = @getPlayer user
+
+    @_communicator.whisper toPlayer, fromPlayer, body
 
 module.exports = MudServer
