@@ -109,4 +109,6 @@ class MudServer
 
     @_communicator.whisper toPlayer, fromPlayer, body
 
+  move: (socket, user, body) ->
+
 module.exports = MudServer

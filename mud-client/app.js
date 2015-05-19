@@ -29,6 +29,7 @@ app.set('view engine', 'jade')
 
 app.use(favicon(path.join(__dirname, '/public/favicon.ico')))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'node_modules')))
 app.use(express.static(path.join(__dirname, 'node_modules/socket.io/node_modules/socket.io-client')))
 
 app.use(logger('dev'))

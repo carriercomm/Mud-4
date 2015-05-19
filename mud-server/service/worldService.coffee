@@ -5,6 +5,7 @@ Area = mongoose.model 'Area'
 class WorldService
   constructor: ->
     @_areas = []
+    @_rooms = []
 
   loadWorld: ->
     Area.find (err, areas) =>
@@ -12,7 +13,6 @@ class WorldService
         @_areas = areas
 
   getBaseArea: ->
-    _.find @_areas, (area) ->
-      area.name == 'area 1'
+    @_areas[0]
 
 module.exports = WorldService
