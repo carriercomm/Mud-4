@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "preinstall": "bower install",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -19,10 +18,12 @@
     "express-recaptcha": "^1.0.2",
     "express-session": "*",
     "jade": "1.X",
+    "jquery": "^2.1.4",
     "method-override": "*",
     "mongoose": "^4.0.1",
     "mongoose-auto-increment": "^4.0.0",
     "morgan": "~1.0.0",
+    "normalize.css": "^3.0.3",
     "passport": "*",
     "passport-local": "*",
     "serve-favicon": "*",
