@@ -12,6 +12,7 @@ roomSchema = new Schema
   floor: Number
   coordinates: String
   exits: [exitSchema]
+  characters: Array
 
 areaSchema = new Schema
   name: String

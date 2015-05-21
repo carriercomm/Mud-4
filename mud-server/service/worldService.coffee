@@ -20,6 +20,10 @@ class WorldService
   getBaseArea: ->
     @_areas[0]
 
+  getRoom: (roomId) ->
+    room = _.find @_rooms, (room) =>
+      return room._id.toString() == roomId
+
   getRoomFromExit: (from, direction) ->
     room = _.find @_rooms, (room) =>
       return room._id.toString() == from
@@ -34,5 +38,23 @@ class WorldService
       room
     else
       null
+
+  getRoomFromCharacter: (character) ->
+    room =  _.find @_rooms, (room) =>
+      return room._id.toString() == character.room
+
+  addCharacterToRoom: (character, roomId) ->
+    room = @getRoom roomId
+
+    if room
+      characterAlreadyInRoom = _.find room.charactes, (c) =>
+        return c.name == character.name
+
+      unless characterAlreadyInRoom
+        room.characters.push character
+
+  removeCharacterFromRoom: (character) ->
+    room = @getRoomFromCharacter character
+    room.characters.splice(room.characters.indexOf(character), 1)
 
 module.exports = WorldService

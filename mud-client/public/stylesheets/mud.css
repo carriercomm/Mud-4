@@ -150,6 +150,10 @@ html {
   font-size: 13px;
 }
 
+.room-character {
+  color: #0c0;
+}
+
 .who {
   margin-top: 20px;
 }

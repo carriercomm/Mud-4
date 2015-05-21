@@ -1,5 +1,4 @@
 mongoose = require 'mongoose'
-Room = mongoose.model 'Room'
 Output = require '../controllers/output'
 Commands = require '../controllers/commands'
 
@@ -25,9 +24,7 @@ class Communicator
     socket.emit 'loadCharacter', data
 
   displayPlayerRoom: (socket, room) ->
-    Room.findById room, (err, room) =>
-      unless err
-        socket.emit 'roomDescription', room
+    socket.emit 'roomDescription', room
 
   who: (socket, players) ->
     socket.emit 'who', @_out.who players

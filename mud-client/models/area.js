@@ -12,7 +12,8 @@ var roomSchema = new Schema({
   description: String,
   floor: Number,
   coordinates: String,
-  exits: [exitSchema]
+  exits: [exitSchema],
+  characters: Array
 })
 
 var areaSchema = new Schema({

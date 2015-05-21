@@ -9,8 +9,8 @@ class MudServer
   constructor: (io) ->
     @_players = []
     @_commands = new Commands()
-    @_communicator = new Communicator io
     @_userService = new UserService()
+    @_communicator = new Communicator io
     @_worldService = new WorldService()
 
   start: ->
@@ -79,11 +79,12 @@ class MudServer
             baseArea = @_worldService.getBaseArea()
             character.area = baseArea.name
             character.room = baseArea.rooms[0]
+            @_worldService.addCharacterToRoom character, character.room
 
           @setPlayerCharacter data.user, character
           @_communicator.loadCharacter socket, character
-          @_communicator.displayPlayerRoom socket, character.room
           @_communicator.charConnected socket, character.name
+          @look socket, data.user
 
   playerCommand: (data, socket) ->
     command = @_commands.isValid data.command, @playerStatus data.user
@@ -99,7 +100,9 @@ class MudServer
 
   look: (socket, user) ->
     player = @getPlayer user
-    @_communicator.displayPlayerRoom socket, player.character.room
+    room = @_worldService.getRoom player.character.room
+
+    @_communicator.displayPlayerRoom socket, room
 
   whisper: (socket, user, body) ->
     body = body.split(/ (.+)/)
@@ -114,7 +117,15 @@ class MudServer
     room = @_worldService.getRoomFromExit player.character.room, direction
 
     if room
+      # remove player from the room first
+      @_worldService.removeCharacterFromRoom player.character
+
+      # update room characters
+      @_worldService.addCharacterToRoom player.character, room._id
+
+      # update character room
       player.character.room = room._id
       @look socket, user
 
 module.exports = MudServer
+  

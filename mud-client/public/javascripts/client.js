@@ -166,6 +166,13 @@
     })
 
     this.appendText(exits)
+
+    _.each(room.characters, function (character) {
+      this.appendText({
+        css: 'room-character',
+        text: character.name + ' is here.'
+      })
+    }, this)
   }
 
   MudClient.prototype.onWho = function (data) {
