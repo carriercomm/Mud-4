@@ -47,7 +47,7 @@ class WorldService
     room = @getRoom roomId
 
     if room
-      characterAlreadyInRoom = _.find room.charactes, (c) =>
+      characterAlreadyInRoom = _.find room.characters, (c) =>
         return c.name == character.name
 
       unless characterAlreadyInRoom
@@ -55,6 +55,8 @@ class WorldService
 
   removeCharacterFromRoom: (character) ->
     room = @getRoomFromCharacter character
-    room.characters.splice(room.characters.indexOf(character), 1)
+
+    room.characters = _.reject room.characters, (c) =>
+      return c.name == character.name
 
 module.exports = WorldService
