@@ -28,8 +28,8 @@ class Commands
 
   parseCommand: (command, body, cb) ->
     if command in ['n', 'e', 's', 'w', 'u', 'd']
-      command = 'move'
       body = command
+      command = 'move'
 
     cb null, command, body
 

@@ -74,7 +74,7 @@ class MudServer
         unless err
           @playerStatus data.user, PlayerStatus.STANDING
 
-          # if the character has no set area and room, use the base one
+          # if the character has no area and room set, use the base one
           unless character.area
             baseArea = @_worldService.getBaseArea()
             character.area = baseArea.name
@@ -109,6 +109,12 @@ class MudServer
 
     @_communicator.whisper toPlayer, fromPlayer, body
 
-  move: (socket, user, body) ->
+  move: (socket, user, direction) ->
+    player = @getPlayer user
+    room = @_worldService.getRoomFromExit player.character.room, direction
+
+    if room
+      player.character.room = room._id
+      @look socket, user
 
 module.exports = MudServer
