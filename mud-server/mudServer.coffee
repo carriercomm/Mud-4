@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Redis = require 'ioredis'
 UserService = require './service/UserService'
 WorldService = require './service/WorldService'
 Communicator = require './controllers/communicator'
@@ -7,11 +8,12 @@ PlayerStatus = require './controllers/playerStatus'
 
 class MudServer
   constructor: (io) ->
+    @_redis = new Redis()
     @_players = []
     @_commands = new Commands()
     @_userService = new UserService()
     @_communicator = new Communicator io
-    @_worldService = new WorldService()
+    @_worldService = new WorldService @_redis
 
   start: ->
     @_worldService.loadWorld()
@@ -64,7 +66,9 @@ class MudServer
 
   disconnectPlayer: (socket) ->
     player = @getPlayerBySocket socket
-    @_players.splice(@_players.indexOf(player), 1)
+
+    @_worldService.removeCharacterFromRoom player.character, =>
+      @_players.splice(@_players.indexOf(player), 1)
 
   chooseCharacter: (data, socket) ->
     command = @_commands.isValid data.command, @playerStatus data.user
@@ -76,15 +80,15 @@ class MudServer
 
           # if the character has no area and room set, use the base one
           unless character.area
-            baseArea = @_worldService.getBaseArea()
-            character.area = baseArea.name
-            character.room = baseArea.rooms[0]
-            @_worldService.addCharacterToRoom character, character.room
+            @_worldService.getBaseArea (area) =>
+              character.area = area.name
+              character.room = area.rooms[0]
+              @_worldService.addCharacterToRoom character, character.room, =>
 
-          @setPlayerCharacter data.user, character
-          @_communicator.loadCharacter socket, character
-          @_communicator.charConnected socket, character.name
-          @look socket, data.user
+                @setPlayerCharacter data.user, character
+                @_communicator.loadCharacter socket, character
+                @_communicator.charConnected socket, character.name
+                @look socket, data.user
 
   playerCommand: (data, socket) ->
     command = @_commands.isValid data.command, @playerStatus data.user
@@ -100,9 +104,9 @@ class MudServer
 
   look: (socket, user) ->
     player = @getPlayer user
-    room = @_worldService.getRoom player.character.room
 
-    @_communicator.displayPlayerRoom socket, room
+    @_worldService.getRoom player.character.room, (room) =>
+      @_communicator.displayPlayerRoom socket, room
 
   whisper: (socket, user, body) ->
     body = body.split(/ (.+)/)
@@ -114,18 +118,15 @@ class MudServer
 
   move: (socket, user, direction) ->
     player = @getPlayer user
-    room = @_worldService.getRoomFromExit player.character.room, direction
 
-    if room
-      # remove player from the room first
-      @_worldService.removeCharacterFromRoom player.character
+    @_worldService.getRoomFromExit player.character.room, direction, (room) =>
+      if room
+        @_worldService.removeCharacterFromRoom player.character, =>
+          @_worldService.addCharacterToRoom player.character, room._id, =>
 
-      # update room characters
-      @_worldService.addCharacterToRoom player.character, room._id
-
-      # update character room
-      player.character.room = room._id
-      @look socket, user
+            # update character room
+            player.character.room = room._id
+            @look socket, user
 
 module.exports = MudServer
   

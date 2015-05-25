@@ -1,8 +1,10 @@
+Redis = require 'ioredis'
 mongoose = require 'mongoose'
 Character = mongoose.model 'Character'
 
 class UserService
   constructor: ->
+    @_redis = new Redis()
 
   getUserCharacters: (user, cb) ->
     Character.find {user: user}, (err, data) ->

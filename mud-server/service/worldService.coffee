@@ -4,59 +4,96 @@ Area = mongoose.model 'Area'
 Room = mongoose.model 'Room'
 
 class WorldService
-  constructor: ->
-    @_areas = []
-    @_rooms = []
+  constructor: (@_redis) ->
 
   loadWorld: ->
-    Area.find (err, areas) =>
-      unless err
-        @_areas = areas
+    @_redis.get 'areas', (err, areas) =>
+      unless areas
+        Area.find (err, areas) =>
+          unless err
+            @_redis.set 'areas', JSON.stringify areas
 
-    Room.find (err, rooms) =>
-      unless err
-        @_rooms = rooms
+    @_redis.get 'rooms', (err, rooms) =>
+      unless rooms
+        Room.find (err, rooms) =>
+          unless err
+            @_redis.set 'rooms', JSON.stringify rooms
 
-  getBaseArea: ->
-    @_areas[0]
+  getAreas: (cb) ->
+    @_redis.get 'areas', (err, areas) =>
+      cb err, areas  
 
-  getRoom: (roomId) ->
-    room = _.find @_rooms, (room) =>
-      return room._id.toString() == roomId
+  getBaseArea: (cb) ->
+    @getAreas (err, areas) =>
+      if err
+        cb null
+      else
+        areas = JSON.parse areas
+        cb areas[0]
 
-  getRoomFromExit: (from, direction) ->
-    room = _.find @_rooms, (room) =>
-      return room._id.toString() == from
+  getRooms: (cb) ->
+    @_redis.get 'rooms', (err, rooms) =>
+      cb err, JSON.parse rooms
 
-    exit = _.find room.exits, (exit) =>
-      return exit.direction == direction
+  getRoom: (roomId, cb) ->
+    @getRooms (err, rooms) =>
+      room = _.find rooms, (room) =>
+        return room._id.toString() == roomId
 
-    if exit
-      room = _.find @_rooms, (room) =>
-        return room._id.toString() == exit.to
+      cb room
 
-      room
-    else
-      null
+  getRoomFromExit: (from, direction, cb) ->
+    @getRooms (err, rooms) =>
+      room = _.find rooms, (room) =>
+        return room._id.toString() == from
 
-  getRoomFromCharacter: (character) ->
-    room =  _.find @_rooms, (room) =>
-      return room._id.toString() == character.room
+      exit = _.find room.exits, (exit) =>
+        return exit.direction == direction
 
-  addCharacterToRoom: (character, roomId) ->
-    room = @getRoom roomId
+      if exit
+        room = _.find rooms, (room) =>
+          return room._id.toString() == exit.to
 
-    if room
+        cb room
+      else
+        cb null
+
+  getRoomFromCharacter: (character, cb) ->
+    @getRooms (err, rooms) =>
+      room =  _.find rooms, (room) =>
+        return room._id.toString() == character.room
+
+      cb room
+
+  addCharacterToRoom: (character, roomId, cb) ->
+    @getRooms (err, rooms) =>
+      room = _.find rooms, (room) =>
+        return room._id.toString() == roomId
+    
       characterAlreadyInRoom = _.find room.characters, (c) =>
         return c.name == character.name
 
       unless characterAlreadyInRoom
         room.characters.push character
 
-  removeCharacterFromRoom: (character) ->
-    room = @getRoomFromCharacter character
+      @_redis.set 'rooms', JSON.stringify rooms
 
-    room.characters = _.reject room.characters, (c) =>
-      return c.name == character.name
+      cb()
+
+  removeCharacterFromRoom: (character, cb) ->
+    @getRooms (err, rooms) =>
+      room =  _.find rooms, (room) =>
+        return room._id.toString() == character.room
+
+      index = _.indexOf rooms, room
+
+      room.characters = _.reject room.characters, (c) =>
+        return c.name == character.name
+
+      rooms.splice(index, 1, room)
+
+      @_redis.set 'rooms', JSON.stringify rooms
+
+      cb()
 
 module.exports = WorldService

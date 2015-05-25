@@ -134,6 +134,7 @@
     this.appendText(data)
     this.updateHud(data.character)
     this.setPlayerStatus(PlayerStatus.STANDING)
+    this.charName = data.character.name
   }
 
   MudClient.prototype.onRoomDescription = function (room) {
@@ -168,10 +169,12 @@
     this.appendText(exits)
 
     _.each(room.characters, function (character) {
-      this.appendText({
-        css: 'room-character',
-        text: character.name + ' is here.'
-      })
+      if (character.name !== this.charName) {
+        this.appendText({
+          css: 'room-character',
+          text: character.name + ' is here.'
+        })
+      }
     }, this)
   }
 
