@@ -15,11 +15,13 @@ server.start()
 
 io.on 'connection', (socket) ->
   console.log 'player connected'
+  user = ''
 
   socket.emit 'handshake'
 
   socket.on 'login', (data) ->
     server.doLogin data, socket
+    user = data.id
 
   socket.on 'chooseCharacter', (data) ->
     server.chooseCharacter data, socket
@@ -28,5 +30,5 @@ io.on 'connection', (socket) ->
     server.playerCommand data, socket
 
   socket.on 'disconnect', ->
-    server.disconnectPlayer socket
+    server.disconnectPlayer socket, user
     console.log 'player disconnected.'

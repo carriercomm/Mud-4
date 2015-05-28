@@ -69,12 +69,8 @@ class WorldService
     @getRooms (err, rooms) =>
       room = _.find rooms, (room) =>
         return room._id.toString() == roomId
-    
-      characterAlreadyInRoom = _.find room.characters, (c) =>
-        return c.name == character.name
 
-      unless characterAlreadyInRoom
-        room.characters.push character
+      room.characters.push character
 
       @_redis.set 'rooms', JSON.stringify rooms
 
@@ -87,12 +83,12 @@ class WorldService
 
       index = _.indexOf rooms, room
 
-      room.characters = _.reject room.characters, (c) =>
-        return c.name == character.name
+      if index != -1
+        room.characters = _.reject room.characters, (c) =>
+          return c.name == character.name
 
-      rooms.splice(index, 1, room)
-
-      @_redis.set 'rooms', JSON.stringify rooms
+        rooms.splice index, 1, room
+        @_redis.set 'rooms', JSON.stringify rooms
 
       cb()
 

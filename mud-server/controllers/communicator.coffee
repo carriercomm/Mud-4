@@ -29,17 +29,17 @@ class Communicator
   who: (socket, players) ->
     socket.emit 'who', @_out.who players
 
-  whisper: (toPlayer, fromPlayer, messageBody) ->
+  whisper: (toPlayer, toSocket, fromPlayer, fromSocket, messageBody) ->
     if toPlayer
       if messageBody[1] and messageBody[1] != ''
         toChar = toPlayer.character.name
         fromChar = fromPlayer.character.name
-        toPlayer.socket.emit 'whisper', @_out.whisper toChar, fromChar, messageBody[1], false
-        fromPlayer.socket.emit 'whisper', @_out.whisper toChar, fromChar, messageBody[1], true
+        toSocket.emit 'whisper', @_out.whisper toChar, fromChar, messageBody[1], false
+        fromSocket.emit 'whisper', @_out.whisper toChar, fromChar, messageBody[1], true
       else
-        fromPlayer.socket.emit 'whisperError', @_out.whisperErrorNoMessage()
+        fromSocket.emit 'whisperError', @_out.whisperErrorNoMessage()
     else
-      fromPlayer.socket.emit 'whisperError', @_out.whisperErrorInvalidTarget messageBody[0]
+      fromSocket.emit 'whisperError', @_out.whisperErrorInvalidTarget messageBody[0]
 
   ## BROADCASTS ##
   charConnected: (socket, character) ->
