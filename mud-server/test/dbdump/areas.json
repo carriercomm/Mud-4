@@ -1,0 +1,2 @@
+{"__v":NumberInt(0),"_id":{"$oid":"555a86a33d1f3fe804b99630"},"description":"Area 1 super cool","name":"Area 1","rooms":[{"$oid":"555a86a33d1f3fe804b9962f"},{"$oid":"555a86b93d1f3fe804b99631"},{"$oid":"555a86cc3d1f3fe804b99632"},{"$oid":"555a86e53d1f3fe804b99633"}]}
+{"__v":NumberInt(0),"_id":{"$oid":"555e676e6a79c6561bcdf68f"},"description":"Area 2 super cool too","name":"Area 2","rooms":[{"$oid":"555e676e6a79c6561bcdf68e"}]}

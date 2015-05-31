@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "my mud",
   "scripts": {
-    "start": "coffee app.coffee"
+    "start": "coffee app.coffee",
+    "test": "mocha test/ --compilers coffee:coffee-script/register"
   },
   "dependencies": {
     "body-parser": "*",

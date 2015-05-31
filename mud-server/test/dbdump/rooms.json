@@ -1,0 +1,5 @@
+{"__v":NumberInt(0),"_id":{"$oid":"555a86a33d1f3fe804b9962f"},"coordinates":"0,0,0","description":"Room 1 description","exits":[{"direction":"e","to":"555a86b93d1f3fe804b99631"}],"floor":NumberInt(0),"title":"Room 1"}
+{"__v":NumberInt(0),"_id":{"$oid":"555a86b93d1f3fe804b99631"},"coordinates":"1,0,0","description":"Room 2 description","exits":[{"direction":"w","to":"555a86a33d1f3fe804b9962f"},{"direction":"n","to":"555a86cc3d1f3fe804b99632"},{"direction":"s","to":"555a86e53d1f3fe804b99633"}],"floor":NumberInt(0),"title":"Room 2"}
+{"__v":NumberInt(0),"_id":{"$oid":"555a86cc3d1f3fe804b99632"},"coordinates":"1,-1,0","description":"Room 3 description","exits":[{"direction":"s","to":"555a86b93d1f3fe804b99631"}],"floor":NumberInt(0),"title":"Room 3"}
+{"__v":NumberInt(0),"_id":{"$oid":"555a86e53d1f3fe804b99633"},"coordinates":"1,1,0","description":"Room 4 description","exits":[{"direction":"n","to":"555a86b93d1f3fe804b99631"}],"floor":NumberInt(0),"title":"Room 4"}
+{"__v":NumberInt(0),"_id":{"$oid":"555e676e6a79c6561bcdf68e"},"characters":[],"coordinates":"0,0,0","description":"This is my description","exits":[],"floor":NumberInt(0),"title":"Room 2.1"}

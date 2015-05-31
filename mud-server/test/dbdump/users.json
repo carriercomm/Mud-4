@@ -1,0 +1,3 @@
+{"__v":NumberInt(0),"_id":"jessicacsilva","group":"players","local":{"email":"jessicac.silva@yahoo.com.br","password":"$2a$08$v//jH7rBfyuKqIOoR2Q5G.t/NDvC9dw8c4NlW1r.Lypd6.ly8bogS"}}
+{"__v":NumberInt(0),"_id":"ss","group":"players","local":{"email":"sschezar@gmail.com","password":"$2a$08$sLq6Y1HW3qRla4CdiTTFX.ZcVogky2pba82aC2Jw5Ho4ToXq8XkJi"}}
+{"__v":NumberInt(0),"_id":"sschezar","group":"admins","local":{"email":"me@sschezar.rocks","password":"$2a$08$dBVshL7qtO.LrEGTJkG.fuPDPMu5n2EudC6nx1BlGbNtvwVAlbvxe"}}

@@ -6,29 +6,37 @@ Room = mongoose.model 'Room'
 class WorldService
   constructor: (@_redis) ->
 
-  loadWorld: ->
+  loadWorld: (cb) ->
     @_redis.get 'areas', (err, areas) =>
       unless areas
         Area.find (err, areas) =>
           unless err
             @_redis.set 'areas', JSON.stringify areas
 
-    @_redis.get 'rooms', (err, rooms) =>
-      unless rooms
-        Room.find (err, rooms) =>
-          unless err
-            @_redis.set 'rooms', JSON.stringify rooms
+          @_redis.get 'rooms', (err, rooms) =>
+            unless rooms
+              Room.find (err, rooms) =>
+                unless err
+                  @_redis.set 'rooms', JSON.stringify rooms
+
+                cb() if cb
+            else
+              cb() if cb
+      else
+        cb() if cb
 
   getAreas: (cb) ->
     @_redis.get 'areas', (err, areas) =>
-      cb err, areas  
+      if err
+        cb err, null
+      else
+        cb null, JSON.parse areas
 
   getBaseArea: (cb) ->
     @getAreas (err, areas) =>
       if err
         cb null
       else
-        areas = JSON.parse areas
         cb areas[0]
 
   getRooms: (cb) ->

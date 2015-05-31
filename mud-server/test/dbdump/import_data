@@ -1,0 +1,4 @@
+mongoimport --db mud-test --collection areas areas.json
+mongoimport --db mud-test --collection rooms rooms.json
+mongoimport --db mud-test --collection users users.json
+mongoimport --db mud-test --collection characters characters.json

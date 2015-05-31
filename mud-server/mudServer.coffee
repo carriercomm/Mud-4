@@ -8,7 +8,7 @@ PlayerStatus = require './controllers/playerStatus'
 
 class MudServer
   constructor: (io) ->
-    redis = new Redis()
+    redis = new Redis 'redis://127.0.0.1:6379/0'
     @_commands = new Commands()
     @_userService = new UserService redis
     @_communicator = new Communicator io
@@ -16,7 +16,8 @@ class MudServer
 
   start: ->
     @_sockets = {}
-    @_worldService.loadWorld()
+    @_worldService.loadWorld ->
+      console.log 'World loaded...'
 
   doLogin: (user, socket) ->
     @_sockets[user.id] = socket
