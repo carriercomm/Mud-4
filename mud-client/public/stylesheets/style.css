@@ -65,6 +65,30 @@ hr {
   background-image: -webkit-linear-gradient(0deg, #fff, #c0c8c9, #fff);
 }
 
+.bg {
+  position: relative;
+  background: url('../images/bg_1_1080.jpg') center/cover;
+  width: 100%;
+  height: 100vh;
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+}
+
+.logo-2 {
+  position: absolute;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 10vw;
+  color: #fff;
+  text-decoration: none;
+  top: 50vh;
+  margin-top: -5vw;
+  margin-left: 20%;
+  text-shadow: 3px 3px 5px #000;
+}
+
 /*
 LOGIN
 */
@@ -76,7 +100,7 @@ LOGIN
   align-content: flex-start;
   align-items: center;
   height: 100vh;
-  background-color: #fff;
+  background: url('../images/bg_1_1080.jpg') center/cover;
 }
 
 .login-logo {
@@ -149,9 +173,9 @@ REGISTER
 */
 .register {
   height: 526px;
-  background-color: #fff;
+  color: #fff;
   border-radius: 10px;
-  border: 1px solid #6496c8;
+  /*border: 1px solid #6496c8;*/
   box-sizing: border-box;
   padding: 2%;
   text-align: center;
@@ -253,6 +277,14 @@ textarea {
   border: 1px solid #ddd;
   width: 100%;
   height: 500px;
+}
+
+.floor {
+  margin-bottom: 20px;
+}
+
+.floor-select {
+  width: 50px;
 }
 
 /*
@@ -374,6 +406,10 @@ section.flat button.active {
 
 .margin-right-15 {
   margin-right: 15px;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
 }
 
 .small-link {

@@ -1,10 +1,10 @@
 var express = require('express')
 var router = express.Router()
 
-router.get('/', ensureAuthentication, function (req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', {
     isLoggedIn: req.isAuthenticated(),
-    isAdmin: req.user.group === 'admins',
+    isAdmin: req.isAuthenticated() ? req.user.group === 'admins' : null,
     user: req.user
   })
 })
@@ -19,13 +19,5 @@ router.get('/', ensureAuthentication, function (req, res, next) {
   req.logout()
   res.redirect('/')
 })
-
-function ensureAuthentication (req, res, next) {
-  if (req.isAuthenticated()) {
-    next()
-  } else {
-    res.render('login')
-  }
-}
 
 module.exports = router

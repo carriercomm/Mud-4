@@ -23,8 +23,6 @@ Rooms.prototype.getAreaRooms = function (cb) {
 }
 
 Rooms.prototype.showEditRoomInfo = function () {
-  var self = this
-
   this.getRoom(this.selectedNode.id, function (room) {
     if (room) {
       $('#roomInfo').removeClass('display-none')
