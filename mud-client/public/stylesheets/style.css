@@ -82,11 +82,20 @@ hr {
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 10vw;
   color: #fff;
-  text-decoration: none;
   top: 50vh;
   margin-top: -5vw;
   margin-left: 20%;
   text-shadow: 3px 3px 5px #000;
+}
+
+.logo-text {
+  position: absolute;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 2vw;
+  color: #fff;
+  top: 66vh;
+  left: 29%;
+  margin-top: -1vw;
 }
 
 /*
