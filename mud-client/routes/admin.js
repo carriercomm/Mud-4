@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var utils = require('../helper/utils')
+var _ = require('underscore')
 
 var mongoose = require('mongoose')
 var Area = mongoose.model('Area')
@@ -72,12 +73,20 @@ router.get('/', function (req, res) {
     }, function (err, rooms) {
       if (err) throw err
 
+      var allFloors = _.pluck(rooms, 'floor')
+      var floors = []
+
+      for (var i = _.min(allFloors); i <= _.max(allFloors); i++) {
+        floors.push(i)
+      }
+
       res.render('admin/rooms', {
         isLoggedIn: req.isAuthenticated(),
         isAdmin: req.user.group === 'admins',
         user: req.user,
         area: area,
-        rooms: rooms
+        rooms: rooms,
+        floors: floors
       })
     })
   })

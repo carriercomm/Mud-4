@@ -55,4 +55,6 @@ block content
   .floor
     span Floor: &nbsp;
     select.floor-select
+      each floor in floors
+        option(value=floor)=floor
   #rooms-nodes
