@@ -1,6 +1,6 @@
 var $ = window.$
 
-$('document').ready(function () {
+$(window).load(function () {
   $('.logo-2').removeClass('hidden')
   $('.logo-2').addClass('animated bounceInLeft')
 
