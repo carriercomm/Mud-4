@@ -8,7 +8,7 @@ select {
 }
 
 .content {
-  margin: 0px auto 50px auto;
+  margin: 20px auto 50px auto;
   width: 70%;
 }
 
@@ -130,36 +130,29 @@ a {
 HEADER
 */
 .header {
+  position: absolute;
+  top: 0;
+  z-index: 1;
   width: 100%;
-  min-height: 120px;
-  margin-bottom: 1.5rem;
-  background-color: #fff;
-  border-top: solid 6px #6496c8;
-  border-bottom:solid 1px #f2f2f2;
+  min-height: 40px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-around;
-}
-
-.header-container {
-  width: 500px;
-  margin: 15px auto;
-  text-align: center;
+  color: #fff;
 }
 
 .logo {
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 50px;
-  color: #000;
   text-decoration: none;
+  color: #fff;
 }
 
 .navbar a {
-  /*color: #1e73be;*/
-  color: #000;
   text-decoration: none;
   margin-right: 15px;
+  color: #fff;
 }
 
 .navbar { 
@@ -175,6 +168,26 @@ HEADER
 
 .a-selected {
   border-bottom: solid 6px #6496c8;
+}
+
+.header-content {
+  border-top: solid 6px #6496c8;
+  border-bottom:solid 1px #f2f2f2;
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+  color: #000;
+}
+
+.header-content .navbar a {
+  color: #000;
+}
+
+.header-content .logo {
+  color: #000;
 }
 
 /*
@@ -249,8 +262,6 @@ PROFILE
   height: 60px;
   min-width: 400px;
   border-radius: 10px;
-  /*background-color: #000;*/
-  /*color: #ddd;*/
 }
 
 .char-frame-warrior {
@@ -296,6 +307,9 @@ textarea {
   width: 50px;
 }
 
+.content .navbar a {
+  color: #000;
+}
 /*
 OTHER STYLES
 */

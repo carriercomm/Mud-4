@@ -4,31 +4,22 @@ html
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/stylesheets/animate.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
   body
-    .full-header
-      .bg
-      .logo-2
-        span SS MUD
-      .logo-text.hidden
-        span Brief description about the game
-
-    .fixed-header
-      .header
-        a.logo(href='/') SS MUD
-        nav.navbar
-          if isLoggedIn
-            a.play(href='/play') PLAY
-            a(href='/profile') PROFILE (#{user._id})
-            span.margin-right-15 |
-            if isAdmin
-              a(href='/admin') ADMIN PANEL
-            a(href='/logout') LOGOUT
-          else
-            a(id='log-in', href='/login') LOG IN
-            a(id='log-in', href='/signup') REGISTER
+    .header-content
+      a.logo(href='/') BADASS LOGO
+      nav.navbar
+        if isLoggedIn
+          a.play(href='/play') PLAY
+          a(href='/profile') PROFILE (#{user._id})
+          span.margin-right-15 |
+          if isAdmin
+            a(href='/admin') ADMIN PANEL
+          a(href='/logout') LOGOUT
+        else
+          a(id='log-in', href='/login') LOG IN
+          a(id='log-in', href='/signup') REGISTER
 
     div.content
       block content
@@ -38,5 +29,4 @@ html
     script(type='text/javascript', src='/javascripts/validation.js')
     script(type='text/javascript', src='/javascripts/cookie.js')
     script(type='text/javascript', src='/javascripts/newchar.js')
-    script(type='text/javascript', src='/javascripts/site.js')
     script(src='https://www.google.com/recaptcha/api.js')
