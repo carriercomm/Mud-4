@@ -9,3 +9,16 @@ $(window).load(function () {
     $('.logo-text').addClass('animated bounceInRight')
   }, 1000)
 })
+
+$(document).ready(function () {
+  var wow = new WOW()
+  wow.init()
+
+  $(window).on('scroll', function () {
+    if ($('.full-header').visible()) {
+      $('.header').removeClass('header-overlay')
+    } else {
+      $('.header').addClass('header-overlay')
+    }
+  })
+})

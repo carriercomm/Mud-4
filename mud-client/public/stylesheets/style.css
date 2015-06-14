@@ -1,7 +1,13 @@
 html {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
   background-color: #f9f9f9;
   overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: 'Roboto Slab', serif;
 }
 
 select {
@@ -9,7 +15,6 @@ select {
 }
 
 .home-content {
-  z-index: 999;
   background-color: #fff;
   position: absolute;
   top: 100vh;
@@ -31,6 +36,7 @@ select {
 .grid-flex-start,
 .grid-flex-end,
 .grid-space-around {
+  height: 100%;
   display: flex;
   flex-flow: row wrap;
   padding: 0;
@@ -52,12 +58,10 @@ select {
 
 .error {
   color: #d00;
-  font-size: 15px;
 }
 
 .success {
   color: #0d0;
-  font-size: 15px;
 }
 
 hr {
@@ -74,25 +78,17 @@ hr {
   background-image: -webkit-linear-gradient(0deg, #fff, #c0c8c9, #fff);
 }
 
-.bg {
-  position: fixed;
-  top: 0;
-  z-index: 1;
+.full-header {
   background: url('../images/bg_1_1080.jpg') center/cover;
+  background-attachment: fixed;
   width: 100%;
   height: 100vh;
-  filter: blur(1px);
-  -webkit-filter: blur(1px);
-  -moz-filter: blur(1px);
-  -o-filter: blur(1px);
-  -ms-filter: blur(1px);
 }
 
 .logo-2 {
-  z-index: 2;
   position: absolute;
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 10vw;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 6vw;
   color: #fff;
   top: 50vh;
   margin-top: -5vw;
@@ -101,9 +97,8 @@ hr {
 }
 
 .logo-text {
-  z-index: 2;
   position: absolute;
-  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   font-size: 2vw;
   color: #fff;
   top: 66vh;
@@ -115,7 +110,7 @@ hr {
 LOGIN
 */
 .login-content {
-  display:flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
@@ -126,8 +121,8 @@ LOGIN
 }
 
 .login-logo {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 50px;
+  font-family: 'Roboto Slab', serif;
+  font-size: 40px;
 }
 
 .buttons {
@@ -143,20 +138,28 @@ a {
 HEADER
 */
 .header {
-  position: absolute;
-  top: 0;
-  z-index: 2;
+  position: fixed;
+  z-index: 999;
   width: 100%;
-  min-height: 40px;
+  min-height: 10vh;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-around;
   color: #fff;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.header-overlay {
+  background-color: #000;
+  box-shadow: 0 3px 5px black;
 }
 
 .logo {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   font-size: 50px;
   text-decoration: none;
   color: #fff;
@@ -210,7 +213,6 @@ REGISTER
   height: 526px;
   color: #fff;
   border-radius: 10px;
-  /*border: 1px solid #6496c8;*/
   box-sizing: border-box;
   padding: 2%;
   text-align: center;
@@ -325,13 +327,55 @@ textarea {
 }
 
 /*
+SECTIONS
+*/
+.home-content {
+  width: 100%;
+}
+
+.home-content section {
+  height: 90vh;
+}
+
+.section-1 {
+  background-color: #fff;
+  color: #000;
+  font-size: 120%;
+}
+
+.section-2 {
+  color: #fff;
+  background: url('../images/bg_1_1080.jpg') center/cover;
+  background-attachment: fixed;
+}
+
+.section-2 img {
+  width: 25vh;
+}
+
+.footer {
+  box-shadow: 0 -3px 5px black; 
+  height: 20vh;
+  background-color: #eef4ed;
+}
+
+.text-block {
+  width: 500px; 
+}
+
+.race-grid {
+  list-style-type: none;
+}
+
+/*
 OTHER STYLES
 */
 input {
+  color: #000;
   display: block;
   margin: 0 0 10px;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   font-size: 18px;
   appearance: none;
   box-shadow: none;
@@ -378,7 +422,7 @@ button {
   display: inline-block;
   padding: 7px 30px;
   font-size: 25px;
-  font-family: "Bitter", serif;
+  font-family: 'Roboto Slab', serif;
   line-height: 1.8;
   appearance: none;
   box-shadow: none;

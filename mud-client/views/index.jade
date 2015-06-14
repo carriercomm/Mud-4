@@ -6,16 +6,10 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/animate.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Press+Start+2P', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto', rel='stylesheet', type='text/css')
   body
-    .bg
-
-    .logo-2.hidden
-      span GAME NAME
-    .logo-text.hidden
-        span Brief description about the game
-
-    .header
+    .header.animated
       a.logo(href='/') BADASS LOGO
       nav.navbar
         if isLoggedIn
@@ -29,10 +23,44 @@ html
           a(id='log-in', href='/login') LOG IN
           a(id='log-in', href='/signup') REGISTER
 
+    .full-header
+      .logo-2.hidden
+        span GAME NAME
+      .logo-text.hidden
+          span Brief description about the game
+
     .home-content
+      section(class='section-1')
+        .grid-space-around
+          .grid-cell.text-block.wow.slideInLeft
+            h1 Explore!
+            p.
+              Game Name is an Online RPG, based on the MUD style. Here, you can
+              adventure through valleys, explore dungeons, and face the bravest
+              of the enemies. Level up your character, gather equipment, master
+              the spells and abilities, and become the strongest of them all!
+
+          .grid-cell.wow.slideInRight
+            img(src='/images/elf-mage-1.png')
+      section(class='section-2')
+        .grid-space-around
+          .grid-cell.wow.zoomInLeft
+            ul.race-grid
+              li
+                img(src='/images/characters/elf.png')
+                img(src='/images/characters/human.png')
+              li
+                img(src='/images/characters/dwarf.png')
+                img(src='/images/characters/orc.png')
+          .grid-cell.wow.zoomInRight
+            h1 Choose between several races!
+
+      .footer
 
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/underscore/underscore-min.js')
+    script(type='text/javascript', src='/javascripts/jquery.visible.min.js')
+    script(type='text/javascript', src='/javascripts/wow.min.js')
     script(type='text/javascript', src='/javascripts/validation.js')
     script(type='text/javascript', src='/javascripts/cookie.js')
     script(type='text/javascript', src='/javascripts/newchar.js')
