@@ -9,15 +9,15 @@ html
     link(href='http://fonts.googleapis.com/css?family=Press+Start+2P', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto', rel='stylesheet', type='text/css')
   body
-    .header.animated
-      a.logo(href='/') BADASS LOGO
-      nav.navbar
+    .header
+      nav.navbar.navbar-left
         if isLoggedIn
-          a.play(href='/play') PLAY
+          a(href='/play') PLAY
+        a(href='/game-guide') GAME GUIDE
+      a.logo(href='/') BADASS LOGO
+      nav.navbar.navbar-right
+        if isLoggedIn
           a(href='/profile') PROFILE (#{user._id})
-          span.margin-right-15 |
-          if isAdmin
-            a(href='/admin') ADMIN PANEL
           a(href='/logout') LOGOUT
         else
           a(id='log-in', href='/login') LOG IN
@@ -32,7 +32,7 @@ html
     .home-content
       section(class='section-1')
         .grid-space-around
-          .grid-cell.text-block.wow.slideInLeft
+          .grid-cell.text-block
             h1 Explore!
             p.
               Game Name is an Online RPG, based on the MUD style. Here, you can
@@ -40,11 +40,11 @@ html
               of the enemies. Level up your character, gather equipment, master
               the spells and abilities, and become the strongest of them all!
 
-          .grid-cell.wow.slideInRight
+          .grid-cell
             img(src='/images/elf-mage-1.png')
       section(class='section-2')
         .grid-space-around
-          .grid-cell.wow.zoomInLeft
+          .grid-cell
             ul.race-grid
               li
                 img(src='/images/characters/elf.png')
@@ -52,7 +52,7 @@ html
               li
                 img(src='/images/characters/dwarf.png')
                 img(src='/images/characters/orc.png')
-          .grid-cell.wow.zoomInRight
+          .grid-cell
             h1 Choose between several races!
 
       .footer
