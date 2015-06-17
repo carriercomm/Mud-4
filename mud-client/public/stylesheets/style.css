@@ -141,7 +141,7 @@ HEADER
   position: fixed;
   z-index: 999;
   width: 100%;
-  min-height: 10vh;
+  min-height: 5vh;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -160,7 +160,7 @@ HEADER
 
 .logo {
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
-  font-size: 50px;
+  font-size: 30px;
   text-decoration: none;
   color: #fff;
 }
@@ -334,7 +334,7 @@ SECTIONS
 }
 
 .home-content section {
-  height: 90vh;
+  height: 95vh;
 }
 
 .section-1 {
