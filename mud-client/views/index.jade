@@ -14,7 +14,7 @@ html
         if isLoggedIn
           a(href='/play') PLAY
         a(href='/game-guide') GAME GUIDE
-      a.logo(href='/') BADASS LOGO
+      a.logo(href='/') TEARDROP
       nav.navbar.navbar-right
         if isLoggedIn
           a(href='/profile') PROFILE (#{user._id})
@@ -25,7 +25,7 @@ html
 
     .full-header
       .logo-2.hidden
-        span GAME NAME
+        span Teardrop
       .logo-text.hidden
           span Brief description about the game
 
@@ -35,7 +35,7 @@ html
           .grid-cell.text-block
             h1 Explore!
             p.
-              Game Name is an Online RPG, based on the MUD style. Here, you can
+              Teardrop is an Online RPG, based on the MUD style. Here, you can
               adventure through valleys, explore dungeons, and face the bravest
               of the enemies. Level up your character, gather equipment, master
               the spells and abilities, and become the strongest of them all!
@@ -56,6 +56,15 @@ html
             h1 Choose between several races!
 
       .footer
+        .footer-logo
+          p Teardrop
+        .footer-links
+          a(href='https://en.wikipedia.org/?title=MUD') What is MUD? &nbsp; - &nbsp;
+          a(href='https://github.com/sschezar/Mud') github
+
+          p
+            span Hosted by &nbsp;
+            a(href='http://www.digitalocean.com') Digital Ocean
 
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/underscore/underscore-min.js')

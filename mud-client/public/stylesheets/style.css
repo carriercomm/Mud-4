@@ -154,7 +154,8 @@ HEADER
 }
 
 .header-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(49, 61, 56, 0.9);
+  box-shadow: 0 3px 5px black;
 }
 
 .logo {
@@ -354,8 +355,34 @@ SECTIONS
 
 .footer {
   box-shadow: 0 -3px 5px black; 
-  height: 20vh;
-  background-color: #eef4ed;
+  height: 150px;
+  padding-top: 18px;
+  background-color: #313d38;
+  text-align: center;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+.footer-logo p {
+  margin-bottom: 5px;
+}
+
+.footer-links {
+  font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
+  font-size: 75%;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-links a {
+  color: #fff;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .text-block {
