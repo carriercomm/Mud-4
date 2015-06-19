@@ -1,17 +1,17 @@
 extend layout
 
 block content
-  .grid-space-around
-    a.add-char(href='/profile/' + user._id + '/newchar') Create new character
-
   if message && message.length
     .grid-space-around
       p.success= message
 
   if characters && characters.length
-    .grid-flex-start
-      h3 Your characters:
+    .characters.grid-space-around
+      each character in characters
+        div(class='grid-space-around char-frame char-frame-#{character.charClass}')
+          span= character.name
+  else
+    h3 You have no characters created.
 
-    each character in characters
-      div(class='grid-space-around char-frame char-frame-#{character.charClass}')
-        span= character.name
+  .grid-space-around.margin-top-20
+    a.add-char(href='/profile/' + user._id + '/newchar') Create new character

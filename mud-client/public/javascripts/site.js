@@ -1,30 +1,12 @@
 var $ = window.$
 
-$(window).load(function () {
-  $('.logo-2').removeClass('hidden')
-  $('.logo-2').addClass('animated bounceInLeft')
-
-  setTimeout(function () {
-    $('.logo-text').removeClass('hidden')
-    $('.logo-text').addClass('animated bounceInRight')
-  }, 1000)
-
-  handleHeaderOverlay()
-})
-
 $(document).ready(function () {
-  var wow = new WOW()
-  wow.init()
+  // menu events
+  $('#play-link').click(function () {
+    window.location.replace('http://localhost:3000/play')
+  })
 
-  $(window).on('scroll', function () {
-    handleHeaderOverlay()
+  $('#game-guide-link').click(function () {
+    window.location.replace('http://localhost:3000/gameguide')
   })
 })
-
-function handleHeaderOverlay () {
-  if ($('.full-header').visible()) {
-    $('.header').removeClass('header-overlay')
-  } else {
-    $('.header').addClass('header-overlay')
-  }
-}

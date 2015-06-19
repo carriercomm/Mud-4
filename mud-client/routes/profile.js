@@ -76,7 +76,6 @@ router.get('/', function (req, res) {
         if (err) {
           res.json({error: true, message: 'Error creating character.'})
         } else {
-          req.flash('newChar', '' + data.name + ' created!')
           res.json({error: false, message: 'Character created successfully.'})
         }
       })

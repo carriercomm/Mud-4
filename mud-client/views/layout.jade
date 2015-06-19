@@ -5,29 +5,53 @@ html
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto', rel='stylesheet', type='text/css')
   body
-    .header-content
-      nav.navbar.navbar-left
-        if isLoggedIn
-          a(href='/play') PLAY
-        a(href='/game-guide') GAME GUIDE
-      a.logo(href='/') BADASS LOGO
-      nav.navbar.navbar-right
-        if isLoggedIn
-          a(href='/profile') PROFILE (#{user._id})
-          a(href='/logout') LOGOUT
-        else
-          a(id='log-in', href='/login') LOG IN
-          a(id='log-in', href='/signup') REGISTER
+    .wrapper
+      .header-layout
+        a.logo(href='/') TEARDROP
+        nav.navbar
+          if isLoggedIn
+            .nav-item
+              img#play-link(src='/images/play.png')
+              div
+                a(href='/play') PLAY
+          .nav-item
+            img#game-guide-link(src='/images/game_guide.png')
+            div
+              a(href='/gameguide') GAME GUIDE
+      
+      if isLoggedIn
+        .user-loggedin-data
+          img(src='/images/user.png')
+          span= user._id
+          a(href='/profile') &nbsp;( View profile
+          span &nbsp; | &nbsp;
+          a(href='/logout') Logout )
+      else
+        .user-loggedout-data
+          a(href='/login') LOG IN
+          a(href='/signup') REGISTER
 
-    div.content
-      block content
+      .content
+        block content
+
+      .footer
+        .footer-logo
+          p Teardrop
+        .footer-links
+          a(href='https://en.wikipedia.org/?title=MUD') What is MUD? &nbsp; - &nbsp;
+          a(href='https://github.com/sschezar/Mud') github
+
+          p
+            span Hosted by &nbsp;
+            a(href='http://www.digitalocean.com') Digital Ocean
 
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/underscore/underscore-min.js')
     script(type='text/javascript', src='/javascripts/validation.js')
     script(type='text/javascript', src='/javascripts/cookie.js')
     script(type='text/javascript', src='/javascripts/newchar.js')
+    script(type='text/javascript', src='/javascripts/site.js')
     script(src='https://www.google.com/recaptcha/api.js')

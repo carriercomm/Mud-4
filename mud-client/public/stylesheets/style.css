@@ -1,9 +1,11 @@
-html {
+html,
+body {
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  background-color: #f9f9f9;
+  background-color: #fff;
   overflow-x: hidden;
+  height: 100%;
 }
 
 h1, h2, h3 {
@@ -14,6 +16,16 @@ select {
   width: 380px;
 }
 
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
 .home-content {
   background-color: #fff;
   position: absolute;
@@ -22,8 +34,8 @@ select {
 }
 
 .content {
-  margin: 20px auto 50px auto;
-  width: 70%;
+  margin-top: 60px;
+  padding-bottom: 150px;
 }
 
 .content p {
@@ -129,16 +141,12 @@ LOGIN
   margin: 15px 0;
 }
 
-a {
-  text-decoration: none;
-  color: #6496c8;
-}
-
 /*
 HEADER
 */
 .header {
-  position: fixed;
+  position: absolute;
+  top: 0;
   z-index: 999;
   width: 100%;
   min-height: 5vh;
@@ -166,9 +174,9 @@ HEADER
 }
 
 .navbar a {
+  color: #fff;
   text-decoration: none;
   margin-right: 15px;
-  color: #fff;
 }
 
 .navbar { 
@@ -188,7 +196,7 @@ HEADER
 
 .header-content {
   border-top: solid 6px #6496c8;
-  border-bottom:solid 1px #f2f2f2;
+  border-bottom: solid 1px #f2f2f2;
   width: 100%;
   min-height: 40px;
   display: flex;
@@ -206,6 +214,38 @@ HEADER
   color: #000;
 }
 
+.header-layout {
+  height: 150px;
+  background-color: #000;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+  color: #fff;
+}
+
+.header-layout .navbar {
+  margin: 0;
+}
+
+.nav-item {
+  float: left;
+  width: 100px;
+  text-align: center;
+}
+
+.nav-item img {
+  cursor: pointer;
+}
+
+.nav-item a {
+  margin: 0;
+}
+
+.profile {
+
+}
+
 /*
 REGISTER
 */
@@ -216,6 +256,14 @@ REGISTER
   box-sizing: border-box;
   padding: 2%;
   text-align: center;
+}
+
+.register a {
+  color: #fff;
+}
+
+.register a:hover {
+  text-decoration: underline;
 }
 
 .login {
@@ -272,27 +320,29 @@ PROFILE
   width: 200px;
 }
 
+.characters {
+  width: 600px;
+  margin: auto;
+}
+
 .char-frame {
-  display: flex;
-  height: 60px;
-  min-width: 400px;
-  border-radius: 10px;
+  width: 100px;
+  height: 30px;
+  margin: 20px;
+  background-color: #000;
+  color: #fff;
 }
 
-.char-frame-warrior {
-  border: 2px solid red;
+.char-frame-Warrior {
 }
 
-.char-frame-mage {
-  border: 2px solid blue;
+.char-frame-Mage {
 }
 
-.char-frame-ranger {
-  border: 2px solid green;
+.char-frame-Ranger {
 }
 
-.char-frame-rogue {
-  border: 2px solid yellow;
+.char-frame-Rogue {
 }
 
 /*
@@ -354,13 +404,16 @@ SECTIONS
 }
 
 .footer {
-  box-shadow: 0 -3px 5px black; 
+  position: absolute;
+  bottom: 0;
+  border-top: solid 1px #000;
   height: 150px;
+  width: 100%;
   padding-top: 18px;
-  background-color: #313d38;
+  background-color: #fff;
   text-align: center;
   box-sizing: border-box;
-  color: #fff;
+  color: #000;
 }
 
 .footer-logo p {
@@ -370,11 +423,11 @@ SECTIONS
 .footer-links {
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
   font-size: 75%;
-  color: rgba(255, 255, 255, 0.5);
+  color: #000;
 }
 
 .footer-links a {
-  color: #fff;
+  color: #6496c8;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -382,7 +435,7 @@ SECTIONS
 }
 
 .footer-links a:hover {
-  color: rgba(255, 255, 255, 0.5);
+  color: #000;
 }
 
 .text-block {
@@ -391,6 +444,39 @@ SECTIONS
 
 .race-grid {
   list-style-type: none;
+}
+
+.user-loggedin-data {
+  float: right;
+  height: 30px;
+  margin: 5px 20px 20px;
+}
+
+.user-loggedin-data img {
+  top: 6px;
+  position: relative;
+}
+
+.user-loggedin-data a {
+  font-size: 75%;
+}
+
+.user-loggedin-data a:hover {
+  color: #6496c8;
+}
+
+.user-loggedout-data {
+  float: right;
+  height: 30px;
+  margin: 5px 20px 20px; 
+}
+
+.user-loggedout-data a {
+  color: #6496c8;
+}
+
+.user-loggedout-data a:hover {
+  color: #000;
 }
 
 /*
@@ -531,4 +617,8 @@ section.flat button.active {
 .span-link {
   color: #6496c8;
   cursor: pointer;
+}
+
+.fixed {
+  position: fixed;
 }
