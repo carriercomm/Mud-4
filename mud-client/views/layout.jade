@@ -14,13 +14,13 @@ html
         nav.navbar
           if isLoggedIn
             .nav-item
-              img#play-link(src='/images/play.png')
-              div
-                a(href='/play') PLAY
+              a.header-link(href='/play')
+                img(src='/images/play.png')
+                span PLAY
           .nav-item
-            img#game-guide-link(src='/images/game_guide.png')
-            div
-              a(href='/gameguide') GAME GUIDE
+            a.header-link(href='/gameguide')
+              img(src='/images/game_guide.png')
+              span GAME GUIDE
       
       if isLoggedIn
         .user-loggedin-data

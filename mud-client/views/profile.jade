@@ -9,7 +9,8 @@ block content
     .characters.grid-space-around
       each character in characters
         div(class='grid-space-around char-frame char-frame-#{character.charClass}')
-          span= character.name
+          img(src='/images/weapon_#{character.charClass}.png')
+          span &nbsp; #{character.name} (level #{character.level} #{character.charClass})
   else
     h3 You have no characters created.
 

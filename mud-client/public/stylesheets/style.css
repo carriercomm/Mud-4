@@ -234,17 +234,10 @@ HEADER
   text-align: center;
 }
 
-.nav-item img {
-  cursor: pointer;
+.header-link {
+  display: block;
 }
 
-.nav-item a {
-  margin: 0;
-}
-
-.profile {
-
-}
 
 /*
 REGISTER
@@ -326,20 +319,23 @@ PROFILE
 }
 
 .char-frame {
-  width: 100px;
   height: 30px;
   margin: 20px;
+  box-sizing: border-box;
+  padding-right: 20px;
   background-color: #000;
   color: #fff;
 }
 
 .char-frame-Warrior {
+  padding-left: 10px;
 }
 
 .char-frame-Mage {
 }
 
 .char-frame-Ranger {
+  padding-left: 10px;
 }
 
 .char-frame-Rogue {
