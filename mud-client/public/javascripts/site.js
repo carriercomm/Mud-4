@@ -19,9 +19,11 @@ function selectCharacter (char) {
 }
 
 $(document).ready(function () {
-  selectCharacter($('.char-frame').first())
+    if ($('.char-frame').length) {
+    selectCharacter($('.char-frame').first())
 
-  $('.char-frame').click(function () {
-    selectCharacter($(this))
-  })
+    $('.char-frame').click(function () {
+      selectCharacter($(this))
+    })
+  }
 })
