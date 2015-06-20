@@ -55,6 +55,14 @@ router.get('/', function (req, res) {
   })
 })
 
+.get('/character/:charname', function (req, res) {
+  Character.findOne({name: req.params.charname}, function (err, character) {
+    if (err) throw err
+
+    res.json(character)
+  })
+})
+
 .post('/newchar', function (req, res, next) {
   if (!req.body.charGender || !req.body.charRace || !req.body.charClass || !req.body.charName) {
     res.json({error: true, message: 'Error creating character. Missing parameter.'})

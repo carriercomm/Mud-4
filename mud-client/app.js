@@ -16,6 +16,7 @@ var admin = require('./routes/admin')
 var login = require('./routes/login')
 var signup = require('./routes/signup')
 var profile = require('./routes/profile')
+var gameGuide = require('./routes/gameGuide')
 
 require('./config/passport')(passport)
 
@@ -51,6 +52,7 @@ app.use('/admin', admin)
 app.use('/login', login)
 app.use('/signup', signup)
 app.use('/profile', profile)
+app.use('/gameguide', gameGuide)
 
 // catch 404 and forwarding to error handler
 app.use(function (req, res, next) {

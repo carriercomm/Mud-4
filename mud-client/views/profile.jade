@@ -6,11 +6,31 @@ block content
       p.success= message
 
   if characters && characters.length
-    .characters.grid-space-around
-      each character in characters
-        div(class='grid-space-around char-frame char-frame-#{character.charClass}')
-          img(src='/images/weapon_#{character.charClass}.png')
-          span &nbsp; #{character.name} (level #{character.level} #{character.charClass})
+    .flex-auto-margin-1200
+      .characters
+        each character in characters
+          div(class='char-frame char-frame-#{character.charClass}')
+            img(src='/images/weapon_#{character.charClass}.png')
+            span &nbsp; #{character.name} (level #{character.level} #{character.charClass})
+            input(type='hidden', value='#{character.name}')
+      .character-focus
+        .char-data
+          .char-data-left
+            p.char-title Name:
+            p#char-name.char-text
+
+            p.char-title Class:
+            p#char-class.char-text
+
+          .char-data-right
+            p.char-title Race:
+            p#char-race.char-text
+
+            p.char-title Level:
+            p#char-level.char-text
+
+        .class-image
+          img(src='/images/elf-mage-1.png')
   else
     h3 You have no characters created.
 

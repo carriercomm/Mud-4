@@ -34,7 +34,7 @@ a {
 }
 
 .content {
-  margin-top: 60px;
+  margin-top: 70px;
   padding-bottom: 150px;
 }
 
@@ -314,32 +314,101 @@ PROFILE
 }
 
 .characters {
-  width: 600px;
-  margin: auto;
+  width: 350px;
+}
+
+.character-focus {
+  width: 850px;
 }
 
 .char-frame {
   height: 30px;
-  margin: 20px;
+  margin-bottom: 40px;
   box-sizing: border-box;
   padding-right: 20px;
-  background-color: #000;
+  background-color: rgb(49, 168, 204);
   color: #fff;
+  cursor: pointer;
+}
+
+.char-frame img {
+  float: left;
+  position: relative;
+  top: -15px;
+}
+
+.char-frame span {
+  float: right;
+  line-height: 30px;
+}
+
+.char-selected {
+  width: 380px;
+  height: 40px;
+  margin-left: -15px;
+  margin-top: -5px;
+}
+
+.char-selected span {
+  line-height: 40px;
+}
+
+.char-selected img {
+  width: 80px;
+  height: auto;
+  top: -20px;
 }
 
 .char-frame-Warrior {
-  padding-left: 10px;
 }
 
 .char-frame-Mage {
 }
 
 .char-frame-Ranger {
-  padding-left: 10px;
 }
 
 .char-frame-Rogue {
 }
+
+.class-image {
+  float: right;
+}
+
+.class-image img {
+  width: 250px;
+  height: auto;
+}
+
+.char-data {
+  float: left;
+  width: 600px;
+  box-sizing: border-box;
+  padding: 0 80px;
+  margin-top: -4px;
+}
+
+.char-data .char-title {
+  text-decoration: underline;
+  font-family: 'Cherry Cream Soda', cursive;
+  padding-bottom: 0;
+}
+
+.char-data ul {
+  list-style-type: none;
+}
+
+.char-data-left {
+  width: 220px;
+  float: left;
+}
+
+.char-data-right {
+  width: 220px;
+  float: right;
+  text-align: end;
+}
+
 
 /*
 ADMIN
@@ -381,6 +450,7 @@ SECTIONS
 
 .home-content section {
   height: 95vh;
+  /*padding-bottom: 150px;*/
 }
 
 .section-1 {
@@ -400,8 +470,6 @@ SECTIONS
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
   border-top: solid 1px #000;
   height: 150px;
   width: 100%;
@@ -617,4 +685,15 @@ section.flat button.active {
 
 .fixed {
   position: fixed;
+}
+
+.flex-auto-margin-1200 {
+  display: flex;
+  width: 1200px;
+  margin: auto;
+}
+
+.absolute-footer {
+  position: absolute;
+  bottom: 0;
 }
