@@ -9,8 +9,8 @@ block content
     .flex-auto-margin-1200
       .characters
         each character in characters
-          div(class='char-frame char-frame-#{character.charClass}')
-            img(src='/images/weapon_#{character.charClass}.png')
+          div(class='char-frame char-frame-#{character.charClass.toLowerCase()}')
+            img(src='/images/weapon_#{character.charClass.toLowerCase()}.png')
             span &nbsp; #{character.name} (level #{character.level} #{character.charClass})
             input(type='hidden', value='#{character.name}')
       .character-focus

@@ -1,3 +1,5 @@
+var $ = window.$
+
 var charGender = (function () {
   return {
     show: function () {
@@ -27,7 +29,7 @@ var charRace = (function () {
   return {
     show: function () {
       $('#select-race').show()
-      $('.selected-gender').attr('src', '/images/characters/' + charGender.selected + '.png')
+      $('.selected-gender').attr('src', '/images/characters/' + charGender.selected.toLowerCase() + '.png')
       $('.selected-gender').show()
       $('.selected-gender-label').html(charGender.selected)
     },
@@ -55,7 +57,7 @@ var charClass = (function () {
   return {
     show: function () {
       $('#select-class').show()
-      $('.selected-race').attr('src', '/images/characters/' + charRace.selected + '.png')
+      $('.selected-race').attr('src', '/images/characters/' + charRace.selected.toLowerCase() + '.png')
       $('.selected-race').show()
       $('.selected-race-label').html(charRace.selected)
     },
@@ -84,7 +86,7 @@ var charConfirm = (function () {
     show: function () {
       $('#confirm-newchar').show()
       $('#char-name-alert').addClass('hidden')
-      $('.selected-class').attr('src', '/images/characters/' + charClass.selected + '.png')
+      $('.selected-class').attr('src', '/images/characters/' + charClass.selected.toLowerCase() + '.png')
       $('.selected-class').show()
       $('.selected-class-label').html(charClass.selected)
     },
