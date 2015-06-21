@@ -11,19 +11,41 @@ function selectCharacter (char) {
   char.addClass('char-selected')
 
   getCharacter($('input:first', char).val(), function (character) {
-    $('#char-name').html(character.name)
-    $('#char-class').html(character.charClass)
-    $('#char-race').html(character.race)
-    $('#char-level').html(character.level)
+    $('#char-name').html('Name: ' + character.name)
+    $('#char-class').html('Class: ' + character.charClass)
+    $('#char-level').html('Level: ' + character.level)
+    $('#char-race').html('Race: ' + character.race)
+    $('#char-gender').html('Gender: ' + character.gender)
+
+    $('#char-life').html('Life: ' + character.life)
+    $('#char-energy').html('Energy: ' + character.energy)
+    $('#char-experience').html('Experience: ' + character.experience)
+    $('#char-next-lvl').html('Next Level: ' + character.nextLevel)
   })
 }
 
+function toggleCharData (section) {
+  var openedSection = $('.open').first()
+
+  if (openedSection === section) return
+
+  openedSection.removeClass('open')
+  openedSection.addClass('display-none')
+
+  section.addClass('open')
+  section.removeClass('display-none')
+}
+
 $(document).ready(function () {
-    if ($('.char-frame').length) {
+  if ($('.char-frame').length) {
     selectCharacter($('.char-frame').first())
 
     $('.char-frame').click(function () {
       selectCharacter($(this))
+    })
+
+    $('.char-data-section').click(function () {
+      toggleCharData($(this).first())
     })
   }
 })

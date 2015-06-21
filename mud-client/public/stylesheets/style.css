@@ -388,27 +388,24 @@ PROFILE
   margin-top: -4px;
 }
 
-.char-data .char-title {
-  text-decoration: underline;
-  font-family: 'Cherry Cream Soda', cursive;
-  padding-bottom: 0;
+.char-data-name {
+  margin-bottom: 10px;
 }
 
-.char-data ul {
-  list-style-type: none;
+.char-data-section {
+  color: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgb(49, 168, 204);
 }
 
-.char-data-left {
-  width: 220px;
-  float: left;
+.char-data-section-content {
+  background-color: #fff;
+  box-sizing: border-box;
+  border: solid 1px rgb(49, 168, 204);
+  padding: 5px;
 }
-
-.char-data-right {
-  width: 220px;
-  float: right;
-  text-align: end;
-}
-
 
 /*
 ADMIN

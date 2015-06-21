@@ -4,29 +4,57 @@ html
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/animate.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
-    link(href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto', rel='stylesheet', type='text/css')
+  
   body
-    .header-content
-      a.logo(href='/') BADASS LOGO
-      nav.navbar
-        a.play(href='/play') PLAY
-        if isLoggedIn
-          a(href='/profile') PROFILE (#{user._id})
-          span.margin-right-15 |
-          if isAdmin
-            a(href='/admin') ADMIN PANEL
-          a(href='/logout') LOGOUT
-        else
-          a(id='log-in', href='/login') LOG IN
-          a(id='log-in', href='/signup') REGISTER
-    .content
-      nav.navbar.subnav
-        a.a-selected(href='/admin/areas') AREAS
-        a(href='/admin/users') USERS
+    .wrapper
+      .header-layout
+        a.logo(href='/') TEARDROP
+        nav.navbar
+          if isLoggedIn
+            .nav-item
+              a.header-link(href='/play')
+                img(src='/images/play.png')
+                span PLAY
+          .nav-item
+            a.header-link(href='/gameguide')
+              img(src='/images/game_guide.png')
+              span GAME GUIDE
+      
+      if isLoggedIn
+        .user-loggedin-data
+          img(src='/images/user.png')
+          span= user._id
+          a(href='/profile') &nbsp;( View profile
+          span &nbsp; | &nbsp;
 
-      hr
-      block content
+          if isAdmin
+            a(href='/admin') Admin Panel
+            span &nbsp; | &nbsp;
+
+          a(href='/logout') Logout )
+      else
+        .user-loggedout-data
+          a(href='/login') LOG IN
+          a(href='/signup') REGISTER
+
+      .content
+        block content
+
+      .footer.absolute-footer
+        .footer-logo
+          p Teardrop
+        .footer-links
+          a(href='https://en.wikipedia.org/?title=MUD') What is MUD? &nbsp; - &nbsp;
+          a(href='https://github.com/sschezar/Mud') github
+
+          p
+            span Hosted by &nbsp;
+            a(href='http://www.digitalocean.com') Digital Ocean
+
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/underscore/underscore-min.js')
     script(type='text/javascript', src='/javascripts/sigmajs/sigma.min.js')

@@ -15,19 +15,34 @@ block content
             input(type='hidden', value='#{character.name}')
       .character-focus
         .char-data
-          .char-data-left
-            p.char-title Name:
-            p#char-name.char-text
-
-            p.char-title Class:
-            p#char-class.char-text
-
-          .char-data-right
-            p.char-title Race:
-            p#char-race.char-text
-
-            p.char-title Level:
-            p#char-level.char-text
+          ul
+            li
+              input(type="checkbox", checked)
+              i
+              h3 General Information
+              p#char-name
+              p#char-class
+              p#char-race
+              p#char-gender
+              p#char-level
+            li
+              input(type="checkbox", checked)
+              i
+              h3 Status
+              p#char-life
+              p#char-energy
+              p#char-experience
+              p#char-next-lvl
+            li
+              input(type="checkbox", checked)
+              i
+              h3 Teardrops
+              p Future content =)
+            li
+              input(type="checkbox", checked)
+              i
+              h3 Equipment
+              p Future content =)
 
         .class-image
           img(src='/images/elf-mage-1.png')

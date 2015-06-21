@@ -5,6 +5,7 @@ html
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/animate.css')
+    link(rel='stylesheet', href='/stylesheets/ul-style.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto', rel='stylesheet', type='text/css')
@@ -29,6 +30,11 @@ html
           span= user._id
           a(href='/profile') &nbsp;( View profile
           span &nbsp; | &nbsp;
+
+          if isAdmin
+            a(href='/admin') Admin Panel
+            span &nbsp; | &nbsp;
+
           a(href='/logout') Logout )
       else
         .user-loggedout-data
