@@ -47,7 +47,8 @@ block content
         .class-image
           img(src='/images/elf-mage-1.png')
   else
-    h3 You have no characters created.
+    .grid-space-around
+      h3 You have no characters created.
 
   .grid-space-around.margin-top-20
     a.add-char(href='/profile/' + user._id + '/newchar') Create new character
