@@ -1,6 +1,10 @@
 extends adminLayout
 
 block content
+  .admin-page-title
+    img(src='/images/picture.png')
+    span New Area
+
   .grid-space-around
     if message && message.length > 0
       span.error= message

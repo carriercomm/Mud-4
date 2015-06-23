@@ -22,7 +22,7 @@ block content
       span.span-link#deleteRoom Delete
       span.span-link#cancelRoomEdit Nothing
 
-  #roomInfo.grid-space-around.display-none(style='align-items: flex-start')
+  #roomInfo.grid-space-around.display-none
     .grid-cell
       .grid-flex-start.nomargin-bottom
         span Title
@@ -33,14 +33,6 @@ block content
         span Description
       .grid-flex-start
         textarea#roomDescription
-
-    .grid-cell
-      .grid-flex-start.nomargin-bottom
-        span Floor
-      .grid-flex-start
-        input#roomFloor.text(type='text', disabled)
-
-      .grid-flex-start.nomargin-bottom
 
     .grid-cell
       .grid-flex-end

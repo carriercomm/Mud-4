@@ -1,8 +1,9 @@
 extends adminLayout
 
 block content
-  .grid-space-around
-    a.add-char(href='/admin/newarea') Create new area
+  .admin-page-title
+    img(src='/images/picture.png')
+    span Areas
 
   if (areas && areas.length)
     each area in areas
@@ -11,3 +12,6 @@ block content
         span |
         a(href='#') &nbsp; Delete &nbsp;
         span= area.name
+
+  .grid-space-around
+    a.add-char(href='/admin/newarea') Create new area

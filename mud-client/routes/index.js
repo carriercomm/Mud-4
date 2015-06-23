@@ -19,5 +19,12 @@ router.get('/', function (req, res, next) {
   req.logout()
   res.redirect('/')
 })
+.get('/news', function (req, res) {
+  res.render('news', {
+    isLoggedIn: req.isAuthenticated(),
+    isAdmin: req.isAuthenticated() ? req.user.group === 'admins' : null,
+    user: req.user
+  })
+})
 
 module.exports = router

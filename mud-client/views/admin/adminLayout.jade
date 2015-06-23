@@ -4,56 +4,40 @@ html
     title MUD
     link(rel='stylesheet', href='/normalize.css/normalize.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/admin.css')
     link(rel='stylesheet', href='/stylesheets/animate.css')
     link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Cherry+Cream+Soda', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Roboto+Slab|Roboto', rel='stylesheet', type='text/css')
   
   body
-    .wrapper
-      .header-layout
+    .admin-sidebar
+      .admin-logo
         a.logo(href='/') TEARDROP
-        nav.navbar
-          if isLoggedIn
-            .nav-item
-              a.header-link(href='/play')
-                img(src='/images/play.png')
-                span PLAY
-          .nav-item
-            a.header-link(href='/gameguide')
-              img(src='/images/game_guide.png')
-              span GAME GUIDE
-      
-      if isLoggedIn
-        .user-loggedin-data
-          img(src='/images/user.png')
-          span= user._id
-          a(href='/profile') &nbsp;( View profile
-          span &nbsp; | &nbsp;
 
-          if isAdmin
-            a(href='/admin') Admin Panel
-            span &nbsp; | &nbsp;
+      .admin-menu
+        if isLoggedIn
+          a(href='/profile')
+            img(src='/images/user-admin.png')
+            span= user._id
+          div
+            a(href='/logout')
+              img(src='/images/arrow-right.png')
+              span Logout
 
-          a(href='/logout') Logout )
-      else
-        .user-loggedout-data
-          a(href='/login') LOG IN
-          a(href='/signup') REGISTER
+        hr
 
-      .content
-        block content
+        div
+          a(href='/admin/areas')
+            img(src='/images/picture.png')
+            span Areas
+        div
+          a(href='/admin/users')
+            img(src='/images/users.png')
+            span Users
 
-      .footer.absolute-footer
-        .footer-logo
-          p Teardrop
-        .footer-links
-          a(href='https://en.wikipedia.org/?title=MUD') What is MUD? &nbsp; - &nbsp;
-          a(href='https://github.com/sschezar/Mud') github
-
-          p
-            span Hosted by &nbsp;
-            a(href='http://www.digitalocean.com') Digital Ocean
+    .admin-content
+      block content
 
     script(type='text/javascript', src='/jquery/dist/jquery.min.js')
     script(type='text/javascript', src='/underscore/underscore-min.js')
