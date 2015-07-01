@@ -673,3 +673,11 @@ section.flat button.active {
   -ms-user-select: none;
   user-select: none;
 }
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}

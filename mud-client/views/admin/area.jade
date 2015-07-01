@@ -6,12 +6,20 @@ block content
     span Areas
 
   if (areas && areas.length)
-    each area in areas
-      .glid-flex-start
-        a(href='/admin/editarea/#{area._id}') Edit &nbsp;
-        span |
-        a(href='#') &nbsp; Delete &nbsp;
-        span= area.name
+    .grid-space-around.areas-grid
+      ul.areas-header
+        li.left Name
+        li.right Action
+      ul.areas
+        each area in areas
+          .row
+            li.left
+              span= area.name
+            li.right
+              a(href='/admin/editarea/#{area._id}') Edit &nbsp;
+              span |
+              a(href='#') &nbsp; Delete
+            br
 
   .grid-space-around
     a.add-char(href='/admin/newarea') Create new area

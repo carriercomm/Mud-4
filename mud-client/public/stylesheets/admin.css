@@ -75,7 +75,6 @@ textarea {
   color: #000;
 }
 
-
 .floor {
   margin-bottom: 20px;
 }
@@ -90,4 +89,33 @@ textarea {
 
 .text-input {
   width: 380px;
+}
+
+.areas-grid li {
+  box-sizing: border-box;
+  padding: 0 5%;
+}
+
+.areas-header {
+  width: 700px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Slab', serif;
+  margin-bottom: 10px;
+}
+
+.areas {
+  width: 700px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.areas .row {
+  background-color: #fff;
+}
+
+.areas .row:nth-child(odd) {
+  background-color: #6496c8;
 }
